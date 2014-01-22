@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html dir="rtl">
+<head>
+	<meta charset="utf-8">
+	<title>ویرایشگر CKEditor برای مای‌بی‌بی</title>
+	<style>
+		body{
+			font-family:Tahoma;
+			font-size:13px;
+		}
+	</style>
+	<script src="jscripts/ckeditor/ckeditor.js"></script>
+</head>
+<body>
+	<form action="post">
+		<textarea cols="80" id="editor1" name="editor1" rows="10">
+			این یک  [b]متن آزمایشی[/b] است.
+		</textarea>
+		<script>
+			CKEDITOR.replace( 'editor1');
+		</script>
+	</form>
+
+</body>
+</html>
