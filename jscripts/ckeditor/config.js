@@ -14,7 +14,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// Width and height are not supported in the BBCode format, so object resizing is disabled.
 	config.disableObjectResizing = true;
 	// Define font sizes in percent values.
-	config.fontSize_sizes = "30/30%;50/50%;100/100%;120/120%;150/150%;200/200%;300/300%";
+	config.fontSize_sizes = "xx-small/xx-small;x-small/x-small;small/small;medium/medium;large/large;x-large/x-large;xx-large/xx-large";
 	config.toolbar = [
 		[ 'Source', '-', 'Save', 'NewPage', '-', 'Undo', 'Redo' ],
 		[ 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat' ],
@@ -26,17 +26,6 @@ CKEDITOR.editorConfig = function( config ) {
 		[ 'NumberedList', 'BulletedList', '-', 'Blockquote' ],
 		[ 'Maximize' ]
 	];
-	// Strip CKEditor smileys to those commonly used in BBCode.
-	config.smiley_images = [
-		'regular_smile.png', 'sad_smile.png', 'wink_smile.png', 'teeth_smile.png', 'tongue_smile.png',
-		'embarrassed_smile.png', 'omg_smile.png', 'whatchutalkingabout_smile.png', 'angel_smile.png',
-		'shades_smile.png', 'cry_smile.png', 'kiss.png'
-	];
-	config.smiley_descriptions = [
-		'smiley', 'sad', 'wink', 'laugh', 'cheeky', 'blush', 'surprise',
-		'indecision', 'angel', 'cool', 'crying', 'kiss'
-	];
-	// Define changes to default configuration here. For example=
 	config.language = 'fa';
 	// config.uiColor = '#AADC6E';
 };

@@ -137,10 +137,16 @@
 						}
 
 						if ( stylesMap[ part ] ) {
-							// Font size represents percentage.
-							if ( part == 'size' )
-								optionPart += '%';
-
+							if ( part == 'size' ) {
+								if ( optionPart == 'xx-small' || optionPart == 'x-small' || optionPart == 'small' || optionPart == 'medium' || optionPart == 'large' || optionPart == 'x-large' || optionPart == 'xx-large') {}
+								else {
+									optionPart = parseInt(optionPart) + 10;
+									if(optionPart > 50) {
+										optionPart = 50;
+									}
+									optionPart += 'pt';
+								}
+							}
 							styles[ stylesMap[ part ] ] = optionPart;
 							attribs.style = serializeStyleText( styles );
 						} else if ( attributesMap[ part ] )
@@ -656,10 +662,20 @@
 								tagName = 'color';
 								value = CKEDITOR.tools.convertRgbToHex( value );
 							} else if ( ( value = style[ 'font-size' ] ) ) {
-								var percentValue = value.match( /(\d+)%$/ );
-								if ( percentValue ) {
-									value = percentValue[ 1 ];
+								if ( value == 'xx-small' || value == 'x-small' || value == 'small' || value == 'medium' || value == 'large' || value == 'x-large' || value == 'xx-large') {
 									tagName = 'size';
+								} else {
+									percentValue = value.match( /(\d+)px$/ );
+									if ( percentValue ) {
+										value = parseInt(percentValue[ 1 ]) - 10;
+										tagName = 'size';
+									} else {
+										percentValue = value.match( /(\d+)pt$/ );
+										if ( percentValue ) {
+											value = parseInt(percentValue[ 1 ]) - 10;
+											tagName = 'size';
+										}
+									}
 								}
 							}
 						} else if ( tagName == 'ol' || tagName == 'ul' ) {
