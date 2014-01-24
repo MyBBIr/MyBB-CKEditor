@@ -18,7 +18,7 @@ CKEDITOR.editorConfig = function( config ) {
 		[ 'Source', '-', 'Save', 'NewPage'],
 		[ 'Cut', 'Copy', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
 		[ 'Find', 'Replace', '-', 'SelectAll', 'Scayt' ],
-		[ 'Link', 'Unlink', 'Image', 'Smiley', 'SpecialChar' ],
+		[ 'Link', 'Unlink', 'Image', 'Smiley', 'SpecialChar', '-', 'HorizontalRule' ],
 		'/',
 		[ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ],
 		[ 'FontSize' , 'Font' ],
