@@ -26,10 +26,10 @@
 		}
 	} );
 
-	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', color: 'span', size: 'span', quote: 'blockquote', code: 'code', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol' },
+	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', color: 'span', size: 'span', font: 'span', quote: 'blockquote', code: 'code', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol' },
 		convertMap = { strong: 'b', b: 'b', u: 'u', em: 'i', i: 'i', s: 's', strike: 's', code: 'code', li: '*' },
 		tagnameMap = { strong: 'b', em: 'i', u: 'u', strike: 's', li: '*', ul: 'list', ol: 'list', code: 'code', a: 'link', img: 'img', blockquote: 'quote' },
-		stylesMap = { color: 'color', size: 'font-size' },
+		stylesMap = { color: 'color', size: 'font-size', font: 'font-family' },
 		attributesMap = { url: 'href', email: 'mailhref', quote: 'cite', list: 'listType' };
 
 	// List of block-like tags.
@@ -677,6 +677,8 @@
 										}
 									}
 								}
+							} else if ( ( value = style[ 'font-family' ] ) ) {
+								tagName = 'font'
 							}
 						} else if ( tagName == 'ol' || tagName == 'ul' ) {
 							if ( ( value = style[ 'list-style-type' ] ) ) {
@@ -784,6 +786,8 @@
 						else if ( htmlName == 'span' ) {
 							if ( element.getStyle( 'font-size' ) )
 								name = 'size';
+							else if ( element.getStyle( 'font-family' ) )
+								name = 'font';
 							else if ( element.getStyle( 'color' ) )
 								name = 'color';
 						} else if ( name == 'img' ) {

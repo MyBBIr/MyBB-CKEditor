@@ -14,14 +14,13 @@ CKEDITOR.editorConfig = function( config ) {
 	// Width and height are not supported in the BBCode format, so object resizing is disabled.
 	config.disableObjectResizing = true;
 	// Define font sizes in percent values.
-	config.fontSize_sizes = "xx-small/xx-small;x-small/x-small;small/small;medium/medium;large/large;x-large/x-large;xx-large/xx-large";
 	config.toolbar = [
 		[ 'Source', '-', 'Save', 'NewPage', '-', 'Undo', 'Redo' ],
 		[ 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat' ],
 		[ 'Link', 'Unlink', 'Image', 'Smiley', 'SpecialChar' ],
 		'/',
 		[ 'Bold', 'Italic', 'Underline', 'Strike' ],
-		[ 'FontSize' ],
+		[ 'FontSize' , 'Font' ],
 		[ 'TextColor' ],
 		[ 'NumberedList', 'BulletedList', '-', 'Blockquote' ],
 		[ 'Maximize' ]

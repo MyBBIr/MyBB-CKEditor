@@ -131,15 +131,13 @@
  * @cfg {String} [font_names=see source]
  * @member CKEDITOR.config
  */
-CKEDITOR.config.font_names = 'Arial/Arial, Helvetica, sans-serif;' +
-	'Comic Sans MS/Comic Sans MS, cursive;' +
-	'Courier New/Courier New, Courier, monospace;' +
-	'Georgia/Georgia, serif;' +
-	'Lucida Sans Unicode/Lucida Sans Unicode, Lucida Grande, sans-serif;' +
-	'Tahoma/Tahoma, Geneva, sans-serif;' +
-	'Times New Roman/Times New Roman, Times, serif;' +
-	'Trebuchet MS/Trebuchet MS, Helvetica, sans-serif;' +
-	'Verdana/Verdana, Geneva, sans-serif';
+CKEDITOR.config.font_names = 'Arial/Arial;' +
+	'Courier/Courier;' +
+	'Impact/Impact;' +
+	'Tahoma/Tahoma;' +
+	'Times New Roman/Times New Roman;' +
+	'Trebuchet MS/Trebuchet MS;' +
+	'Verdana/Verdana';
 
 /**
  * The text to be displayed in the Font combo is none of the available values
@@ -151,7 +149,7 @@ CKEDITOR.config.font_names = 'Arial/Arial, Helvetica, sans-serif;' +
  * @cfg {String} [font_defaultLabel='']
  * @member CKEDITOR.config
  */
-CKEDITOR.config.font_defaultLabel = '';
+CKEDITOR.config.font_defaultLabel = 'Tahoma';
 
 /**
  * The style definition to be used to apply the font in the text.
@@ -194,7 +192,7 @@ CKEDITOR.config.font_style = {
  * @cfg {String} [fontSize_sizes=see source]
  * @member CKEDITOR.config
  */
-CKEDITOR.config.fontSize_sizes = '8/8px;9/9px;10/10px;11/11px;12/12px;14/14px;16/16px;18/18px;20/20px;22/22px;24/24px;26/26px;28/28px;36/36px;48/48px;72/72px';
+CKEDITOR.config.fontSize_sizes = 'x-small/x-small;small/small;medium/medium;large/large;x-large/x-large;xx-large/xx-large';
 
 /**
  * The text to be displayed in the Font Size combo is none of the available
@@ -206,7 +204,7 @@ CKEDITOR.config.fontSize_sizes = '8/8px;9/9px;10/10px;11/11px;12/12px;14/14px;16
  * @cfg {String} [fontSize_defaultLabel='']
  * @member CKEDITOR.config
  */
-CKEDITOR.config.fontSize_defaultLabel = '';
+CKEDITOR.config.fontSize_defaultLabel = 'small';
 
 /**
  * The style definition to be used to apply the font size in the text.
