@@ -14,30 +14,9 @@ if(!defined("IN_MYBB"))
     die("Direct initialization of this file is not allowed.<br /><br />Please make sure IN_MYBB is defined.");
 }
 
-/**
- * DEFINE PLUGINLIBRARY
- *
- *   Define the path to the plugin library, if it isn't defined yet.
- */
-if(!defined("PLUGINLIBRARY"))
-{
-    define("PLUGINLIBRARY", MYBB_ROOT."inc/plugins/pluginlibrary.php");
-}
-
-
-
-function ckeditor_info()
-{
-	$info = array(
-		"name"          => "CKEditor",
-		"description"   => "",
-		"website"       => "https://github.com/ATofighi/MyBB-CKEditor",
-		"author"        => "AliReza_Tofighi",
-		"authorsite"    => "http://my-bb.ir",
-		"version"       => "0.1 Preview",
-		"guid"          => "",
-		"compatibility" => "16*"
-	);
-	return $info;
-}
+define(CKEDITOR_PLUGINROOT,MYBB_ROOT.'inc/plugins/ckeditor/');
+require_once(CKEDITOR_PLUGINROOT.'core.php');
+require_once(CKEDITOR_PLUGINROOT.'hooks.php');
+require_once(CKEDITOR_PLUGINROOT.'info.php');
+require_once(CKEDITOR_PLUGINROOT.'install.php');
 ?>

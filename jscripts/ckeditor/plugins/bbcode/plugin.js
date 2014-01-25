@@ -50,7 +50,7 @@
 	}
 
 	// Maintain the map of smiley-to-description.
-	var smileyMap = { smiley: ':)', sad: ':(', wink: ';)', laugh: ':D', cheeky: ':P', blush: ':*)', surprise: ':-o', indecision: ':|', angry: '>:(', angel: 'o:)', cool: '8-)', devil: '>:-)', crying: ';(', kiss: ':-*' },
+	var smileyMap = smiliesmap,
 		smileyReverseMap = {},
 		smileyRegExp = [];
 
@@ -635,7 +635,7 @@
 
 						var description = element.attributes.desc,
 							image = config.smiley_images[ CKEDITOR.tools.indexOf( config.smiley_descriptions, description ) ],
-							src = CKEDITOR.tools.htmlEncode( config.smiley_path + image );
+							src = CKEDITOR.tools.htmlEncode( image );
 
 						element.attributes = {
 							src: src,
@@ -730,7 +730,7 @@
 							var src = attributes[ 'data-cke-saved-src' ] || attributes.src,
 								alt = attributes.alt;
 
-							if ( src && src.indexOf( editor.config.smiley_path ) != -1 && alt )
+							if ( src && alt )
 								return new CKEDITOR.htmlParser.text( smileyMap[ alt ] );
 							else
 								element.children = [ new CKEDITOR.htmlParser.text( src ) ];
