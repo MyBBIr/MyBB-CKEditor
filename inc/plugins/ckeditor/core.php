@@ -118,7 +118,7 @@ function ckesmiliesjs_build($finds = null)
 				}
 			}
 			if($finds) {
-				$clickablesmilies = "var smiliesmap = { {$smilies3} };alert('ok');";
+				$clickablesmilies = "var smiliesmap = { {$smilies3} };";
 			} else {
 				$clickablesmilies = "smiley_images: [\n{$smilies1}\n],\n smiley_descriptions: [\n{$smilies2}\n]";
 			}
