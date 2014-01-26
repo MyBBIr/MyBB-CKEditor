@@ -59,8 +59,12 @@ function ckeditor_activate(){
 					array(
 						"active" => array(
 							"title" => $lang->ckeditor_activate,
-							"description" => '',
-						)
+							"description" => ''
+						),
+						"usedivarea" => array(
+							"title" => $lang->ckeditor_userdivarea,
+							"description" => ''
+						),
 					)
 				);
 	$PL->edit_core('ckeditor', 'inc/functions.php',

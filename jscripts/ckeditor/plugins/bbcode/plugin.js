@@ -155,9 +155,9 @@
 
 					// Two special handling - image and email, protect them
 					// as "span" with an attribute marker.
-					if ( part == 'email' || part == 'img' )
+					if ( part == 'email' || part == 'img' ) {
 						attribs[ 'bbcode' ] = part;
-
+					}
 					this.onTagOpen( tagName, attribs, CKEDITOR.dtd.$empty[ tagName ] );
 				}
 				// Closing tag
@@ -729,8 +729,8 @@
 							// Translate smiley (image) to text emotion.
 							var src = attributes[ 'data-cke-saved-src' ] || attributes.src,
 								alt = attributes.alt;
-
-							if ( src && alt )
+							
+							if ( src && alt && smileyMap[ alt ] != null )
 								return new CKEDITOR.htmlParser.text( smileyMap[ alt ] );
 							else
 								element.children = [ new CKEDITOR.htmlParser.text( src ) ];

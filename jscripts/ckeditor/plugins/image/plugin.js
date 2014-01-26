@@ -168,3 +168,5 @@ CKEDITOR.config.image_removeLinkByEmptyURL = true;
  * @cfg {String} [image_previewText='Lorem ipsum dolor...' (placeholder text)]
  * @member CKEDITOR.config
  */
+
+CKEDITOR.config.image_previewText = ' ';

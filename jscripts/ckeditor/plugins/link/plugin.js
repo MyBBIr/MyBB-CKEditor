@@ -320,7 +320,7 @@ CKEDITOR.unlinkCommand.prototype = {
 		if ( element && element.getName() == 'a' && element.getAttribute( 'href' ) && element.getChildCount() )
 			this.setState( CKEDITOR.TRISTATE_OFF );
 		else
-			this.setState( CKEDITOR.TRISTATE_DISABLED );
+			this.setState( CKEDITOR.TRISTATE_OFF );
 	},
 
 	contextSensitive: 1,

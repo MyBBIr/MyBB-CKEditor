@@ -27,5 +27,6 @@ CKEDITOR.editorConfig = function( config ) {
 		[ 'Maximize' ]
 	];
 	config.language = 'fa';
+	config.image_previewText  = ' ';
 	// config.uiColor = '#AADC6E';
 };

@@ -38,7 +38,10 @@ function ckeditor_build($bind="message") {
 		}
 		$smilies = ckesmiliesjs_build();
 		$smiliesmap = ckesmiliesjs_build(1);
-		
+		$divarea = '';
+		if($mybb->settings['ckeditor_usedivarea']) {
+			$divarea = 'divarea,';
+		}
 		if(defined("IN_ADMINCP"))
 		{
 			eval("\$codeinsert = \"".addslashes(ckplugin_gettemplate("codebuttons"))."\";");
@@ -87,7 +90,8 @@ function ckesmiliesjs_build($finds = null)
 		if(is_array($smiliecache))
 		{
 			reset($smiliecache);
-
+			$mysmilies = $smiliecache;
+			arsort($mysmilies);
 			$getmore = '';
 			if($mybb->settings['smilieinsertertot'] >= $smiliecount)
 			{
@@ -97,10 +101,11 @@ function ckesmiliesjs_build($finds = null)
 			$smilies1 = "";
 			$smilies2 = "";
 			$smilies3 = "";
+			$smilies4 = "";
 			$counter = 0;
 			$i = 0;
 
-			foreach($smiliecache as $find => $image)
+			foreach($mysmilies as $find => $image)
 			{
 				if($i < $mybb->settings['smilieinsertertot'])
 				{
@@ -108,6 +113,11 @@ function ckesmiliesjs_build($finds = null)
 					$smilies1 .= "'".str_replace("'","\\'",$image)."', ";
 					$smilies2 .= "'smilie{$i}', ";
 					$smilies3 .= "'smilie{$i}': '".str_replace("'","\\'",$find)."', ";
+					$smilies4 .= "'".str_replace("'","\\'",$image)."': 'smilie{$i}', ";
+					if(substr($image, 0, 4) != "http") {
+						$image = $mybb->settings['bburl']."/".$image;
+						$smilies4 .= "'".str_replace("'","\\'",$image)."': 'smilie{$i}', ";
+					}
 					++$i;
 					++$counter;
 
@@ -119,6 +129,7 @@ function ckesmiliesjs_build($finds = null)
 			}
 			if($finds) {
 				$clickablesmilies = "var smiliesmap = { {$smilies3} };";
+				$clickablesmilies .= "var smilieyurlmap = { {$smilies4} };";
 			} else {
 				$clickablesmilies = "smiley_images: [\n{$smilies1}\n],\n smiley_descriptions: [\n{$smilies2}\n]";
 			}
