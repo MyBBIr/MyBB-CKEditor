@@ -45,7 +45,6 @@ messageEditor.prototype = {
 		if(this.editor.mode == 'wysiwyg') {
 			this.editor.insertHtml(html);
 		} else {
-		alert(this.editorid);
 			this.editor.insertText(text);
 		}
 	},

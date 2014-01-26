@@ -10,7 +10,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.plugins = 'dialogui,dialog,about,a11yhelp,dialogadvtab,basicstyles,bidi,blockquote,clipboard,button,panelbutton,panel,floatpanel,colorbutton,colordialog,templates,menu,contextmenu,div,resize,toolbar,elementspath,enterkey,entities,popup,filebrowser,find,fakeobjects,flash,floatingspace,listblock,richcombo,font,forms,format,horizontalrule,htmlwriter,iframe,wysiwygarea,image,indent,indentblock,indentlist,smiley,justify,menubutton,language,link,list,liststyle,magicline,maximize,newpage,pagebreak,pastetext,pastefromword,preview,print,removeformat,save,selectall,showblocks,showborders,sourcearea,specialchar,scayt,stylescombo,tab,table,tabletools,undo,wsc,bbcode';
 	config.skin = 'moonocolor';
 	
-	config.removePlugins = 'bidi,dialogadvtab,div,filebrowser,flash,format,forms,iframe,justify,liststyle,pagebreak,showborders,stylescombo,table,tabletools,templates';
+	config.removePlugins = 'bidi,dialogadvtab,div,filebrowser,flash,format,forms,iframe,liststyle,pagebreak,showborders,stylescombo,table,tabletools,templates';
 	// Width and height are not supported in the BBCode format, so object resizing is disabled.
 	config.disableObjectResizing = true;
 	// Define font sizes in percent values.
@@ -21,8 +21,8 @@ CKEDITOR.editorConfig = function( config ) {
 		[ 'Link', 'Unlink', 'Image', 'Smiley', 'SpecialChar', '-', 'HorizontalRule' ],
 		'/',
 		[ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ],
-		[ 'FontSize' , 'Font' ],
-		[ 'TextColor' ],
+		[ 'FontSize' , 'Font' , 'TextColor' ],
+		[ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ],
 		[ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote' ],
 		[ 'Maximize' ]
 	];

@@ -26,10 +26,10 @@
 		}
 	} );
 
-	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', color: 'span', size: 'span', font: 'span', quote: 'blockquote', code: 'code', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol', hr: 'hr' },
+	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', color: 'span', size: 'span', font: 'span', align: 'div', quote: 'blockquote', code: 'code', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol', hr: 'hr' },
 		convertMap = { strong: 'b', b: 'b', u: 'u', em: 'i', i: 'i', s: 's', strike: 's', code: 'code', li: '*' },
 		tagnameMap = { strong: 'b', em: 'i', u: 'u', strike: 's', li: '*', ul: 'list', ol: 'list', code: 'code', a: 'link', img: 'img', blockquote: 'quote', hr: 'hr' },
-		stylesMap = { color: 'color', size: 'font-size', font: 'font-family' },
+		stylesMap = { color: 'color', size: 'font-size', font: 'font-family', align: 'text-align' },
 		attributesMap = { url: 'href', email: 'mailhref', quote: 'cite', list: 'listType' };
 
 	// List of block-like tags.
@@ -680,6 +680,10 @@
 							} else if ( ( value = style[ 'font-family' ] ) ) {
 								tagName = 'font'
 							}
+						} else if ( tagName == 'div' ) {
+							if ( ( value = style[ 'text-align' ] ) ) {
+								tagName = 'align'
+							}
 						} else if ( tagName == 'ol' || tagName == 'ul' ) {
 							if ( ( value = style[ 'list-style-type' ] ) ) {
 								switch ( value ) {
@@ -790,6 +794,9 @@
 								name = 'font';
 							else if ( element.getStyle( 'color' ) )
 								name = 'color';
+						} else if ( htmlName == 'div' ) {
+							if ( element.getStyle( 'text-align' ) )
+								name = 'size';
 						} else if ( name == 'img' ) {
 							var src = element.data( 'cke-saved-src' ) || element.getAttribute( 'src' );
 							if ( src && src.indexOf( editor.config.smiley_path ) === 0 )
