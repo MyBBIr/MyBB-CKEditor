@@ -26,11 +26,11 @@
 		}
 	} );
 
-	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', color: 'span', size: 'span', font: 'span', align: 'div', quote: 'blockquote', code: 'code', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol', hr: 'hr' },
-		convertMap = { strong: 'b', b: 'b', u: 'u', em: 'i', i: 'i', s: 's', strike: 's', code: 'code', li: '*' },
-		tagnameMap = { strong: 'b', em: 'i', u: 'u', strike: 's', li: '*', ul: 'list', ol: 'list', code: 'code', a: 'link', img: 'img', blockquote: 'quote', hr: 'hr' },
+	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', color: 'span', size: 'span', font: 'span', align: 'div', quote: 'blockquote', code: 'pre', php: 'pre', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol', hr: 'hr' },
+		convertMap = { strong: 'b', b: 'b', u: 'u', em: 'i', i: 'i', s: 's', strike: 's', pre: 'code', li: '*' },
+		tagnameMap = { strong: 'b', em: 'i', u: 'u', strike: 's', li: '*', ul: 'list', ol: 'list', pre: 'code', a: 'link', img: 'img', blockquote: 'quote', hr: 'hr' },
 		stylesMap = { color: 'color', size: 'font-size', font: 'font-family', align: 'text-align' },
-		attributesMap = { url: 'href', email: 'mailhref', quote: 'cite', list: 'listType' };
+		attributesMap = { url: 'href', email: 'mailhref', quote: 'cite', list: 'listType', code: 'codeblock', php: 'phpblock' };
 
 	// List of block-like tags.
 	var dtd = CKEDITOR.dtd,
@@ -125,7 +125,14 @@
 						attribs = {},
 						styles = {},
 						optionPart = parts[ 2 ];
-
+					if ( attributesMap[ part ] ) {
+						if( part == 'code') {
+							attribs['class'] = 'prettyprint codeblock';
+						} else if( part == 'php') {
+							attribs['class'] = 'prettyprint phpblock';
+						}
+						attribs[ attributesMap[ part ] ] = optionPart;
+					}
 					if ( optionPart ) {
 						if ( part == 'list' ) {
 							if ( !isNaN( optionPart ) )
@@ -149,8 +156,7 @@
 							}
 							styles[ stylesMap[ part ] ] = optionPart;
 							attribs.style = serializeStyleText( styles );
-						} else if ( attributesMap[ part ] )
-							attribs[ attributesMap[ part ] ] = optionPart;
+						}
 					}
 
 					// Two special handling - image and email, protect them
@@ -739,7 +745,13 @@
 							else
 								element.children = [ new CKEDITOR.htmlParser.text( src ) ];
 						}
-
+						if(tagName == 'code') {
+							if(attributes['class'] == 'prettyprint phpblock') {
+								tagName = 'php';
+							} else {
+								tagName = 'code';
+							}
+						}
 						element.name = tagName;
 						value && ( element.attributes.option = value );
 
@@ -799,8 +811,14 @@
 								name = 'size';
 						} else if ( name == 'img' ) {
 							var src = element.data( 'cke-saved-src' ) || element.getAttribute( 'src' );
-							if ( src && src.indexOf( editor.config.smiley_path ) === 0 )
+							if ( src && typeof smiliesmap[element.getAttribute('alt')] != 'undefined' )
 								name = 'smiley';
+						} else if ( htmlName == 'pre') {
+							if(element.getAttribute('class').match(/phpblock/)) {
+								name = 'php';
+							} else {
+								name = 'code';
+							}
 						}
 
 						return name;

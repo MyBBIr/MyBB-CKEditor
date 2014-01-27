@@ -30,7 +30,7 @@
 				boxColor: config.magicline_color || '#ff0000',
 				rtl: config.contentsLangDirection == 'rtl',
 				tabuList: [ 'data-cke-hidden-sel' ].concat( config.magicline_tabuList || [] ),
-				triggers: config.magicline_everywhere ? DTD_BLOCK : { table: 1, hr: 1, div: 1, ul: 1, ol: 1, dl: 1, form: 1, blockquote: 1 }
+				triggers: config.magicline_everywhere ? DTD_BLOCK : { table: 1, hr: 1, div: 1, ul: 1, ol: 1, dl: 1, form: 1, blockquote: 1, pre: 1 }
 			},
 			scrollTimeout, checkMouseTimeoutPending, checkMouseTimeout, checkMouseTimer;
 
