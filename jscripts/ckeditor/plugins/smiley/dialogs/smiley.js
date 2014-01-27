@@ -117,7 +117,7 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
 	// Build the HTML for the smiley images table.
 	var labelId = CKEDITOR.tools.getNextId() + '_smiley_emtions_label';
 	var html = [
-		'<div>' +
+		'<div style="max-width:270px;max-height:120px;overflow:auto;">' +
 		'<span id="' + labelId + '" class="cke_voice_label">' + lang.options + '</span>',
 		'<table role="listbox" aria-labelledby="' + labelId + '" style="width:100%;height:100%;border-collapse:separate;" cellspacing="2" cellpadding="2"',
 		CKEDITOR.env.ie && CKEDITOR.env.quirks ? ' style="position:absolute;"' : '',

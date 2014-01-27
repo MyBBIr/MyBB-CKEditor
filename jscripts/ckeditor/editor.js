@@ -32,11 +32,6 @@ messageEditor.prototype = {
 			}.bind(this));
 		}
 	},
-
-	openGetMoreSmilies: function(editor)
-	{
-		MyBB.popupWindow('misc.php?action=smilies&popup=true&editor='+editor, 'sminsert', 240, 280);
-	},
 	
 	Insert: function(text, html) {
 		if(!html) {
@@ -47,6 +42,17 @@ messageEditor.prototype = {
 		} else {
 			this.editor.insertText(text);
 		}
+	},
+	
+	execCommand: function(e) {
+		if(this.editor.mode == 'wysiwyg') {
+			return this.editor.execCommand(e);
+		}
+	},
+	
+	openGetMoreSmilies: function(editor)
+	{
+		this.execCommand('smiley');
 	},
 	
 	insertSmilie: function(e)
