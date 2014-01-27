@@ -80,49 +80,6 @@
 			if ( editor.plugins.image2 )
 				return;
 
-			// Customize the behavior of the alignment commands. (#7430)
-			setupAlignCommand( 'left' );
-			setupAlignCommand( 'right' );
-			setupAlignCommand( 'center' );
-			setupAlignCommand( 'block' );
-
-			function setupAlignCommand( value ) {
-				var command = editor.getCommand( 'justify' + value );
-				if ( command ) {
-					if ( value == 'left' || value == 'right' ) {
-						command.on( 'exec', function( evt ) {
-							var img = getSelectedImage( editor ),
-								align;
-							if ( img ) {
-								align = getImageAlignment( img );
-								if ( align == value ) {
-									img.removeStyle( 'float' );
-
-									// Remove "align" attribute when necessary.
-									if ( value == getImageAlignment( img ) )
-										img.removeAttribute( 'align' );
-								} else
-									img.setStyle( 'float', value );
-
-								evt.cancel();
-							}
-						} );
-					}
-
-					command.on( 'refresh', function( evt ) {
-						var img = getSelectedImage( editor ),
-							align;
-						if ( img ) {
-							align = getImageAlignment( img );
-
-							this.setState(
-							( align == value ) ? CKEDITOR.TRISTATE_ON : ( value == 'right' || value == 'left' ) ? CKEDITOR.TRISTATE_OFF : CKEDITOR.TRISTATE_DISABLED );
-
-							evt.cancel();
-						}
-					} );
-				}
-			}
 		}
 	} );
 
