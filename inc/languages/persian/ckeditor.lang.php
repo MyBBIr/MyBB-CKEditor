@@ -3,7 +3,7 @@
  * Persian Language Pack
  * Copyright 2014 © BY My-BB.Ir Group, All Rights Reserved
  * Update : چهارشنبه 9 بهمن 1392 - ساعت  1:50 صبح
- * Total Count Line Codes : 24 Line
+ * Total Count Line Codes : 25 Line
  */
 
 $l['mybbirckeditor_lang'] = 'fa';
