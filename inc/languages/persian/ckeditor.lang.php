@@ -1,8 +1,9 @@
 <?php
 /*
  * Persian Language Pack
- * Copyright 2014 My-BB.Ir Group, All Rights Reserved
- * Update : چهارشنبه 9 بهمن 1392 - ساعت 1:30 صبح
+ * Copyright 2014 © BY My-BB.Ir Group, All Rights Reserved
+ * Update : چهارشنبه 9 بهمن 1392 - ساعت  1:50 صبح
+ * Total Count Line Codes : 24 Line
  */
 
 $l['mybbirckeditor_lang'] = 'fa';
@@ -21,5 +22,4 @@ $l['mybbirckeditor_previewautosave'] = 'پیش نمایش متن';
 $l['mybbirckeditor_removeautosave'] = 'حذف متن';
 $l['mybbirckeditor_autosavefound'] = 'یک ذخیره‌ی خودکار یافت شد.';
 $l['mybbirckeditor_userckeditor'] = 'استفاده از ویرایشگر پیشرفته (CKEditor)';
-//$l['mybbirckeditor_'] = '';
 ?>
