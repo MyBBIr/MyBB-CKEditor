@@ -60,10 +60,11 @@ CKEDITOR.plugins.add( 'link', {
 			allowed = allowed.replace( ']', ',target,onclick]' );
 
 		// Add the link and unlink buttons.
-		editor.addCommand( 'link', new CKEDITOR.dialogCommand( 'link', {
+		command = editor.addCommand( 'link', new CKEDITOR.dialogCommand( 'link', {
 			allowedContent: allowed,
 			requiredContent: required
 		} ) );
+		command.modes = { wysiwyg: 1, source: 1 };
 		editor.addCommand( 'anchor', new CKEDITOR.dialogCommand( 'anchor', {
 			allowedContent: 'a[!name,id]',
 			requiredContent: 'a[name]'

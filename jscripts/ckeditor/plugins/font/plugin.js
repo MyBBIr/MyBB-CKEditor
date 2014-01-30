@@ -37,6 +37,7 @@
 			toolbar: 'styles,' + order,
 			allowedContent: style,
 			requiredContent: style,
+			modes: { wysiwyg: 1, source: 1 },
 
 			panel: {
 				css: [ CKEDITOR.skin.getPath( 'editor' ) ].concat( config.contentsCss ),
@@ -56,10 +57,17 @@
 			},
 
 			onClick: function( value ) {
+				var style = styles[ value ];
+				if(editor.mode == 'source' && style.getDefinition().styles['font-size']) {
+					CKEDITOR.performInsert('[size='+style.getDefinition().styles['font-size']+']','[/size]',false);
+					return;
+				} else if(editor.mode == 'source' && style.getDefinition().styles['font-family']) {
+					CKEDITOR.performInsert('[font='+style.getDefinition().styles['font-family']+']','[/font]',false);
+					return;
+				}
 				editor.focus();
 				editor.fire( 'saveSnapshot' );
 
-				var style = styles[ value ];
 
 				editor[ this.getValue() == value ? 'removeStyle' : 'applyStyle' ]( style );
 				editor.fire( 'saveSnapshot' );

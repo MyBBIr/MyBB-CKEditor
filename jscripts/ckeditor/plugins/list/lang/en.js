@@ -4,5 +4,6 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang( 'list', 'en', {
 	bulletedlist: 'Insert/Remove Bulleted List',
-	numberedlist: 'Insert/Remove Numbered List'
+	numberedlist: 'Insert/Remove Numbered List',
+	enterlistitem: 'Enter a list item. Click cancel or leave blank to end the list.'
 } );

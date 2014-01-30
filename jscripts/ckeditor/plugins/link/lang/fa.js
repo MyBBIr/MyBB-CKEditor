@@ -61,5 +61,7 @@ CKEDITOR.plugins.setLang( 'link', 'fa', {
 	toolbar: 'گنجاندن/ویرایش پیوند',
 	type: 'نوع پیوند',
 	unlink: 'برداشتن پیوند',
-	upload: 'انتقال به سرور'
+	upload: 'انتقال به سرور',
+	plztypeurl: 'لطفا URL پیوند را تایپ کنید',
+	plztypedesc: 'لطفا توضیحات پیوند را وارد کنید'
 } );

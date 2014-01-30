@@ -1055,7 +1055,19 @@ CKEDITOR.dialog.add( 'link', function( editor ) {
 			var editor = this.getParentEditor(),
 				selection = editor.getSelection(),
 				element = null;
-
+			if(editor.mode == 'source') {
+				this.hide();
+				var link = prompt(editor.lang.link.plztypeurl,"http://");
+				if (link!=null) {
+					var title = prompt(editor.lang.link.plztypedesc,"");
+					if(!title) {
+						CKEDITOR.performInsert('[url]'+ link + '[/url]','',true);
+					} else {
+					CKEDITOR.performInsert('[url='+link+']'+ title + '[/url]','',true);
+					}
+				}
+				return;
+			}
 			// Fill in all the relevant fields if there's already one link selected.
 			if ( ( element = plugin.getSelectedLink( editor ) ) && element.hasAttribute( 'href' ) ) {
 				// Don't change selection if some element is already selected.

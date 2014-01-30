@@ -41,14 +41,16 @@ CKEDITOR.plugins.add( 'insertpre',
 			}
 			// allowed and required content is the same for this plugin
 			var required = CKEDITOR.config.insertpre_class ? ( 'pre( ' + CKEDITOR.config.insertpre_class + ' )' ) : 'pre';
-			editor.addCommand( 'insertpre', new CKEDITOR.dialogCommand( 'insertpre', {
+			command = editor.addCommand( 'insertpre', new CKEDITOR.dialogCommand( 'insertpre', {
 				allowedContent : required,
 				requiredContent : required
 			} ) );
-			editor.addCommand( 'insertprephp', new CKEDITOR.dialogCommand( 'insertprephp', {
+			command.modes = { wysiwyg: 1, source: 1 };
+			command = editor.addCommand( 'insertprephp', new CKEDITOR.dialogCommand( 'insertprephp', {
 				allowedContent : required,
 				requiredContent : required
 			} ) );
+			command.modes = { wysiwyg: 1, source: 1 };
 			editor.ui.addButton && editor.ui.addButton( 'InsertPHP',
 				{
 					label : editor.lang.insertpre.titlephp,
@@ -132,6 +134,11 @@ CKEDITOR.plugins.add( 'insertpre',
 					],
 					onShow : function()
 					{
+						if(editor.mode == 'source') {
+							CKEDITOR.performInsert('[code]','[/code]',false);
+							this.hide();
+							return;
+						}
 						var sel = editor.getSelection(),
 							element = sel.getStartElement();
 						if ( element )
@@ -203,6 +210,11 @@ CKEDITOR.plugins.add( 'insertpre',
 					],
 					onShow : function()
 					{
+						if(editor.mode == 'source') {
+							CKEDITOR.performInsert('[php]','[/php]',false);
+							this.hide();
+							return;
+						}
 						var sel = editor.getSelection(),
 							element = sel.getStartElement();
 						if ( element )

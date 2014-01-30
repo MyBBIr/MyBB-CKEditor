@@ -6,7 +6,7 @@ if(!defined("IN_MYBB"))
 }
 function ckeditor_info()
 {
-	global $lang;
+	global $lang, $plugins_cache;
 	$lang->load('ckeditor');
 	$info = array(
 		"name"          => $lang->ckeditor,

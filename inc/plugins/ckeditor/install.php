@@ -30,6 +30,9 @@ function ckeditor_install(){
 		flash_message($lang->pluginlibraryold, "error");
 		admin_redirect("index.php?module=config-plugins");
 	}
+	include MYBB_ROOT."/inc/adminfunctions_templates.php";
+	find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('{$codebuttons}')."#i", '', 0);
+	find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('</textarea>')."#i", '</textarea>{$codebuttons}');
 	$PL->templates("ckeditor",
 					"<lang:group_ckeditor>",
 					array(
@@ -59,7 +62,8 @@ function ckeditor_activate(){
 					array(
 						"active" => array(
 							"title" => $lang->ckeditor_activate,
-							"description" => ''
+							"description" => '',
+							"value" => 1
 						),
 						"usedivarea" => array(
 							"title" => $lang->ckeditor_userdivarea,

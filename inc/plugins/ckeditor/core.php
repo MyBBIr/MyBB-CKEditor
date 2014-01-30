@@ -26,7 +26,7 @@ function ckplugin_gettemplate($template) {
 }
 
 function ckeditor_build($bind="message") {
-	global $db, $mybb, $theme, $templates, $lang, $plugins;
+	global $db, $mybb, $theme, $templates, $lang, $plugins, $headerinclude;
 	$lang->load('ckeditor');
 	$codeinsert = '';
 	if($mybb->settings['bbcodeinserter'] != 0)
@@ -41,6 +41,9 @@ function ckeditor_build($bind="message") {
 		$divarea = '';
 		if($mybb->settings['ckeditor_usedivarea']) {
 			$divarea = 'divarea,';
+		}
+		if(!isset($headerinclude) || !stristr('jscripts/ckeditor/ckeditor.js',$headerinclude)) {
+			$jsfiles = '<script type="text/javascript" src="<bburl>/jscripts/ckeditor/ckeditor.js"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js"></script>';
 		}
 		if(defined("IN_ADMINCP"))
 		{
@@ -107,24 +110,20 @@ function ckesmiliesjs_build($finds = null)
 
 			foreach($mysmilies as $find => $image)
 			{
-				if($i < $mybb->settings['smilieinsertertot'])
-				{
-					$find = htmlspecialchars_uni($find);
-					$smilies1 .= "'".str_replace("'","\\'",$image)."', ";
-					$smilies2 .= "'smilie{$i}', ";
-					$smilies3 .= "'smilie{$i}': '".str_replace("'","\\'",$find)."', ";
+				$find = htmlspecialchars_uni($find);
+				$smilies1 .= "'".str_replace("'","\\'",$image)."', ";
+				$smilies2 .= "'smilie{$i}', ";
+				$smilies3 .= "'smilie{$i}': '".str_replace("'","\\'",$find)."', ";
+				$smilies4 .= "'".str_replace("'","\\'",$image)."': 'smilie{$i}', ";
+				if(substr($image, 0, 4) != "http") {
+					$image = $mybb->settings['bburl']."/".$image;
 					$smilies4 .= "'".str_replace("'","\\'",$image)."': 'smilie{$i}', ";
-					if(substr($image, 0, 4) != "http") {
-						$image = $mybb->settings['bburl']."/".$image;
-						$smilies4 .= "'".str_replace("'","\\'",$image)."': 'smilie{$i}', ";
-					}
-					++$i;
-					++$counter;
-
+				}
+				++$i;
+				++$counter;
 					if($counter == $mybb->settings['smilieinsertercols'])
-					{
-						$counter = 0;
-					}
+				{
+					$counter = 0;
 				}
 			}
 			if($finds) {

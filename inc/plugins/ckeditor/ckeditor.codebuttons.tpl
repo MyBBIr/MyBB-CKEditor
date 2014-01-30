@@ -1,5 +1,4 @@
-<script type="text/javascript" src="<bburl>jscripts/ckeditor/ckeditor.js"></script>
-<script type="text/javascript" src="<bburl>jscripts/ckeditor/editor.js"></script>
+{$jsfiles}
 <script type="text/javascript">
 <!--
 	{$smiliesmap}
@@ -13,6 +12,9 @@
 			{$smilies}
 		});
 	var clickableEditor = new messageEditor("{$bind}");
+	CKEDITOR.performInsert = function(a,b,c,d) {
+		return clickableEditor.performInsert(a,b,c,d);
+	}
 	if(clickableEditor)
 	{
 		clickableEditor.bindSmilieInserter("clickable_smilies");

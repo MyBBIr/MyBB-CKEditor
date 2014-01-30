@@ -10,7 +10,12 @@
 ( function() {
 	var horizontalruleCmd = {
 		canUndo: false, // The undo snapshot will be handled by 'insertElement'.
+		modes: { wysiwyg: 1, source: 1 },
 		exec: function( editor ) {
+			if(editor.mode == 'source') {
+				CKEDITOR.performInsert('[hr]','',true);
+				return;
+			}
 			var hr = editor.document.createElement( 'hr' );
 			editor.insertElement( hr );
 		},

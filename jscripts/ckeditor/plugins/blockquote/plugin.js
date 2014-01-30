@@ -13,16 +13,20 @@
 	}
 
 	var commandObject = {
+		modes :{ wysiwyg: 1, source: 1 },
 		exec: function( editor ) {
 			var state = editor.getCommand( 'blockquote' ).state,
 				selection = editor.getSelection(),
 				range = selection && selection.getRanges()[ 0 ];
+			if(editor.mode == 'source') {
+				CKEDITOR.performInsert('[quote]','[/quote]',false);
+				return;
+			}
 
 			if ( !range )
 				return;
-
+			
 			var bookmarks = selection.createBookmarks();
-
 			// Kludge for #1592: if the bookmark nodes are in the beginning of
 			// blockquote, then move them to the nearest block element in the
 			// blockquote.

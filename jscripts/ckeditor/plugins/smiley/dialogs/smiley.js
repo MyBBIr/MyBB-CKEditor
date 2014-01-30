@@ -24,20 +24,21 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
 
 			var src = target.getAttribute( 'cke_src' ),
 				title = target.getAttribute( 'title' );
-
-			var img = editor.document.createElement( 'img', {
-				attributes: {
-					src: src,
-					'data-cke-saved-src': src,
-					title: title,
-					alt: title,
-					width: target.$.width,
-					height: target.$.height
-				}
-			} );
-
-			editor.insertElement( img );
-
+			if(editor.mode == 'source') {
+				CKEDITOR.performInsert(smiliesmap[title],'',true);
+			} else {
+				var img = editor.document.createElement( 'img', {
+					attributes: {
+						src: src,
+						'data-cke-saved-src': src,
+						title: title,
+						alt: title,
+						width: target.$.width,
+						height: target.$.height
+					}
+				} );
+				editor.insertElement( img );
+			}
 			dialog.hide();
 			evt.data.preventDefault();
 		};

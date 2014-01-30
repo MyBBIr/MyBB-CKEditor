@@ -19,7 +19,10 @@ CKEDITOR.dialog.add( 'specialchar', function( editor ) {
 			if ( target.getName() == 'a' && ( value = target.getChild( 0 ).getHtml() ) ) {
 				target.removeClass( "cke_light_background" );
 				dialog.hide();
-
+				if(editor.mode == 'source') {
+					CKEDITOR.performInsert(value,'',true);
+					return;
+				}
 				// We must use "insertText" here to keep text styled.
 				var span = editor.document.createElement( 'span' );
 				span.setHtml( value );

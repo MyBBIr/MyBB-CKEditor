@@ -711,7 +711,7 @@
 									citeText = cite.name == 'cite' && cite.children[ 0 ].value;
 
 								if ( citeText ) {
-									value = '"' + citeText + '"';
+									value = citeText;
 									element.children = quoted.children;
 								}
 

@@ -61,5 +61,7 @@ CKEDITOR.plugins.setLang( 'link', 'en', {
 	toolbar: 'Link',
 	type: 'Link Type',
 	unlink: 'Unlink',
-	upload: 'Upload'
+	upload: 'Upload',
+	plztypeurl: 'Please enter the URL of the website.',
+	plztypedesc: 'Optionally, you can also enter a title for the URL.'
 } );

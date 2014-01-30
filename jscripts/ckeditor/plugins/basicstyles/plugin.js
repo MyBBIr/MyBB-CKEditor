@@ -26,11 +26,36 @@ CKEDITOR.plugins.add( 'basicstyles', {
 				editor.attachStyleStateChange( style, function( state ) {
 					!editor.readOnly && editor.getCommand( commandName ).setState( state );
 				} );
-
-				// Create the command that can be used to apply the style.
-				editor.addCommand( commandName, new CKEDITOR.styleCommand( style, {
+				mycom = new CKEDITOR.styleCommand( style, {
 					contentForms: forms
-				} ) );
+				} );
+				mycom.modes = { wysiwyg: 1, source: 1 };
+				mycom.exec = function ( editor ) {
+					"use strict";
+					if(editor.mode == 'source') {
+						//tagname = this.style.getDefinition().element;
+						
+						if(this.name == 'italic') {
+							CKEDITOR.performInsert('[i]','[/i]',false);
+						} else if(this.name == 'underline') {
+							CKEDITOR.performInsert('[u]','[/u]',false);
+						} else if(this.name == 'bold') {
+							CKEDITOR.performInsert('[b]','[/b]',false);
+						} else if(this.name == 'strike') {
+							CKEDITOR.performInsert('[s]','[/s]',false);
+						}
+						return;
+					}
+					editor.focus();
+
+					if ( this.state == CKEDITOR.TRISTATE_OFF )
+						editor.applyStyle( this.style );
+					else if ( this.state == CKEDITOR.TRISTATE_ON )
+						editor.removeStyle( this.style );
+				};
+				// Create the command that can be used to apply the style.
+				command = editor.addCommand( commandName, mycom );
+
 
 				// Register the button, if the button plugin is loaded.
 				if ( editor.ui.addButton ) {

@@ -36,7 +36,7 @@ CKEDITOR.plugins.add( 'specialchar', {
 					editor.openDialog( pluginName );
 				} );
 			},
-			modes: { wysiwyg: 1 },
+			modes: { wysiwyg: 1, source: 1 },
 			canUndo: false
 		} );
 

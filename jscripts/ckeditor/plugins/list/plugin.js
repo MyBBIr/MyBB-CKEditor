@@ -527,7 +527,26 @@
 	}
 
 	listCommand.prototype = {
+		modes: { wysiwyg: 1, source: 1 },
 		exec: function( editor ) {
+			if(editor.mode == 'source') {
+				i = 0;
+				while(x = prompt(editor.lang.list.enterlistitem)) {
+					if(i == 0) {
+						if(this.name == 'numberedlist') {
+							CKEDITOR.performInsert('[list=1]\n','',true);
+						} else {
+							CKEDITOR.performInsert('[list]\n','',true);						
+						}
+					}
+					i++;
+					CKEDITOR.performInsert('[*]'+x+"\n",'',true);
+				}
+				if( i > 0) {
+					CKEDITOR.performInsert('[/list]','',true);
+				}
+				return;
+			}
 			// Run state check first of all.
 			this.refresh( editor, editor.elementPath() );
 

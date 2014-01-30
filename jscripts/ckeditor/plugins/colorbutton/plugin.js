@@ -31,7 +31,7 @@ CKEDITOR.plugins.add( 'colorbutton', {
 			editor.ui.add( name, CKEDITOR.UI_PANELBUTTON, {
 				label: title,
 				title: title,
-				modes: { wysiwyg: 1 },
+				modes: { wysiwyg: 1, source: 1 },
 				editorFocus: 0,
 				toolbar: 'colors,' + order,
 				allowedContent: style,
@@ -110,7 +110,6 @@ CKEDITOR.plugins.add( 'colorbutton', {
 					function onColorDialogClose( evt ) {
 						this.removeListener( 'ok', onColorDialogClose );
 						this.removeListener( 'cancel', onColorDialogClose );
-
 						evt.name == 'ok' && applyColorStyle( this.getContentElement( 'picker', 'selectedColor' ).getValue(), type );
 					}
 
@@ -119,6 +118,11 @@ CKEDITOR.plugins.add( 'colorbutton', {
 						this.on( 'cancel', onColorDialogClose );
 					} );
 
+					return;
+				}
+				
+				if(editor.mode == 'source' && color) {
+					CKEDITOR.performInsert('[color='+color+']','[/color]',false);
 					return;
 				}
 
@@ -130,7 +134,6 @@ CKEDITOR.plugins.add( 'colorbutton', {
 
 				// Clean up any conflicting style within the range.
 				editor.removeStyle( new CKEDITOR.style( config[ 'colorButton_' + type + 'Style' ], { color: 'inherit' } ) );
-
 				if ( color ) {
 					var colorStyle = config[ 'colorButton_' + type + 'Style' ];
 
@@ -143,7 +146,6 @@ CKEDITOR.plugins.add( 'colorbutton', {
 						// Fore color style must be applied inside links instead of around it. (#4772,#6908)
 						return !( element.is( 'a' ) || element.getElementsByTag( 'a' ).count() ) || isUnstylable( element );
 					};
-
 					editor.applyStyle( new CKEDITOR.style( colorStyle, { color: color } ) );
 				}
 

@@ -126,6 +126,10 @@
 
 	justifyCommand.prototype = {
 		exec: function( editor ) {
+			if(editor.mode == 'source') {
+				CKEDITOR.performInsert('[align='+this.value+']','[/align]',false);
+				return;
+			}
 			var selection = editor.getSelection(),
 				enterMode = editor.config.enterMode;
 
@@ -194,11 +198,15 @@
 				right = new justifyCommand( editor, 'justifyright', 'right' ),
 				justify = new justifyCommand( editor, 'justifyblock', 'justify' );
 
-			editor.addCommand( 'justifyleft', left );
-			editor.addCommand( 'justifycenter', center );
-			editor.addCommand( 'justifyright', right );
-			editor.addCommand( 'justifyblock', justify );
-
+			command = editor.addCommand( 'justifyleft', left );
+			command.modes = { wysiwyg: 1, source: 1 };
+			command = editor.addCommand( 'justifycenter', center );
+			command.modes = { wysiwyg: 1, source: 1 };
+			command = editor.addCommand( 'justifyright', right );
+			command.modes = { wysiwyg: 1, source: 1 };
+			command = editor.addCommand( 'justifyblock', justify );
+			command.modes = { wysiwyg: 1, source: 1 };
+			
 			if ( editor.ui.addButton ) {
 				editor.ui.addButton( 'JustifyLeft', {
 					label: editor.lang.justify.left,

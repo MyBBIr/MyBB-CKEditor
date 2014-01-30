@@ -30,17 +30,16 @@
 
 			if ( CKEDITOR.dialog.isTabEnabled( editor, pluginName, 'advanced' ) )
 				allowed = 'img[alt,dir,id,lang,longdesc,!src,title]{*}(*)';
-
-			// Register the command.
-			editor.addCommand( pluginName, new CKEDITOR.dialogCommand( pluginName, {
-				allowedContent: allowed,
-				requiredContent: required,
-				contentTransformations: [
-					[ 'img{width}: sizeToStyle', 'img[width]: sizeToAttribute' ],
-					[ 'img{float}: alignmentToStyle', 'img[align]: alignmentToAttribute' ]
-				]
-			} ) );
-
+				// Register the command.
+				command =editor.addCommand( pluginName, new CKEDITOR.dialogCommand( pluginName, {
+					allowedContent: allowed,
+					requiredContent: required,
+					contentTransformations: [
+						[ 'img{width}: sizeToStyle', 'img[width]: sizeToAttribute' ],
+						[ 'img{float}: alignmentToStyle', 'img[align]: alignmentToAttribute' ]
+					]
+				} ) );
+				command.modes = { wysiwyg: 1, source: 1 };
 			// Register the toolbar button.
 			editor.ui.addButton && editor.ui.addButton( 'Image', {
 				label: editor.lang.common.image,

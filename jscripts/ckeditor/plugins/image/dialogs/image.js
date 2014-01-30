@@ -420,6 +420,15 @@
 
 					this.commitContent = commitContent;
 				},
+				onShow: function() {
+						if(editor.mode == 'source') {
+							this.hide();
+							var person = prompt(editor.lang.image.alertUrl,"http://");
+							if (person!=null) {
+								CKEDITOR.performInsert('[img]'+ person + '[/img]','',true);
+							}
+						}
+				},
 				onHide: function() {
 					if ( this.preview )
 						this.commitContent( CLEANUP, this.preview );
