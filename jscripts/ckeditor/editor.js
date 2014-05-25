@@ -12,6 +12,7 @@ messageEditor.prototype = {
 			document.write(unescape("%3Cscript src=\'"+this.baseURL+"ckeditor/ckeditor.js\' type=\'text/javascript\'%3E%3C/script%3E"));
 		}
 		eval('this.editor = CKEDITOR.instances.'+this.editorid+';');
+		this.updateoldtextarea(this.editor);
 	},
 	
 	loadtextarea: function() {
@@ -158,15 +159,16 @@ messageEditor.prototype = {
 		}
 	},
 	
-	execCommand: function(e) {
-		if(this.editor.mode == 'wysiwyg') {
+	execCommand: function(e,o) {
+		if(!o) o = false;
+		if(o || this.editor.mode == 'wysiwyg') {
 			return this.editor.execCommand(e);
 		}
 	},
 	
 	openGetMoreSmilies: function(editor)
 	{
-		this.execCommand('smiley');
+		this.execCommand('smiley', true);
 	},
 	
 	insertSmilie: function(e)
@@ -183,5 +185,154 @@ messageEditor.prototype = {
 	insertAttachment: function(aid)
 	{
 		this.Insert("[attachment="+aid+"]");
+	},
+	
+	updateoldtextarea: function(editor) {
+		var updatePreview = function() {
+			var consoleEl = CKEDITOR.document.getById( editor.name );
+			consoleEl.addClass( 'updated' );
+			setTimeout( function() { consoleEl.removeClass( 'updated' ); }, 500 );
+			// IE needs <br>, it doesn't even understand new lines.
+			consoleEl.setHtml( editor.getData());
+		}
+
+		var checkUpdatePreview= function() {
+			setTimeout( function() {
+				if ( editor.checkDirty() ) {
+					updatePreview();
+					editor.resetDirty();
+				}
+			}, 0 );
+		}
+
+		editor.on( 'instanceReady', updatePreview );
+		editor.on( 'key', checkUpdatePreview );
+		editor.on( 'selectionChange', checkUpdatePreview );
+
 	}
 };
+
+if(typeof Thread != 'undefined')
+{
+	Thread.multiQuotedLoaded = function(request)
+	{
+		if(request.responseText.match(/<error>(.*)<\/error>/))
+		{
+			message = request.responseText.match(/<error>(.*)<\/error>/);
+			if(!message[1])
+			{
+				message[1] = "یک خطای ناشناخته رخ داده‌است.";
+			}
+			if(this.spinner)
+			{
+				this.spinner.destroy();
+				this.spinner = '';
+			}
+			alert('یک خطا در ارسال پست رخ داده است.\n\n'+message[1]);
+		}
+		else if(request.responseText)
+		{
+			var id = '';
+			if(typeof clickableEditor != 'undefined')
+			{
+				id = clickableEditor.editor;
+			}
+			value = id.getData();
+			if(value)
+			{
+				value += "\n";
+			}
+			value += request.responseText;
+			id.setData(value);
+		}
+		Thread.clearMultiQuoted();
+		$('quickreply_multiquote').hide();
+		$('quoted_ids').value = 'all';
+		if(this.spinner)
+		{
+			this.spinner.destroy();
+			this.spinner = '';
+		}
+		id.focus();
+	};
+	
+	Thread.quickReplyDone = function(request)
+	{
+		if($('captcha_trow'))
+		{
+			captcha = request.responseText.match(/^<captcha>([0-9a-zA-Z]+)(\|([0-9a-zA-Z]+)|)<\/captcha>/);
+			if(captcha)
+			{
+				request.responseText = request.responseText.replace(/^<captcha>(.*)<\/captcha>/, '');
+
+				if(captcha[1] == "reload")
+				{
+					Recaptcha.reload();
+				}
+				else if($("captcha_img"))
+				{
+					if(captcha[1])
+					{
+						imghash = captcha[1];
+						$('imagehash').value = imghash;
+						if(captcha[3])
+						{
+							$('imagestring').type = "hidden";
+							$('imagestring').value = captcha[3];
+							// hide the captcha
+							$('captcha_trow').style.display = "none";
+						}
+						else
+						{
+							$('captcha_img').src = "captcha.php?action=regimage&imagehash="+imghash;
+							$('imagestring').type = "text";
+							$('imagestring').value = "";
+							$('captcha_trow').style.display = "";
+						}
+					}
+				}
+			}
+		}
+		if(request.responseText.match(/<error>([^<]*)<\/error>/))
+		{
+			message = request.responseText.match(/<error>([^<]*)<\/error>/);
+
+			if(!message[1])
+			{
+				message[1] = "یک خطای ناشناخته رخ داده‌است.";
+			}
+
+			if(this.spinner)
+			{
+				this.spinner.destroy();
+				this.spinner = '';
+			}
+			alert('خطایی در ارسال پاسخ وجود دارد:\n\n'+message[1]);
+		}
+		else if(request.responseText.match(/id="post_([0-9]+)"/))
+		{
+			var pid = request.responseText.match(/id="post_([0-9]+)"/)[1];
+			var post = document.createElement("div");
+			post.innerHTML = request.responseText;
+			$('posts').appendChild(post);
+			request.responseText.evalScripts();
+			Form.reset('quick_reply_form');
+			clickableEditor.editor.setData('');
+			if($('lastpid'))
+			{
+				$('lastpid').value = pid;
+			}
+		}
+		else
+		{
+			request.responseText.evalScripts();
+		}
+
+		if(this.spinner)
+		{
+			this.spinner.destroy();
+			this.spinner = '';
+		}
+		this.quick_replying = 0;
+	};
+}

@@ -14,6 +14,7 @@
 		icons: 'source,source-rtl', // %REMOVE_LINE_CORE%
 		hidpi: true, // %REMOVE_LINE_CORE%
 		init: function( editor ) {
+			CKEDITOR.document.appendStyleText('.textareackcontnet { overflow-y:auto}');
 			// Source mode isn't available in inline mode yet.
 			if ( editor.elementMode == CKEDITOR.ELEMENT_MODE_INLINE )
 				return;
@@ -31,16 +32,17 @@
 						height: '100%',
 						resize: 'none',
 						outline: 'none',
-						'text-align': 'left'
+						color: '#333',
+						'text-align': 'right'
 					},
 					CKEDITOR.tools.cssVendorPrefix( 'tab-size', editor.config.sourceAreaTabSize || 4 ) ) );
 
 				// Make sure that source code is always displayed LTR,
 				// regardless of editor language (#10105).
-				textarea.setAttribute( 'dir', 'ltr' );
+				textarea.setAttribute( 'dir', 'rtl' );
 
 				textarea.addClass( 'cke_source cke_reset cke_enable_context_menu' );
-
+				editor.ui.space( 'contents' ).addClass('textareackcontnet');
 				editor.ui.space( 'contents' ).append( textarea );
 
 				var editable = editor.editable( new sourceEditable( editor, textarea ) );
@@ -75,6 +77,21 @@
 
 			editor.on( 'mode', function() {
 				editor.getCommand( 'source' ).setState( editor.mode == 'source' ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
+				if(editor.mode == 'source') {
+					editor.getCommand( 'bold' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'italic' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'underline' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'strike' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'justifyleft' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'justifyright' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'justifycenter' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'justifyblock' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'numberedlist' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'bulletedlist' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'blockquote' ).setState(CKEDITOR.TRISTATE_OFF);
+				} else {
+					editor.ui.space( 'contents' ).removeClass('textareackcontnet');
+				}
 			} );
 
 			function onResize() {

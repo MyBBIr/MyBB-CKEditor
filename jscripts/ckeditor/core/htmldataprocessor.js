@@ -50,7 +50,6 @@
 		editor.on( 'toHtml', function( evt ) {
 			var evtData = evt.data,
 				data = evtData.dataValue;
-
 			// The source data is already HTML, but we need to clean
 			// it up and apply the filter.
 			data = protectSource( data, editor );

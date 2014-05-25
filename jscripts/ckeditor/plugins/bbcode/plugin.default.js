@@ -3,61 +3,18 @@
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
 
-var codeblocks = [];
-var phpblocks = [];
+var codeblocks = {};
 var BBCODEparser_custom_first = function(str)
 {
-	str = str.replace(/</gi,"&lt");
-	str = str.replace(/>/gi,"&gt");
-	while(m = str.match(/\[list\]([^\"]*?)\[\/list\]/i)) {
-		m[1] = m[1].replace(/\[\*\]/g,'</li><li>');
-		m1 = '<ul>' + m[1] + '</ul>';
-		m1 = m1.replace(/<ul>\n<\li>/i,'<ul>');		
-		str = str.replace(m[0],m1);
-	}
-	while(m = str.match(/\[list=1\]([^\"]*?)\[\/list\]/i)) {
-		m[1] = m[1].replace(/\[\*\]/g,'</li><li>');
-		m1 = '<ol>' + m[1] + '</ol>';
-		m1 = m1.replace(/<ol>\n<\li>/i,'<ol>');		
-		str = str.replace(m[0],m1);
-	}
-	while(m = str.match(/\[list=(i|I|a|A)\]([^\"]*?)\[\/list\]/i)) {
-		m[2] = m[2].replace(/\[\*\]/g,'</li><li>');
-		m1 = '<ol type="'+m[1]+'">' + m[2] + '</ol>';
-		m1 = m1.replace("<ol type=\""+m[1]+"\">\n<\li>",'<ol type="'+m[1]+'">');		
-		str = str.replace(m[0],m1);
-	}
-	i = 0;
-	while(m = str.match(/\[code\]([^\"]*?)\[\/code\]/i)) {
-		codeblocks[i] = m;
-		str = str.replace(m[0],'<code-'+i+'>');
-		i++;
-	}
-	i = 0;
-	while(m = str.match(/\[php\]([^\"]*?)\[\/php\]/i)) {
-		phpblocks[i] = m;
-		str = str.replace(m[0],'<php-'+i+'>');
-		i++;
-	}
+
+	str = str.replace(/\[list\]([^\"]*?)\[\/list\]/gi,"<ul>$1</ul>");
+	str = str.replace(/\[list=1\]([^\"]*?)\[\/list\]/gi,"<ol>$1</ol>");
+	str = str.replace(/\[\*\]/g,'</li><li>');
+	str = str.replace(/<ul>\n<\li>/g,'<ul>');
+	str = str.replace(/<ol>\n<\li>/g,'<ol>');
 	return str;
 };
 
-var BBCODEparser_custom_last = function(str)
-{
-	if(codeblocks.length)
-	{
-		for(i = 0;i < codeblocks.length;i++) {
-			str = str.replace('<code-'+i+'>','<pre class="prettyprint codeblock">'+codeblocks[i][1]+'</pre>');
-		}
-	}
-	if(phpblocks.length)
-	{
-		for(i = 0;i < phpblocks.length;i++) {
-			str = str.replace('<php-'+i+'>','<pre class="prettyprint phpblock">'+phpblocks[i][1]+'</pre>');
-		}
-	}
-	return str;
-};
 
 ( function() {
 	CKEDITOR.on( 'dialogDefinition', function( ev ) {
@@ -794,10 +751,7 @@ var BBCODEparser_custom_last = function(str)
 							}
 						} else if ( tagName == 'img' ) {
 							element.isEmpty = 0;
-							if(attributes[ 'width' ] && attributes[ 'height' ])
-							{
-								value = attributes[ 'width' ] + 'x' + attributes[ 'height' ];
-							}
+
 							// Translate smiley (image) to text emotion.
 							var src = attributes[ 'data-cke-saved-src' ] || attributes.src,
 								alt = attributes.alt;
@@ -835,10 +789,8 @@ var BBCODEparser_custom_last = function(str)
 			function onSetData( evt ) {
 				var bbcode = evt.data.dataValue;
 				bbcode = BBCODEparser_custom_first(bbcode);
-				bbcode = bbcodeParser.bbcodeToHtml(bbcode);
-				bbcode = bbcode.replace(/\n/g,'<br>');
-				bbcode = BBCODEparser_custom_last(bbcode);
-				evt.data.dataValue = bbcode;
+				evt.data.dataValue = bbcodeParser.bbcodeToHtml(bbcode);
+				evt.data.dataValue = evt.data.dataValue.replace(/\n/g,'<br>');
 			}
 
 			// Skip the first "setData" call from inline creator, to allow content of

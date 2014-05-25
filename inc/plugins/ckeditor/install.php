@@ -7,8 +7,8 @@ if(!defined("IN_MYBB"))
 
 function ckeditor_is_installed() {
 	global $mybb,$db;
-	$query = $db->query("select * from ".TABLE_PREFIX."templategroups where prefix = 'ckeditor'");
-	if(isset($mybb->settings['ckeditor_active']) || isset($settings['ckeditor_active']) || $db->num_rows($query) > 0)
+	//$query = $db->query("select * from ".TABLE_PREFIX."templategroups where prefix = 'ckeditor'");
+	if(isset($mybb->settings['ckeditor_active']) || isset($settings['ckeditor_active'])/* || $db->num_rows($query) > 0*/)
 	{
 		return true;
 	} else {
@@ -32,7 +32,11 @@ function ckeditor_install(){
 	}
 	include MYBB_ROOT."/inc/adminfunctions_templates.php";
 	find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('{$codebuttons}')."#i", '', 0);
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$codebuttons}')."#i", '', 0);
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$smilieinserter}')."#i", '', 0);
 	find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('</textarea>')."#i", '</textarea>{$codebuttons}');
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('</textarea>')."#i", '</textarea>{$codebuttons}');
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$option_signature}')."#i", '{$smilieinserter}{$option_signature}');
 	$PL->templates("ckeditor",
 					"<lang:group_ckeditor>",
 					array(
@@ -94,6 +98,10 @@ function ckeditor_deactivate(){
 
 function ckeditor_uninstall(){
 	global $mybb, $db, $lang, $PL;
+	include MYBB_ROOT."/inc/adminfunctions_templates.php";
+	find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('{$codebuttons}')."#i", '', 0);
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$codebuttons}')."#i", '', 0);
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$smilieinserter}')."#i", '', 0);
 	$lang->load('ckeditor');
 	$PL or require_once PLUGINLIBRARY;
 	$PL->templates_delete("ckeditor");

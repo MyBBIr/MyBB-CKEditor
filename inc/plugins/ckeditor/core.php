@@ -16,13 +16,29 @@ if(!defined("PLUGINLIBRARY"))
 }
 
 /* Functions - start*/
-function ckplugin_gettemplate($template) {
-	$file = CKEDITOR_PLUGINROOT.'ckeditor.'.$template.'.tpl';
-	if(file_exists($file)) {
-		return file_get_contents($file);
-	} else {
+function ckplugin_gettemplate($title, $eslashes=1, $htmlcomments=1) {
+	$file = CKEDITOR_PLUGINROOT.'ckeditor.'.$title.'.tpl';
+	if(!file_exists($file)) {
 		return false;
 	}
+	$template = file_get_contents($file);
+	if($htmlcomments)
+	{
+		if($mybb->settings['tplhtmlcomments'] == 1)
+		{
+			$template = "<!-- start: ".htmlspecialchars_uni($title)." -->\n{$template}\n<!-- end: ".htmlspecialchars_uni($title)." -->";
+		}
+		else
+		{
+			$template = "\n{$template}\n";
+		}
+	}
+	
+	if($eslashes)
+	{
+		$template = str_replace("\\'", "'", addslashes($template));
+	}	
+	return $template;
 }
 
 function ckeditor_build($bind="message") {
@@ -47,7 +63,7 @@ function ckeditor_build($bind="message") {
 		}
 		if(defined("IN_ADMINCP"))
 		{
-			eval("\$codeinsert = \"".addslashes(ckplugin_gettemplate("codebuttons"))."\";");
+			eval("\$codeinsert = \"".ckplugin_gettemplate("codebuttons")."\";");
 			$codeinsert = str_replace('<bburl>', '../', $codeinsert);
 		}
 		else
@@ -61,7 +77,7 @@ function ckeditor_build($bind="message") {
 	
 }
 
-function ckesmiliesjs_build($finds = null)
+function ckesmiliesjs_build($finds = 0)
 {
 	global $cache, $smiliecache, $theme, $templates, $lang, $mybb, $smiliecount;
 
@@ -105,19 +121,25 @@ function ckesmiliesjs_build($finds = null)
 			$smilies2 = "";
 			$smilies3 = "";
 			$smilies4 = "";
+			$smilies5 = "";
 			$counter = 0;
 			$i = 0;
 
 			foreach($mysmilies as $find => $image)
 			{
-				$find = htmlspecialchars_uni($find);
-				$smilies1 .= "'".str_replace("'","\\'",$image)."', ";
+				$find = addslashes(htmlspecialchars_uni($find));
+				$image = addslashes($image);
+				$image2 = ((substr($image, 0, 4) != "http" && defined("IN_ADMINCP"))?('../'.$image):$image);
+				$smilies1 .= "'".$image2."', ";
 				$smilies2 .= "'smilie{$i}', ";
-				$smilies3 .= "'smilie{$i}': '".str_replace("'","\\'",$find)."', ";
-				$smilies4 .= "'".str_replace("'","\\'",$image)."': 'smilie{$i}', ";
+				$smilies3 .= "'smilie{$i}': '".$find."', ";
+				$smilies4 .= "'".$image."': 'smilie{$i}', ";
+				$smilies5 .= <<<EOF
+	bbcodeParser.addBBCode('{$find}', '<img src="{$image2}" data-cke-saved-src="{$image}" title="smilie{$i}" alt="smilie{$i}">');
+EOF;
 				if(substr($image, 0, 4) != "http") {
 					$image = $mybb->settings['bburl']."/".$image;
-					$smilies4 .= "'".str_replace("'","\\'",$image)."': 'smilie{$i}', ";
+					$smilies4 .= "'".$image."': 'smilie{$i}', ";
 				}
 				++$i;
 				++$counter;
@@ -129,6 +151,7 @@ function ckesmiliesjs_build($finds = null)
 			if($finds) {
 				$clickablesmilies = "var smiliesmap = { {$smilies3} };";
 				$clickablesmilies .= "var smilieyurlmap = { {$smilies4} };";
+				$clickablesmilies .= $smilies5;
 			} else {
 				$clickablesmilies = "smiley_images: [\n{$smilies1}\n],\n smiley_descriptions: [\n{$smilies2}\n]";
 			}

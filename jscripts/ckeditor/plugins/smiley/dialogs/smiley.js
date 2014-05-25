@@ -7,7 +7,7 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
 	var config = editor.config,
 		lang = editor.lang.smiley,
 		images = config.smiley_images,
-		columns = config.smiley_columns || 8,
+		columns = config.smiley_columns || 4,
 		i;
 
 	// Simulate "this" of a dialog for non-dialog events.
@@ -118,7 +118,7 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
 	// Build the HTML for the smiley images table.
 	var labelId = CKEDITOR.tools.getNextId() + '_smiley_emtions_label';
 	var html = [
-		'<div style="max-width:270px;max-height:120px;overflow:auto;">' +
+		'<div style="max-width:350px;max-height:250px;overflow:auto;">' +
 		'<span id="' + labelId + '" class="cke_voice_label">' + lang.options + '</span>',
 		'<table role="listbox" aria-labelledby="' + labelId + '" style="width:100%;height:100%;border-collapse:separate;" cellspacing="2" cellpadding="2"',
 		CKEDITOR.env.ie && CKEDITOR.env.quirks ? ' style="position:absolute;"' : '',
@@ -172,8 +172,8 @@ CKEDITOR.dialog.add( 'smiley', function( editor ) {
 
 	return {
 		title: editor.lang.smiley.title,
-		minWidth: 270,
-		minHeight: 120,
+		minWidth: 350,
+		minHeight: 250,
 		contents: [
 			{
 			id: 'tab1',

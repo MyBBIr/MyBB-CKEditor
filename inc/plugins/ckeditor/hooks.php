@@ -18,4 +18,17 @@ function ckeditor_inline_editor(){
 		$codebuttons = build_mycode_inserter("quickedit_".intval($mybb->input['pid']));
 	}
 }
+
+$plugins->add_hook('showthread_start','ckeditor_quickreply');
+function ckeditor_quickreply(){
+	global $mybb, $forumpermissions, $thread, $fid, $forum;
+	global $codebuttons, $smilieinserter;
+	if(($forumpermissions['canpostreplys'] != 0 && $mybb->user['suspendposting'] != 1 && ($thread['closed'] != 1 || is_moderator($fid)) && $mybb->settings['quickreply'] != 0 && $mybb->user['showquickreply'] != '0' && $forum['open'] != 0) && ($mybb->settings['bbcodeinserter'] != 0 && $forum['allowmycode'] != 0 && (!$mybb->user['uid'] || $mybb->user['showcodebuttons'] != 0))) {
+		$codebuttons = build_mycode_inserter("message");
+		if($forum['allowsmilies'] != 0)
+		{
+			$smilieinserter = build_clickable_smilies();
+		}
+	}
+}
 ?>

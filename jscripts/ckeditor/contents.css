@@ -32,6 +32,7 @@ blockquote
 	border-style: solid;
 	border-color: #ccc;
 	border-width: 0;
+	margin:5px;
 }
 
 .cke_contents_ltr blockquote
@@ -120,4 +121,8 @@ figure figcaption
 {
 	text-align: center;
 	display: block; /* For IE8 */
+}
+
+.textareackcontnet {
+	overflow:auto;
 }
