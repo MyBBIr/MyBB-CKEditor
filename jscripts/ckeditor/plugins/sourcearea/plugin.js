@@ -33,13 +33,13 @@
 						resize: 'none',
 						outline: 'none',
 						color: '#333',
-						'text-align': 'right'
+						'text-align': (editor.config.direction == 'ltr')?'left':'right'
 					},
 					CKEDITOR.tools.cssVendorPrefix( 'tab-size', editor.config.sourceAreaTabSize || 4 ) ) );
 
 				// Make sure that source code is always displayed LTR,
 				// regardless of editor language (#10105).
-				textarea.setAttribute( 'dir', 'rtl' );
+				textarea.setAttribute( 'dir', editor.config.direction );
 
 				textarea.addClass( 'cke_source cke_reset cke_enable_context_menu' );
 				editor.ui.space( 'contents' ).addClass('textareackcontnet');
