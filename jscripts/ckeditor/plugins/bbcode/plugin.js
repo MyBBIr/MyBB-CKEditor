@@ -82,9 +82,9 @@ var BBCODEparser_custom_last = function(str)
 		}
 	} );
 
-	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', color: 'span', size: 'span', font: 'span', align: 'div', quote: 'blockquote', code: 'pre', php: 'pre', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol', hr: 'hr' },
-		convertMap = { strong: 'b', b: 'b', u: 'u', em: 'i', i: 'i', s: 's', strike: 's', pre: 'code', li: '*' },
-		tagnameMap = { strong: 'b', em: 'i', u: 'u', strike: 's', li: '*', ul: 'list', ol: 'list', pre: 'code', a: 'link', img: 'img', blockquote: 'quote', hr: 'hr' },
+	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', sub: 'sub', sup: 'sup', color: 'span', size: 'span', font: 'span', align: 'div', quote: 'blockquote', code: 'pre', php: 'pre', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol', hr: 'hr' },
+		convertMap = { strong: 'b', b: 'b', u: 'u', em: 'i', i: 'i', s: 's', strike: 's', sub: 'sub', sup: 'sup', pre: 'code', li: '*' },
+		tagnameMap = { strong: 'b', em: 'i', u: 'u', strike: 's', sub: 'sub', sup: 'sup', li: '*', ul: 'list', ol: 'list', pre: 'code', a: 'link', img: 'img', blockquote: 'quote', hr: 'hr' },
 		stylesMap = { color: 'color', size: 'font-size', font: 'font-family', align: 'text-align' },
 		attributesMap = { url: 'href', email: 'mailhref', quote: 'cite', list: 'listType', code: 'codeblock', php: 'phpblock' };
 

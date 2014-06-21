@@ -20,7 +20,7 @@ CKEDITOR.editorConfig = function( config ) {
 		[ 'Find', 'Replace', '-', 'SelectAll', 'Scayt' ],
 		[ 'Link', 'Unlink', 'Image', 'Smiley', 'SpecialChar', '-', 'HorizontalRule' ],
 		'/',
-		[ 'Bold', 'Italic', 'Underline', 'Strike', '-', 'RemoveFormat' ],
+		[ 'Bold', 'Italic', 'Underline', 'Strike', 'Superscript', 'Subscript', '-', 'RemoveFormat' ],
 		[ 'FontSize' , 'Font' , 'TextColor' ],
 		[ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ],
 		[ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'InsertCode', 'InsertPHP' ],

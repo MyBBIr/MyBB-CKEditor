@@ -31,4 +31,22 @@ function ckeditor_quickreply(){
 		}
 	}
 }
+
+$plugins->add_hook('parse_message','ckeditor_parser');
+function ckeditor_parser($m){
+	$standard_mycode = $mycodes = array();
+
+	$standard_mycode['sub']['regex'] = "#\[sub\](.*?)\[/sub\]#si";
+	$standard_mycode['sub']['replacement'] = "<sub>$1</sub>";
+
+	$standard_mycode['sup']['regex'] = "#\[sup\](.*?)\[/sup\]#si";
+	$standard_mycode['sup']['replacement'] = "<sup>$1</sup>";
+	foreach($standard_mycode as $code)
+	{
+		$mycodes['find'][] = $code['regex'];
+		$mycodes['replacement'][] = $code['replacement'];
+	}
+	$m = preg_replace($mycodes['find'], $mycodes['replacement'], $m);
+	return $m;
+}
 ?>

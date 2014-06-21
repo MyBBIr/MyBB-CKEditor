@@ -110,6 +110,7 @@
 		base: CKEDITOR.editable,
 		proto: {
 			setData: function( data ) {
+				data = bbcodeParser.htmlToBBCode(data);
 				this.setValue( data );
 				this.editor.fire( 'dataReady' );
 			},

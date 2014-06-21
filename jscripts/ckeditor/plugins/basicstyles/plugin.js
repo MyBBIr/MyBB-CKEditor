@@ -43,6 +43,10 @@ CKEDITOR.plugins.add( 'basicstyles', {
 							CKEDITOR.performInsert('[b]','[/b]',false);
 						} else if(this.name == 'strike') {
 							CKEDITOR.performInsert('[s]','[/s]',false);
+						} else if(this.name == 'subscript') {
+							CKEDITOR.performInsert('[sub]','[/sub]',false);
+						} else if(this.name == 'superscript') {
+							CKEDITOR.performInsert('[sup]','[/sup]',false);
 						}
 						return;
 					}

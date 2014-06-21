@@ -188,6 +188,8 @@ bbcodeParser.addBBCode('[u]{TEXT}[/u]', '<u>{TEXT}</u>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[u]{TEXT}[/u]', '<u>{TEXT}</u>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[s]{TEXT}[/s]', '<strike>{TEXT}</strike>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[s]{TEXT}[/s]', '<s>{TEXT}</s>', 'bbcodetohtml');
+bbcodeParser.addBBCode('[sub]{TEXT}[/sub]', '<sub>{TEXT}</sub>', 'bbcodetohtml');
+bbcodeParser.addBBCode('[sup]{TEXT}[/sup]', '<sup>{TEXT}</sup>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[align={ALIGN}]{TEXT}[/align]', '<div style="text-align: {ALIGN};">{TEXT}</div>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[size={FONTSIZE}]{TEXT}[/size]', '<span style="font-size: {FONTSIZE}">{TEXT}</span>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[font={TEXT_INTAG}]{TEXT}[/font]', '<span style="font-family: {TEXT_INTAG};">{TEXT}</span>', 'bbcodetohtml');
@@ -207,6 +209,7 @@ bbcodeParser.addBBCode('[img]{TEXT_INTAG}[/img]', '<img src="{TEXT_INTAG}"/>', '
 bbcodeParser.addBBCode('[img={NUMBER1}x{NUMBER2}]{TEXT_INTAG}[/img]', '<img width="{NUMBER1}" height="{NUMBER2}" src="{TEXT_INTAG}" />');
 bbcodeParser.addBBCode('[img={NUMBER1}x{NUMBER2}]{TEXT_INTAG}[/img]', '<img width="{NUMBER1}" height="{NUMBER2}" src="{TEXT_INTAG}">');
 bbcodeParser.addBBCode('', '<removess>{TEXT}</removess>','htmltobbcode');
+bbcodeParser.addBBCode('</div>', '</div><br>','htmltobbcode');
 
 /**
  * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
