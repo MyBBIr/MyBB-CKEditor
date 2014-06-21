@@ -364,7 +364,6 @@
 			 */
 			getData: function( isSnapshot ) {
 				var data = this.getHtml();
-				data = bbcodeParser.htmlToBBCode(data);
 				if ( !isSnapshot )
 					data = this.editor.dataProcessor.toDataFormat( data );
 
