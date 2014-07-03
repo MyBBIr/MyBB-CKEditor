@@ -12,6 +12,7 @@ CKEDITOR.plugins.setLang( 'image', 'fa', {
 	img2Button: 'آیا مایلید از یک دکمه تصویری روی تصویر انتخاب شده استفاده کنید؟',
 	infoTab: 'اطلاعات تصویر',
 	linkTab: 'پیوند',
+	sizeTab: 'اندازه',
 	lockRatio: 'قفل کردن نسبت',
 	menu: 'ویژگی​های تصویر',
 	resetSize: 'بازنشانی اندازه',
@@ -22,5 +23,7 @@ CKEDITOR.plugins.setLang( 'image', 'fa', {
 	vSpace: 'فاصلهٴ عمودی',
 	validateBorder: 'مقدار خطوط باید یک عدد باشد.',
 	validateHSpace: 'مقدار فاصله گذاری افقی باید یک عدد باشد.',
-	validateVSpace: 'مقدار فاصله گذاری عمودی باید یک عدد باشد.'
+	validateVSpace: 'مقدار فاصله گذاری عمودی باید یک عدد باشد.',
+	width : 'عرض:',
+	height : 'ارتفاع:'
 } );

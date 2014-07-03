@@ -1019,6 +1019,44 @@
 					]
 				},
 					{
+					id: 'Size',
+					requiredContent: 'a[width]',
+					label: editor.lang.image.sizeTab,
+					padding: 0,
+					elements: [
+						{
+						id: 'width',
+						type: 'text',
+						label: editor.lang.image.width,
+						style: 'width: 100%',
+						'default': '',
+						commit: function( type, element ) {
+							var width = parseInt(this.getValue());
+							if(width)
+								element.setAttribute( 'width', width );
+						},
+						setup: function( type, element ) {
+								this.setValue( element.getAttribute( 'width' ) || '' );
+						}
+					},
+						{
+						id: 'height',
+						type: 'text',
+						label: editor.lang.image.height,
+						style: 'width: 100%',
+						'default': '',
+						commit: function( type, element ) {
+							var height = parseInt(this.getValue());
+							if(height)
+								element.setAttribute( 'height', height );
+						},
+						setup: function( type, element ) {
+								this.setValue( element.getAttribute( 'height' ) || '' );
+						}
+					}
+					]
+				},
+					{
 					id: 'Upload',
 					hidden: false,
 					filebrowser: 'uploadButton',

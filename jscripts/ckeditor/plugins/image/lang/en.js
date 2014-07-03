@@ -12,6 +12,7 @@ CKEDITOR.plugins.setLang( 'image', 'en', {
 	img2Button: 'Do you want to transform the selected image on a image button?',
 	infoTab: 'Image Info',
 	linkTab: 'Link',
+	sizeTab: 'Size',
 	lockRatio: 'Lock Ratio',
 	menu: 'Image Properties',
 	resetSize: 'Reset Size',
@@ -22,5 +23,7 @@ CKEDITOR.plugins.setLang( 'image', 'en', {
 	vSpace: 'VSpace',
 	validateBorder: 'Border must be a whole number.',
 	validateHSpace: 'HSpace must be a whole number.',
-	validateVSpace: 'VSpace must be a whole number.'
+	validateVSpace: 'VSpace must be a whole number.',
+	width : 'Width:',
+	height : 'Height:'
 } );
