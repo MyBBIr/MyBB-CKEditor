@@ -7,7 +7,7 @@ CKEDITOR.editorConfig = function( config ) {
 	
 	// %REMOVE_START%
 	// The configuration options below are needed when running CKEditor from source files.
-	config.plugins = 'dialogui,dialog,about,a11yhelp,dialogadvtab,basicstyles,bidi,blockquote,clipboard,button,panelbutton,panel,floatpanel,colorbutton,colordialog,templates,menu,contextmenu,div,resize,toolbar,elementspath,enterkey,entities,popup,filebrowser,find,fakeobjects,flash,floatingspace,listblock,richcombo,font,forms,format,horizontalrule,htmlwriter,iframe,wysiwygarea,image,indent,indentblock,indentlist,smiley,justify,menubutton,language,link,list,liststyle,magicline,maximize,newpage,pagebreak,pastetext,pastefromword,preview,print,removeformat,save,selectall,showblocks,showborders,sourcearea,specialchar,scayt,stylescombo,tab,table,tabletools,undo,wsc,bbcode,insertpre,videos';
+	config.plugins = 'dialogui,dialog,about,a11yhelp,dialogadvtab,basicstyles,bidi,blockquote,clipboard,button,panelbutton,panel,floatpanel,colorbutton,colordialog,templates,menu,contextmenu,div,resize,toolbar,elementspath,enterkey,entities,popup,filebrowser,find,fakeobjects,flash,floatingspace,listblock,richcombo,font,forms,format,horizontalrule,htmlwriter,iframe,wysiwygarea,image,indent,indentblock,indentlist,smiley,justify,menubutton,language,link,list,liststyle,magicline,maximize,newpage,pagebreak,pastetext,pastefromword,preview,print,removeformat,save,selectall,showblocks,showborders,sourcearea,specialchar,scayt,stylescombo,tab,table,tabletools,undo,wsc,bbcode,insertpre,videos,myoptions';
 	config.skin = 'moonocolor';
 	
 	config.removePlugins = 'bidi,dialogadvtab,div,filebrowser,flash,format,forms,iframe,liststyle,pagebreak,showborders,stylescombo,table,tabletools,templates';
@@ -24,9 +24,28 @@ CKEDITOR.editorConfig = function( config ) {
 		[ 'FontSize' , 'Font' , 'TextColor' ],
 		[ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ],
 		[ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'InsertCode', 'InsertPHP', '-', 'Videos' ],
-		[ 'Maximize' ]
+		[ 'MyOptions', 'Maximize' ]
 	];
 	config.language = 'fa';
 	config.image_previewText  = ' ';
+
+	// My Options -> default paste
+	mycookie = '';
+	cname = 'myoptions_pastetext';
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0; i<ca.length; i++) {
+		var c = ca[i].trim();
+		if (c.indexOf(name) == 0) mycookie =  c.substring(name.length,c.length);
+	}
+	if(mycookie == 'true')
+	{
+		config.clipboard_defaultContentType = 'text';
+	}
+	else
+	{
+		config.clipboard_defaultContentType = 'html';
+	}
+	
 	// config.uiColor = '#AADC6E';
 };
