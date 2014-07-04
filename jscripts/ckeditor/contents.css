@@ -126,3 +126,19 @@ figure figcaption
 .textareackcontnet {
 	overflow:auto;
 }
+
+
+table {
+	width: 100%;
+	border-collapse:collapse;
+	border-spacing:0;
+	table-layout:fixed;
+	border: 2px solid #333;
+}
+
+table td {
+	border: 1px dashed #999;
+	padding: 3px 5px;
+	vertical-align: top;
+	min-height:20px;
+}

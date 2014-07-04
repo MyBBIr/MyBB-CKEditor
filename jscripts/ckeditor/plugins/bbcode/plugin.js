@@ -9,6 +9,19 @@ var BBCODEparser_custom_first = function(str)
 {
 	str = str.replace(/</gi,"&lt");
 	str = str.replace(/>/gi,"&gt");
+	i = 0;
+	while(m = str.match(/\[code\]([^\"]*?)\[\/code\]/i)) {
+		codeblocks[i] = m;
+		str = str.replace(m[0],'<code-'+i+'>');
+		i++;
+	}
+	i = 0;
+	while(m = str.match(/\[php\]([^\"]*?)\[\/php\]/i)) {
+		phpblocks[i] = m;
+		str = str.replace(m[0],'<php-'+i+'>');
+		i++;
+	}
+	
 	while(m = str.match(/\[list\]([^\"]*?)\[\/list\]/i)) {
 		m[1] = m[1].replace(/\[\*\]/g,'</li><li>');
 		m1 = '<ul>' + m[1] + '</ul>';
@@ -27,18 +40,16 @@ var BBCODEparser_custom_first = function(str)
 		m1 = m1.replace("<ol type=\""+m[1]+"\">\n<\li>",'<ol type="'+m[1]+'">');		
 		str = str.replace(m[0],m1);
 	}
-	i = 0;
-	while(m = str.match(/\[code\]([^\"]*?)\[\/code\]/i)) {
-		codeblocks[i] = m;
-		str = str.replace(m[0],'<code-'+i+'>');
-		i++;
+	
+	while(m1 = str.match(/\[table\]([^\"]*?)\[\/table\]/i)) {
+		while(m2 = m1[1].match(/\[tr\]([^\"]*?)\[\/tr\]/i)) {
+			m2[1] = m2[1].replace(/\[td\]([^\"]*?)\[\/td\]/g,'<td>$1</td>');
+			m1[1] = m1[1].replace(m2[0], '<tr>' + m2[1] + '</tr>');
+		}
+		str = str.replace(m1[0],'<table>'+m1[1]+'</table>');
 	}
-	i = 0;
-	while(m = str.match(/\[php\]([^\"]*?)\[\/php\]/i)) {
-		phpblocks[i] = m;
-		str = str.replace(m[0],'<php-'+i+'>');
-		i++;
-	}
+	str = str.replace(/<tr>\n/g, '<tr>');
+	str = str.replace(/<td>\n/g, '<tr>');
 	return str;
 };
 
@@ -82,9 +93,9 @@ var BBCODEparser_custom_last = function(str)
 		}
 	} );
 
-	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', sub: 'sub', sup: 'sup', color: 'span', size: 'span', font: 'span', align: 'div', quote: 'blockquote', code: 'pre', php: 'pre', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol', hr: 'hr' },
+	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', sub: 'sub', sup: 'sup', color: 'span', size: 'span', font: 'span', align: 'div', quote: 'blockquote', code: 'pre', php: 'pre', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol', hr: 'hr', table: 'table', td: 'td', tr: 'tr' },
 		convertMap = { strong: 'b', b: 'b', u: 'u', em: 'i', i: 'i', s: 's', strike: 's', sub: 'sub', sup: 'sup', pre: 'code', li: '*' },
-		tagnameMap = { strong: 'b', em: 'i', u: 'u', strike: 's', sub: 'sub', sup: 'sup', li: '*', ul: 'list', ol: 'list', pre: 'code', a: 'link', img: 'img', blockquote: 'quote', hr: 'hr' },
+		tagnameMap = { strong: 'b', em: 'i', u: 'u', strike: 's', sub: 'sub', sup: 'sup', li: '*', ul: 'list', ol: 'list', pre: 'code', a: 'link', img: 'img', blockquote: 'quote', hr: 'hr', table: 'table', td: 'td', tr: 'tr' },
 		stylesMap = { color: 'color', size: 'font-size', font: 'font-family', align: 'text-align' },
 		attributesMap = { url: 'href', email: 'mailhref', quote: 'cite', list: 'listType', code: 'codeblock', php: 'phpblock' };
 
