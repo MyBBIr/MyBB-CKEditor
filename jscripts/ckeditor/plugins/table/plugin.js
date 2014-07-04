@@ -22,6 +22,7 @@ CKEDITOR.plugins.add( 'table', {
 				'th td tr[scope];' +
 				( editor.plugins.dialogadvtab ? 'table' + editor.plugins.dialogadvtab.allowedContent() : '' ),
 			requiredContent: 'table',
+			modes: { wysiwyg: 1, source: 1 },
 			contentTransformations: [
 				[ 'table{width}: sizeToStyle', 'table[width]: sizeToAttribute' ]
 			]
