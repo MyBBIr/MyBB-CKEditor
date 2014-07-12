@@ -22,21 +22,21 @@ var BBCODEparser_custom_first = function(str)
 		i++;
 	}
 	
-	while(m = str.match(/\[list\]([^\"]*?)\[\/list\]/i)) {
-		m[1] = m[1].replace(/\[\*\]/g,'</li><li>');
-		m1 = '<ul>' + m[1] + '</ul>';
+	while(m = str.match(/\[list\](\n|\r\n|)([^\"]*?)\[\/list\]/i)) {
+		m[2] = m[2].replace(/\[\*\]/g,'</li><li>');
+		m1 = '<ul>' + m[2] + '</ul>';
 		m1 = m1.replace(/<ul>\n<\li>/i,'<ul>');		
 		str = str.replace(m[0],m1);
 	}
-	while(m = str.match(/\[list=1\]([^\"]*?)\[\/list\]/i)) {
-		m[1] = m[1].replace(/\[\*\]/g,'</li><li>');
-		m1 = '<ol>' + m[1] + '</ol>';
+	while(m = str.match(/\[list=1\](\n|\r\n|)([^\"]*?)\[\/list\]/i)) {
+		m[2] = m[2].replace(/\[\*\]/g,'</li><li>');
+		m1 = '<ol>' + m[2] + '</ol>';
 		m1 = m1.replace(/<ol>\n<\li>/i,'<ol>');		
 		str = str.replace(m[0],m1);
 	}
-	while(m = str.match(/\[list=(i|I|a|A)\]([^\"]*?)\[\/list\]/i)) {
-		m[2] = m[2].replace(/\[\*\]/g,'</li><li>');
-		m1 = '<ol type="'+m[1]+'">' + m[2] + '</ol>';
+	while(m = str.match(/\[list=(i|I|a|A)\](\n|\r\n|)([^\"]*?)\[\/list\]/i)) {
+		m[3] = m[3].replace(/\[\*\]/g,'</li><li>');
+		m1 = '<ol type="'+m[1]+'">' + m[3] + '</ol>';
 		m1 = m1.replace("<ol type=\""+m[1]+"\">\n<\li>",'<ol type="'+m[1]+'">');		
 		str = str.replace(m[0],m1);
 	}
@@ -50,6 +50,7 @@ var BBCODEparser_custom_first = function(str)
 	}
 	str = str.replace(/<tr>\n/g, '<tr>');
 	str = str.replace(/<td>\n/g, '<tr>');
+	console.log(str);
 	return str;
 };
 
