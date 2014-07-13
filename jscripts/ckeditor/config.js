@@ -46,5 +46,6 @@ CKEDITOR.editorConfig = function( config ) {
 		config.clipboard_defaultContentType = 'html';
 	}
 	
+	config.filebrowserImageUploadUrl = '/ckeditor_mybb/ckeditorupload.php';
 	// config.uiColor = '#AADC6E';
 };

@@ -428,6 +428,15 @@
 								CKEDITOR.performInsert('[img]'+ person + '[/img]','',true);
 							}
 						}
+						else
+						{
+							that = this;
+							CKEDITOR.insertpicture = function(img){
+								editor.insertHtml('<img src="'+img+'" />');
+								that.hide();
+								return false;
+							};
+						}
 				},
 				onHide: function() {
 					if ( this.preview )
@@ -1059,22 +1068,12 @@
 					{
 					id: 'Upload',
 					hidden: false,
-					filebrowser: 'uploadButton',
 					label: editor.lang.image.upload,
 					elements: [
 						{
-						type: 'file',
-						id: 'upload',
-						label: editor.lang.image.btnUpload,
-						style: 'height:40px',
-						size: 38
-					},
-						{
-						type: 'fileButton',
-						id: 'uploadButton',
-						filebrowser: 'info:txtUrl',
-						label: editor.lang.image.btnUpload,
-						'for': [ 'Upload', 'upload' ]
+						type: 'html',
+						html: '<iframe src="ckeditor_upload/index.php" frameborder="0" width="600" height="400"></iframe>',
+						style: 'width:600px;height:400px;'
 					}
 					]
 				},
