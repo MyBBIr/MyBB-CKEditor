@@ -754,10 +754,11 @@ var BBCODEparser_custom_last = function(str)
 							} else if ( ( value = style[ 'font-family' ] ) ) {
 								tagName = 'font'
 							}
-						} else if ( tagName == 'div' ) {
+						} else if ( tagName == 'div' || tagName == 'p' ) {
 							if ( ( value = style[ 'text-align' ] ) ) {
 								tagName = 'align'
 							}
+							element.children[0].value += '\n';
 						} else if ( tagName == 'ol' || tagName == 'ul' ) {
 							if ( ( value = style[ 'list-style-type' ] ) ) {
 								switch ( value ) {
@@ -836,8 +837,9 @@ var BBCODEparser_custom_last = function(str)
 					// e.g. <div>some text<br /><p>paragraph</p></div>
 					br: function( element ) {
 						var next = element.next;
+						console.log(blockLikeTags);
 						if ( next && next.name in blockLikeTags )
-							return false;
+							return true;
 					}
 				}
 			}, 1 );

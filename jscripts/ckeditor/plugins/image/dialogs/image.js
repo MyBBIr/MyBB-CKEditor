@@ -332,6 +332,7 @@
 					}
 				},
 				onOk: function() {
+					if(!this.getValueOf('info', 'txtUrl')) return;
 					// Edit existing Image.
 					if ( this.imageEditMode ) {
 						var imgTagName = this.imageEditMode;
@@ -433,7 +434,7 @@
 							that = this;
 							CKEDITOR.insertpicture = function(img){
 								editor.insertHtml('<img src="'+img+'" />');
-								that.hide();
+								//that.hide();
 								return false;
 							};
 						}
@@ -471,7 +472,7 @@
 								id: 'txtUrl',
 								type: 'text',
 								label: editor.lang.common.url,
-								required: true,
+								/*required: true,*/
 								onChange: function() {
 									var dialog = this.getDialog(),
 										newUrl = this.getValue();
@@ -527,7 +528,7 @@
 										element.removeAttribute( 'src' );
 									}
 								},
-								validate: CKEDITOR.dialog.validate.notEmpty( editor.lang.image.urlMissing )
+								/*validate: CKEDITOR.dialog.validate.notEmpty( editor.lang.image.urlMissing )*/
 							},
 								{
 								type: 'button',
@@ -1072,8 +1073,8 @@
 					elements: [
 						{
 						type: 'html',
-						html: '<iframe src="ckeditor_upload/index.php" frameborder="0" width="600" height="400"></iframe>',
-						style: 'width:600px;height:400px;'
+						html: '<iframe src="ckeditor_upload/index.php" frameborder="0" width="100%" height="400"></iframe>',
+						style: 'min-width:600px;width:100%;height:400px;'
 					}
 					]
 				},

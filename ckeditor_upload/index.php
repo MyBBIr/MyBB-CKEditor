@@ -6,7 +6,8 @@ define("NO_ONLINE", 1);
 
 require_once "../global.php";
 
-$template = file_get_contents('./_index.tpl');
 $lang->load('ckeditor');
-output_page($template);
+
+eval("\$upload = \"".ckplugin_gettemplate("upload")."\";");
+output_page($upload);
 ?>

@@ -151,10 +151,11 @@
 	 */
 	bbcodeParser.htmlToBBCode = function(str) {
 		var i = 0;
-
 		for(; i < bbcodeParser.html_matches.length; i += 1) {
 			str = str.replace(bbcodeParser.html_matches[i], bbcodeParser.bbcode_tpls[i]);
 		}
+		
+		str = str.replace('<br>', '\n');
 
 		return str;
 	}
@@ -181,6 +182,15 @@
 })();
 
 
+bbcodeParser.addBBCode('</div>', '</div><br />', 'htmltobbcode');
+bbcodeParser.addBBCode('</p>', '</p><br />', 'htmltobbcode');
+bbcodeParser.addBBCode('<p>', '<br /><p>', 'htmltobbcode');
+bbcodeParser.addBBCode('</h1>', '</h1><br />', 'htmltobbcode');
+bbcodeParser.addBBCode('</h2>', '</h2><br />', 'htmltobbcode');
+bbcodeParser.addBBCode('</h3>', '</h3><br />', 'htmltobbcode');
+bbcodeParser.addBBCode('</h4>', '</h4><br />', 'htmltobbcode');
+bbcodeParser.addBBCode('</h5>', '</h5><br />', 'htmltobbcode');
+bbcodeParser.addBBCode('</h6>', '</h6><br />', 'htmltobbcode');
 bbcodeParser.addBBCode('[b]{TEXT}[/b]', '<strong>{TEXT}</strong>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[i]{TEXT}[/i]', '<i>{TEXT}</i>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[i]{TEXT}[/i]', '<em>{TEXT}</em>', 'bbcodetohtml');
@@ -209,7 +219,6 @@ bbcodeParser.addBBCode('[img]{TEXT_INTAG}[/img]', '<img src="{TEXT_INTAG}"/>', '
 bbcodeParser.addBBCode('[img={NUMBER1}x{NUMBER2}]{TEXT_INTAG}[/img]', '<img width="{NUMBER1}" height="{NUMBER2}" src="{TEXT_INTAG}" />');
 bbcodeParser.addBBCode('[img={NUMBER1}x{NUMBER2}]{TEXT_INTAG}[/img]', '<img width="{NUMBER1}" height="{NUMBER2}" src="{TEXT_INTAG}">');
 bbcodeParser.addBBCode('', '<removess>{TEXT}</removess>','htmltobbcode');
-bbcodeParser.addBBCode('</div>', '</div><br>','htmltobbcode');
 
 /**
  * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.

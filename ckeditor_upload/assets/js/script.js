@@ -12,14 +12,15 @@ $(function(){
     $('#upload').fileupload({
 
         // This element will accept file drag/drop uploading
-        dropZone: $('#drop'),
+        dropZone: $('#upload_cover'),
 
         // This function is called when a file is added to the queue;
         // either via the browse button, or via drag/drop:
         add: function (e, data) {
+			$('#upload_cover').stop(true, true).fadeOut();
 			//$('.upload').remove();
-            var tpl = $('<li class="working upload" title="افزودن به ویرایش‌گر"><input type="text" value="0" data-width="48" data-height="48"'+
-                ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span></span></li>');
+            var tpl = $('<li class="working upload"><input type="text" value="0" data-width="48" data-height="48"'+
+                ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /><p></p><span title="'+lang.hide+'"></span></li>');
 
             // Append the file name and file size
             tpl.find('p').text(data.files[0].name)
@@ -68,6 +69,7 @@ $(function(){
         },
 		
 		done: function (e, data) {
+			console.log(data);
 			var result = jQuery.parseJSON(data.result);
 			//alert(data.context.html());
 			//console.log(data.context.find('p').html());
@@ -78,7 +80,7 @@ $(function(){
 			}
 			else
 			{
-				data.context.append('<img src="'+result.filename+'" title="افزودن عکس به ویرایشگر" />');
+				data.context.append('<img src="'+result.filename+'" title="'+lang.inserttoeditor+'" />');
 				$('.upload img, .upload canvas').click(function()
 				{
 					parent.CKEDITOR.insertpicture(result.filename);
@@ -93,6 +95,19 @@ $(function(){
     $(document).on('drop dragover', function (e) {
         e.preventDefault();
     });
+	
+	$(document).on('dragover', function(e) {
+		$('#upload_cover').stop(true, true).fadeIn();
+		return false;
+	});
+	$(document).on('dragleave', function(e) {
+		$('#upload_cover').stop(true, true).fadeOut();
+		return false;
+	});
+	$(document).on('dragend', function(e) {
+		$('#upload_cover').stop(true, true).fadeOut();
+		return false;
+	});
 
     // Helper function that formats the file sizes
     function formatFileSize(bytes) {
