@@ -60,7 +60,7 @@
 			editor.on( 'paste', function( evt ) {
 				var data = evt.data,
 					mswordHtml = data.dataValue;
-
+				mswordHtml = mswordHtml.replace(/<\/(div|p|h1|h2|h3|h4|h5|h6)>/gi,'</$1><br />');
 				// MS-WORD format sniffing.
 				if ( mswordHtml && ( forceFromWord || ( /(class=\"?Mso|style=\"[^\"]*\bmso\-|w:WordDocument)/ ).test( mswordHtml ) ) ) {
 					// If filter rules aren't loaded then cancel 'paste' event,
