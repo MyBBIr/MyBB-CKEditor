@@ -837,7 +837,6 @@ var BBCODEparser_custom_last = function(str)
 					// e.g. <div>some text<br /><p>paragraph</p></div>
 					br: function( element ) {
 						var next = element.next;
-						console.log(blockLikeTags);
 						if ( next && next.name in blockLikeTags )
 							return true;
 					}

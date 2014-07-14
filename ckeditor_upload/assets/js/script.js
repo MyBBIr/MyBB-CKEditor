@@ -69,10 +69,9 @@ $(function(){
         },
 		
 		done: function (e, data) {
-			console.log(data);
+
 			var result = jQuery.parseJSON(data.result);
-			//alert(data.context.html());
-			//console.log(data.context.find('p').html());
+
 			if(result.status == 'error')
 			{
 				data.context.find('p').html(data.files[0].name + "<i>"+ result.message + '</i>');
