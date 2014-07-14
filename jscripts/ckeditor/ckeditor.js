@@ -201,6 +201,8 @@ bbcodeParser.addBBCode('[s]{TEXT}[/s]', '<s>{TEXT}</s>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[sub]{TEXT}[/sub]', '<sub>{TEXT}</sub>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[sup]{TEXT}[/sup]', '<sup>{TEXT}</sup>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[align={ALIGN}]{TEXT}[/align]', '<div style="text-align: {ALIGN};">{TEXT}</div>', 'bbcodetohtml');
+bbcodeParser.addBBCode('[dir=ltr]{TEXT}[/dir]', '<div dir="ltr" style="direction:ltr;">{TEXT}</div>', 'bbcodetohtml');
+bbcodeParser.addBBCode('[dir=rtl]{TEXT}[/dir]', '<div dir="rtl" style="direction:rtl;>{TEXT}</div>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[size={FONTSIZE}]{TEXT}[/size]', '<span style="font-size: {FONTSIZE}">{TEXT}</span>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[font={TEXT_INTAG}]{TEXT}[/font]', '<span style="font-family: {TEXT_INTAG};">{TEXT}</span>', 'bbcodetohtml');
 bbcodeParser.addBBCode('[color={COLOR}]{TEXT}[/color]', '<span style="color: {COLOR};">{TEXT}</span>', 'bbcodetohtml');

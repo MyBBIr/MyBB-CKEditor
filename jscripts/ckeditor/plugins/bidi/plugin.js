@@ -4,7 +4,7 @@
  */
 
 ( function() {
-	var guardElements = { table: 1, ul: 1, ol: 1, blockquote: 1, div: 1 },
+	var guardElements = { /*table: 1, ul: 1, ol: 1, blockquote: 1,*/ div: 1 },
 		directSelectionGuardElements = {},
 		// All guard elements which can have a direction applied on them.
 		allGuardElements = {};
@@ -126,7 +126,8 @@
 			// It applies to a "block-like" context.
 			context: 'p',
 			allowedContent: {
-				'h1 h2 h3 h4 h5 h6 table ul ol blockquote div tr p div li td': {
+				//'h1 h2 h3 h4 h5 h6 table ul ol blockquote div tr p div li td': {
+				'p div': {
 					propertiesOnly: true,
 					attributes: 'dir'
 				}

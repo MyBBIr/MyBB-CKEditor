@@ -50,7 +50,7 @@ var BBCODEparser_custom_first = function(str)
 	}
 	str = str.replace(/<tr>\n/g, '<tr>');
 	str = str.replace(/<td>\n/g, '<tr>');
-	console.log(str);
+
 	return str;
 };
 
@@ -94,10 +94,10 @@ var BBCODEparser_custom_last = function(str)
 		}
 	} );
 
-	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', sub: 'sub', sup: 'sup', color: 'span', size: 'span', font: 'span', align: 'div', quote: 'blockquote', code: 'pre', php: 'pre', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol', hr: 'hr', table: 'table', td: 'td', tr: 'tr' },
+	var bbcodeMap = { b: 'strong', u: 'u', i: 'em', s: 'strike', sub: 'sub', sup: 'sup', color: 'span', size: 'span', font: 'span', align: 'div', dir: 'div', quote: 'blockquote', code: 'pre', php: 'pre', url: 'a', email: 'span', img: 'span', '*': 'li', list: 'ol', hr: 'hr', table: 'table', td: 'td', tr: 'tr' },
 		convertMap = { strong: 'b', b: 'b', u: 'u', em: 'i', i: 'i', s: 's', strike: 's', sub: 'sub', sup: 'sup', pre: 'code', li: '*' },
 		tagnameMap = { strong: 'b', em: 'i', u: 'u', strike: 's', sub: 'sub', sup: 'sup', li: '*', ul: 'list', ol: 'list', pre: 'code', a: 'link', img: 'img', blockquote: 'quote', hr: 'hr', table: 'table', td: 'td', tr: 'tr' },
-		stylesMap = { color: 'color', size: 'font-size', font: 'font-family', align: 'text-align' },
+		stylesMap = { color: 'color', size: 'font-size', font: 'font-family', align: 'text-align', dir: 'direction' },
 		attributesMap = { url: 'href', email: 'mailhref', quote: 'cite', list: 'listType', code: 'codeblock', php: 'phpblock' };
 
 	// List of block-like tags.
@@ -758,7 +758,9 @@ var BBCODEparser_custom_last = function(str)
 							if ( ( value = style[ 'text-align' ] ) ) {
 								tagName = 'align'
 							}
-							element.children[0].value += '\n';
+							else if ( ( value = style[ 'direction' ] ) || ( value = attributes.dir ) ) {
+								tagName = 'dir'
+							}
 						} else if ( tagName == 'ol' || tagName == 'ul' ) {
 							if ( ( value = style[ 'list-style-type' ] ) ) {
 								switch ( value ) {
@@ -885,9 +887,11 @@ var BBCODEparser_custom_last = function(str)
 								name = 'font';
 							else if ( element.getStyle( 'color' ) )
 								name = 'color';
-						} else if ( htmlName == 'div' ) {
+						} else if ( htmlName == 'div' || htmlName == 'p' ) {
 							if ( element.getStyle( 'text-align' ) )
-								name = 'size';
+								name = 'align';
+							else if ( element.getStyle( 'direction' ) || element.getAttribute( 'dir' ) )
+								name = 'dir';
 						} else if ( name == 'img' ) {
 							var src = element.data( 'cke-saved-src' ) || element.getAttribute( 'src' );
 							if ( src && typeof smiliesmap[element.getAttribute('alt')] != 'undefined' )

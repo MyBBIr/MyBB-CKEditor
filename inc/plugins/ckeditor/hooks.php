@@ -41,6 +41,10 @@ function ckeditor_parser($m){
 
 	$standard_mycode['sup']['regex'] = "#\[sup\](.*?)\[/sup\]#si";
 	$standard_mycode['sup']['replacement'] = "<sup>$1</sup>";
+	$standard_mycode['bidiltr']['regex'] = "#\[dir=ltr\](.*?)\[/dir\]#si";
+	$standard_mycode['bidiltr']['replacement'] = "<div dir=\"ltr\" style=\"direction: ltr;text-align:left;\">$1</div>";
+	$standard_mycode['bidirtl']['regex'] = "#\[dir=rtl\](.*?)\[/dir\]#si";
+	$standard_mycode['bidirtl']['replacement'] = "<div dir=\"rtl\" style=\"direction: rtl;text-align:right;\">$1</div>";
 	foreach($standard_mycode as $code)
 	{
 		$mycodes['find'][] = $code['regex'];
