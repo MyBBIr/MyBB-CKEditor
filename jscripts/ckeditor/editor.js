@@ -335,4 +335,47 @@ if(typeof Thread != 'undefined')
 		}
 		this.quick_replying = 0;
 	};
+	
+	Thread.quickEditLoaded = function(request, pid)
+	{
+		if(request.responseText.match(/<error>(.*)<\/error>/))
+		{
+			message = request.responseText.match(/<error>(.*)<\/error>/);
+			if(!message[1])
+			{
+				message[1] = "An unknown error occurred.";
+			}
+			if(this.spinner)
+			{
+				this.spinner.destroy();
+				this.spinner = '';
+			}
+			alert('There was an error performing the update.\n\n'+message[1]);
+			Thread.qeCache[pid] = "";
+		}
+		else if(request.responseText)
+		{
+			$("pid_"+pid).innerHTML = request.responseText;
+			element = $("quickedit_"+pid);
+			if(typeof opt_editor == 'object')
+			{
+				CKEDITOR.replace("quickedit_"+pid, opt_editor);
+			}
+			element.focus();
+			offsetTop = -60;
+			do
+			{
+				offsetTop += element.offsetTop || 0;
+				element = element.offsetParent;
+			}
+			while(element);
+
+			scrollTo(0, offsetTop);
+		}
+		if(this.spinner)
+		{
+			this.spinner.destroy();
+			this.spinner = '';
+		}
+	};
 }

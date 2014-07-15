@@ -19,14 +19,17 @@ CKEDITOR.editorConfig = function( config ) {
 		[ 'Cut', 'Copy', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
 		[ 'Find', 'Replace', '-', 'SelectAll', 'Scayt' ],
 		[ 'Link', 'Unlink', 'Image', 'Smiley', 'SpecialChar', '-', 'HorizontalRule' ],
+		[ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent' ],
+		'/',
 		[ 'Bold', 'Italic', 'Underline', 'Strike', 'Superscript', 'Subscript', '-', 'RemoveFormat' ],
 		[ 'FontSize' , 'Font' , 'TextColor' ],
 		[ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl' ],
-		[ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'InsertCode', 'InsertPHP', '-', 'Videos', 'Table' ],
+		[ 'Blockquote', 'InsertCode', 'InsertPHP', '-', 'Videos', 'Table' ],
 		[ 'MyOptions', 'Maximize' ]
 	];
 	config.language = 'fa';
 	config.image_previewText  = ' ';
+	config.height = '250';
 
 	// My Options -> default paste
 	mycookie = '';

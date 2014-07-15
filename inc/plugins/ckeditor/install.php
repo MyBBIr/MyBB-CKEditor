@@ -40,7 +40,7 @@ function ckeditor_install(){
 	$PL->templates("ckeditor",
 					"<lang:group_ckeditor>",
 					array(
-						"codebuttons" => ckplugin_gettemplate('codebuttons')
+						"codebuttons" => ckplugin_gettemplate('codebuttons', 0, 0)
 					)
 				);
 }

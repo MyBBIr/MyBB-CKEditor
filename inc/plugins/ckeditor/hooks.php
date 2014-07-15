@@ -57,10 +57,10 @@ function ckeditor_parser($m){
 	{
 		while(preg_match("#\[tr\](.*?)\[/tr\]#si", $m1[1], $m2))
 		{
-			$m2[1] = preg_replace("#\[td\](.*?)\[/td\]#si", "<td>$1</td>", $m2[1]);
+			$m2[1] = preg_replace("#\[td\](.*?)\[/td\]#si", '<td style="border: 1px dashed #999;padding: 3px 5px;vertical-align: top;min-height:20px;">$1</td>', $m2[1]);
 			$m1[1] = str_replace($m2[0], '<tr>'.$m2[1].'</tr>', $m1[1]);
 		}
-		$m = str_replace($m1[0], '<table class="ckeditor_table">'.$m1[1].'</table>', $m);
+		$m = str_replace($m1[0], '<table class="ckeditor_table" style="width: 100%;border-collapse:collapse;border-spacing:0;table-layout:fixed;border: 2px solid #333;background:#fff;">'.$m1[1].'</table>', $m);
 	}
 
 	return $m;
