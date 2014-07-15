@@ -7,4 +7,6 @@ $l['ckeditor_upload_draghere'] = 'Drag Here';
 $l['ckeditor_upload_browse'] = 'Browse';
 $l['ckeditor_upload_hide'] = 'Hide';
 $l['ckeditor_upload_inserttoeditor'] = 'Insert to Editor';
+
+$l['ckeditor_placeholder'] = 'Write something...';
 ?>

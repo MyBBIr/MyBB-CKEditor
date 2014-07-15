@@ -8,6 +8,7 @@
 		language: '{$lang->settings['htmllang']}',
 		fontSize_sizes: '{$lang->editor_size_xx_small}/xx-small;{$lang->editor_size_x_small}/x-small;{$lang->editor_size_small}/small;{$lang->editor_size_medium}/medium;{$lang->editor_size_large}/large;{$lang->editor_size_x_large}/x-large;{$lang->editor_size_xx_large}/xx-large',
 		fontSize_defaultLabel: '{$lang->editor_size_x_small}',
+		placeholder: '{$lang->ckeditor_placeholder}',
 		extraPlugins: '{$divarea}',
 		{$smilies}
 	};

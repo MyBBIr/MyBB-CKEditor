@@ -7,4 +7,6 @@ $l['ckeditor_upload_draghere'] = 'به اینجا بکشید.';
 $l['ckeditor_upload_browse'] = 'انتخاب فایل';
 $l['ckeditor_upload_hide'] = 'پنهان سازی';
 $l['ckeditor_upload_inserttoeditor'] = 'افزودن به ویرایشگر';
+
+$l['ckeditor_placeholder'] = 'چیزی را بنویسید...';
 ?>
