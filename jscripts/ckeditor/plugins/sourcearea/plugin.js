@@ -32,6 +32,8 @@
 						height: '100%',
 						resize: 'none',
 						outline: 'none',
+						'box-sizing': 'border-box',
+						'padding': '20px',
 						color: '#333',
 						'text-align': (editor.config.direction == 'ltr')?'left':'right'
 					},
@@ -40,6 +42,9 @@
 				// Make sure that source code is always displayed LTR,
 				// regardless of editor language (#10105).
 				textarea.setAttribute( 'dir', editor.config.direction );
+
+				// Placeholder:
+				textarea.setAttribute( 'placeholder', editor.config.placeholder );
 
 				textarea.addClass( 'cke_source cke_reset cke_enable_context_menu' );
 				editor.ui.space( 'contents' ).addClass('textareackcontnet');
@@ -89,7 +94,7 @@
 					editor.getCommand( 'numberedlist' ).setState(CKEDITOR.TRISTATE_OFF);
 					editor.getCommand( 'bulletedlist' ).setState(CKEDITOR.TRISTATE_OFF);
 					editor.getCommand( 'blockquote' ).setState(CKEDITOR.TRISTATE_OFF);
-					editor.getCommand( 'video' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'videos' ).setState(CKEDITOR.TRISTATE_OFF);
 
 				} else {
 					editor.ui.space( 'contents' ).removeClass('textareackcontnet');

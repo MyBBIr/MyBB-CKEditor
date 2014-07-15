@@ -1,6 +1,6 @@
 /**
  * @file Configuration helper plugin for CKEditor
- * Copyright (C) 2012 Alfonso Martيnez de Lizarrondo
+ * Copyright (C) 2012 Alfonso Martnez de Lizarrondo
  *
  */
 (function() {
