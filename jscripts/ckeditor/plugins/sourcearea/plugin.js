@@ -94,8 +94,8 @@
 					editor.getCommand( 'numberedlist' ).setState(CKEDITOR.TRISTATE_OFF);
 					editor.getCommand( 'bulletedlist' ).setState(CKEDITOR.TRISTATE_OFF);
 					editor.getCommand( 'blockquote' ).setState(CKEDITOR.TRISTATE_OFF);
-					editor.getCommand( 'videos' ).setState(CKEDITOR.TRISTATE_OFF);
-
+					editor.getCommand( 'bidirtl' ).setState(CKEDITOR.TRISTATE_OFF);
+					editor.getCommand( 'bidiltr' ).setState(CKEDITOR.TRISTATE_OFF);
 				} else {
 					editor.ui.space( 'contents' ).removeClass('textareackcontnet');
 				}

@@ -33,9 +33,8 @@
 			return;
 
 		var selectionDir = useComputedState ? selectedElement.getComputedStyle( 'direction' ) : selectedElement.getStyle( 'direction' ) || selectedElement.getAttribute( 'dir' );
-
-		editor.getCommand( 'bidirtl' ).setState( selectionDir == 'rtl' ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
-		editor.getCommand( 'bidiltr' ).setState( selectionDir == 'ltr' ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
+		editor.getCommand( 'bidirtl' ).setState( selectionDir == 'rtl' && editor.mode != 'source' ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
+		editor.getCommand( 'bidiltr' ).setState( selectionDir == 'ltr' && editor.mode != 'source' ? CKEDITOR.TRISTATE_ON : CKEDITOR.TRISTATE_OFF );
 	}
 
 	function handleMixedDirContent( editor, path ) {
@@ -137,7 +136,12 @@
 				setToolbarStates( editor, path );
 				handleMixedDirContent( editor, path );
 			},
+			modes: { wysiwyg: 1, source: 1 },
 			exec: function( editor ) {
+				if(editor.mode == 'source') {
+					CKEDITOR.performInsert('[dir='+dir+']','[/dir]',false);
+					return;
+				}
 				var selection = editor.getSelection(),
 					enterMode = editor.config.enterMode,
 					ranges = selection.getRanges();
