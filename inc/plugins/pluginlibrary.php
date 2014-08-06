@@ -29,10 +29,10 @@ if(!defined("IN_MYBB"))
 function pluginlibrary_info()
 {
     return array(
-        "name"          => "PluginLibrary افزونه کتابخانه",
-        "description"   => "A collection of useful functions for other plugins. مجموعه ای از توابع مفید برای دیگر افزونه ها",
+        "name"          => "PluginLibrary",
+        "description"   => "A collection of useful functions for other plugins.",
         "website"       => "http://mods.mybb.com/view/pluginlibrary",
-        "author"        => "Andreas Klauer نویسنده افزونه : آندریاس کلائر",
+        "author"        => "Andreas Klauer",
         "authorsite"    => "mailto:Andreas.Klauer@metamorpher.de",
         "version"       => "12",
         "guid"          => "839e9d72e2875a51fccbc0257dfeda03",

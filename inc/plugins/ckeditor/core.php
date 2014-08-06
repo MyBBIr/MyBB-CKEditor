@@ -59,7 +59,7 @@ function ckeditor_build($bind="message") {
 			$divarea = 'divarea,';
 		}
 		if(!isset($headerinclude) || !stristr('jscripts/ckeditor/ckeditor.js',$headerinclude)) {
-			$jsfiles = '<script type="text/javascript">if(typeof jQuery == \'undefined\') document.write(\'<script type="text\\/javascript" src="<bburl>/jscripts/ckeditor/ckeditor.js"><\\/script>\');</script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/ckeditor.js"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js"></script>';
+			$jsfiles = '<script type="text/javascript">if(typeof jQuery == \'undefined\') document.write(\'<script type="text\\/javascript" src="<bburl>/jscripts/ckeditor/jquery.min.js"><\\/script>\');</script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/ckeditor.js"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js"></script>';
 		}
 		if(defined("IN_ADMINCP"))
 		{
