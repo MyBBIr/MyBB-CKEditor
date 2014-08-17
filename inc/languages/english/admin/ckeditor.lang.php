@@ -11,7 +11,7 @@
 	$l['ckeditor_editormode'] = 'Editor Mode';
 	$l['ckeditor_disablelocations'] = '';
 	$l['ckeditor_disablelocations'] = 'Disabled locations';
-	$l['ckeditor_disablelocations_desc'] = 'Please enter places the CKEditor don\'t shown in those, Separate them with a comma (,).';
+	$l['ckeditor_disablelocations_desc'] = 'Please enter places the CKEditor don\'t shown in those, Eeach location in a new line.';
 	$l['ckeditor_autosave'] = 'How often CKEditor auto save the content. (in seconds)';
 	$l['ckeditor_autosave_desc'] = 'If you want disable auto saving please enter 0.';
 	$l['ckeditor_wysiwyg'] = 'WYSIWYG Mode';
