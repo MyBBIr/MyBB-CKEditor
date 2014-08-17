@@ -18,4 +18,6 @@
 	$l['ckeditor_source'] = 'حالت منبع';
 	$l['ckeditor_height'] = 'ارتفاع ویرایشگر';
 	$l['ckeditor_maxheight'] = 'حداکثر ارتفاع ویرایشگر';
+	$l['ckeditor_color'] = 'رنگ ویرایشگر';
+	$l['ckeditor_theme'] = 'پوسته‌ی ویرایشگر';
 ?>

@@ -18,4 +18,6 @@
 	$l['ckeditor_source'] = 'Source Mode';
 	$l['ckeditor_height'] = 'Editor Height (in pixel)';
 	$l['ckeditor_maxheight'] = 'Maximum Height of CKEditor (in pixel)';
+	$l['ckeditor_color'] = 'The color of the CKEditor';
+	$l['ckeditor_theme'] = 'CKEditor Theme';
 ?>

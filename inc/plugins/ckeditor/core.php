@@ -184,6 +184,36 @@ EOF;
 
 	return $clickablesmilies;
 }
+
+function ckeditor_getthemeeditors() {
+	global $setting;
+	$select = '<select name="upsetting['.$setting['name'].']">';
+	$options = array();
+	$editor_theme_root = MYBB_ROOT."jscripts/ckeditor/skins/";
+	if($dh = @opendir($editor_theme_root))
+	{
+		while($dir = readdir($dh))
+		{
+			if($dir == ".svn" || $dir == "." || $dir == ".." || !is_dir($editor_theme_root.$dir))
+			{
+				continue;
+			}
+			$options[$dir] = ucfirst(str_replace('_', ' ', $dir));
+			if ($setting['value'] == $dir)
+			{
+				$select .= '<option value="'.$dir.'" selected="selected">'.$options[$dir].'</option>';
+			}
+			else
+			{
+				$select .= '<option value="'.$dir.'">'.$options[$dir].'</option>';
+			}
+		}
+	}
+	$select .= '</select>';
+	return $select;
+
+}
+
 /* Functions - end */
 
 ?>

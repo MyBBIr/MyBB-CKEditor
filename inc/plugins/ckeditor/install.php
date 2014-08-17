@@ -103,6 +103,19 @@ function ckeditor_activate(){
 							"description" => '',
 							"optionscode" => "text",
 							"value" => 450
+						),
+						"color" => array(
+							"title" => $lang->ckeditor_color,
+							"description" => '',
+							"optionscode" => "text",
+							"value" => '#cecece'
+						),
+						"theme" => array(
+							"title" => $lang->ckeditor_theme,
+							"description" => '',
+							"optionscode" => 'php
+".ckeditor_getthemeeditors()."',
+							"value" => 'moonocolor'
 						)
 					)
 				);

@@ -11,6 +11,8 @@
 		fontSize_defaultLabel: '{$lang->editor_size_x_small}',
 		placeholder: '{$lang->ckeditor_placeholder}',
 		startupMode: '{$mybb->settings['ckeditor_editormode']}',
+		uiColor: '{$mybb->settings['ckeditor_color']}',
+		skin: '{$mybb->settings['ckeditor_theme']}',
 		extraPlugins: '{$divarea}',
 		{$smilies}
 	};
