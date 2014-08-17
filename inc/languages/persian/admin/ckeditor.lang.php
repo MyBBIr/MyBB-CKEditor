@@ -8,4 +8,14 @@
 	$l['group_ckeditor'] = '<div style="float:left">CKEditor Templates</div>قالب‌های ویرایشگر CKEditor';
 	$l['ckeditor_activate'] = 'فعال سازی پلاگین';
 	$l['ckeditor_userdivarea'] = 'استفاده از تگ div برای محیط ویرایشگر';
+	$l['ckeditor_editormode'] = 'حالت ویرایش‌گر';
+	$l['ckeditor_disablelocations'] = '';
+	$l['ckeditor_disablelocations'] = 'مکان‌های غیرمجاز';
+	$l['ckeditor_disablelocations_desc'] = 'نام فایل‌هایی که می‌خواهید ویرایشگر در آن اجرا نشود را وارد کنید. نام هر فایل در یک خط وارد نمائید.';
+	$l['ckeditor_autosave'] = 'متن ویرایشگر چندثانیه یک‌بار به صورت خودکار ذخیره شود؟';
+	$l['ckeditor_autosave_desc'] = 'برای غیرفعال سازی ذخیره خودکار 0 را وارد نمائید';
+	$l['ckeditor_wysiwyg'] = 'حالت پیشرفته';
+	$l['ckeditor_source'] = 'حالت منبع';
+	$l['ckeditor_height'] = 'ارتفاع ویرایشگر';
+	$l['ckeditor_maxheight'] = 'حداکثر ارتفاع ویرایشگر';
 ?>

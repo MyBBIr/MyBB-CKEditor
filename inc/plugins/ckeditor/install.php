@@ -71,15 +71,46 @@ function ckeditor_activate(){
 						),
 						"usedivarea" => array(
 							"title" => $lang->ckeditor_userdivarea,
-							"description" => ''
+							"description" => '',
+							"value" => 0
 						),
+						"editormode" => array(
+							"title" => $lang->ckeditor_editormode,
+							"description" => $lang->ckeditor_editormode_desc,
+							"optionscode" => "select\nwysiwyg={$lang->ckeditor_wysiwyg}\nsource={$lang->ckeditor_source}",
+							"value" => "wysiwyg"
+						),
+						"disablelocation" => array(
+							"title" => $lang->ckeditor_disablelocations,
+							"description" => $lang->ckeditor_disablelocations_desc,
+							"optionscode" => "textarea",
+							"value" => ''
+						),
+						"autosave" => array(
+							"title" => $lang->ckeditor_autosave,
+							"description" => $lang->ckeditor_autosave_desc,
+							"optionscode" => "text",
+							"value" => 25
+						),
+						"height" => array(
+							"title" => $lang->ckeditor_height,
+							"description" => '',
+							"optionscode" => "text",
+							"value" => 250
+						),
+						"maxheight" => array(
+							"title" => $lang->ckeditor_maxheight,
+							"description" => '',
+							"optionscode" => "text",
+							"value" => 450
+						)
 					)
 				);
 	$PL->edit_core('ckeditor', 'inc/functions.php',
                array('search' => 'function build_mycode_inserter($bind="message")
 {',
                      'replace' => 'function build_mycode_inserter($bind="message")
-{global $mybb;if(function_exists("ckeditor_build")) { return ckeditor_build($bind);}'),
+{if(function_exists("ckeditor_build") && is_ckeditor_avilable()) { return ckeditor_build($bind);}'),
                true);
 }
 

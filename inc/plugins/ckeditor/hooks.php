@@ -14,7 +14,7 @@ function ckedtior_admin_style_templates() {
 $plugins->add_hook('xmlhttp','ckeditor_inline_editor');
 function ckeditor_inline_editor(){
 	global $mybb, $codebuttons;
-	if($mybb->settings['ckeditor_inlineedit'] && $mybb->input['action'] == "edit_post" && $mybb->input['do'] == "get_post") {
+	if($mybb->input['action'] == "edit_post" && $mybb->input['do'] == "get_post") {
 		$codebuttons = build_mycode_inserter("quickedit_".intval($mybb->input['pid']));
 	}
 }
@@ -23,6 +23,10 @@ $plugins->add_hook('showthread_start','ckeditor_quickreply');
 function ckeditor_quickreply(){
 	global $mybb, $forumpermissions, $thread, $fid, $forum;
 	global $codebuttons, $smilieinserter;
+	if(!is_ckeditor_avilable('quickreply'))
+	{
+		return NULL;
+	}
 	if(($forumpermissions['canpostreplys'] != 0 && $mybb->user['suspendposting'] != 1 && ($thread['closed'] != 1 || is_moderator($fid)) && $mybb->settings['quickreply'] != 0 && $mybb->user['showquickreply'] != '0' && $forum['open'] != 0) && ($mybb->settings['bbcodeinserter'] != 0 && $forum['allowmycode'] != 0 && (!$mybb->user['uid'] || $mybb->user['showcodebuttons'] != 0))) {
 		$codebuttons = build_mycode_inserter("message");
 		if($forum['allowsmilies'] != 0)

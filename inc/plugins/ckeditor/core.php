@@ -41,6 +41,22 @@ function ckplugin_gettemplate($title, $eslashes=1, $htmlcomments=1) {
 	return $template;
 }
 
+function is_ckeditor_avilable($file = THIS_SCRIPT)
+{
+	global $mybb;
+	$dsblocations = $mybb->settings['ckeditor_disablelocation'];
+	$dsblocations = str_replace(array("\r", " "), '', $dsblocations);
+	$dsblocations = explode("\n", $dsblocations);
+	if(in_array($file, $dsblocations))
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
 function ckeditor_build($bind="message") {
 	global $db, $mybb, $theme, $templates, $lang, $plugins, $headerinclude;
 	$lang->load('ckeditor');
