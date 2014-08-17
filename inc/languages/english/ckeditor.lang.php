@@ -9,4 +9,8 @@ $l['ckeditor_upload_hide'] = 'Hide';
 $l['ckeditor_upload_inserttoeditor'] = 'Insert to Editor';
 
 $l['ckeditor_placeholder'] = 'Write something...';
+
+$l['ckeditor_autosaves'] = 'Auto Saves';
+$l['ckeditor_autosave_disabled'] = 'You have disabled AutoSave.';
+$l['ckeditor_no_autosave'] = 'There aren\'t any AutoSaves now.';
 ?>

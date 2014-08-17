@@ -12,49 +12,56 @@ var autosave = function($btn, e, message)
 
 		if(!message)
 		{
-			$elm.html('<h3>ذخیره‌های خودکار</h3><div class="autosavecontent" style="height:250px"></div>');
+			$elm.html('<h3>'+ lang.ckeditor_autosaves +'</h3><div class="autosavecontent" style="height:250px"></div>');
 			var i = 0;
-			if(localStorage.getItem('autosave'))
+			if(e.editor.config.clearautosave == 1)
 			{
-				myautosave = JSON.parse(localStorage.getItem('autosave'));
-				jQuery.each( myautosave, function( key, value ) {
-					value = decodeURIComponent(value);
-					key = key.replace('a_', '');
-					if(key < timenow - 3 * 24 * 60 * 60 * 1000 || value.length < 5)
-					{
-						delete myautosave['a_' + key];
-						localStorage.setItem('autosave', JSON.stringify(myautosave));
-						return;
-					}
-					++i;
-					row_time = moment.unix(key / 1000).fromNow();
-					message = value.substr(0, 50);
-					if(value.length > 50)
-					{
-						message += '...';
-					}
-					message = message.replace(/>/g, '&gt;');
-					message = message.replace(/</g, '&lt;');
-					$row = jQuery('<div class="autosaverow" data-timenow="'+key+'" />');
-					$row.click(function(ev){
-						//timenow = jQuery(this).data('timenow');
-						if(jQuery(ev.target).closest('.autosaverow_remove').length == 0) {
-							e.editor.setData(value);
-						}
-						delete myautosave['a_' + key];
-						localStorage.setItem('autosave', JSON.stringify(myautosave));
-
-						jQuery(this).slideUp();
-					});
-					$row.append('<a class="autosaverow_remove" href="javascript:;">x</a>');
-					$row.append('<span class="autosaverow_time">' + row_time + '</span>');
-					$row.append('<div class="autosaverow_content">' + message + '</span>');
-					$elm.find('.autosavecontent').prepend($row);
-				});
+				$elm.find('.autosavecontent').prepend(lang.ckeditor_autosave_disabled);
 			}
-			if(i == 0)
+			else
 			{
-				$elm.find('.autosavecontent').prepend('هیچ ذخیره‌ی خودکاری یافت نشد.');
+				if(localStorage.getItem('autosave'))
+				{
+					myautosave = JSON.parse(localStorage.getItem('autosave'));
+					jQuery.each( myautosave, function( key, value ) {
+						value = decodeURIComponent(value);
+						key = key.replace('a_', '');
+						if(key < timenow - 3 * 24 * 60 * 60 * 1000 || value.length < 5)
+						{
+							delete myautosave['a_' + key];
+							localStorage.setItem('autosave', JSON.stringify(myautosave));
+							return;
+						}
+						++i;
+						row_time = moment.unix(key / 1000).fromNow();
+						message = value.substr(0, 50);
+						if(value.length > 50)
+						{
+							message += '...';
+						}
+						message = message.replace(/>/g, '&gt;');
+						message = message.replace(/</g, '&lt;');
+						$row = jQuery('<div class="autosaverow" data-timenow="'+key+'" />');
+						$row.click(function(ev){
+							//timenow = jQuery(this).data('timenow');
+							if(jQuery(ev.target).closest('.autosaverow_remove').length == 0) {
+								e.editor.setData(value);
+							}
+							delete myautosave['a_' + key];
+							localStorage.setItem('autosave', JSON.stringify(myautosave));
+
+							jQuery(this).slideUp();
+						});
+						$row.append('<a class="autosaverow_remove" href="javascript:;">x</a>');
+						$row.append('<span class="autosaverow_time">' + row_time + '</span>');
+						$row.append('<div class="autosaverow_content">' + message + '</span>');
+						$elm.find('.autosavecontent').prepend($row);
+					});
+				}
+				if(i == 0)
+				{
+					$elm.find('.autosavecontent').prepend(lang.ckeditor_no_autosave);
+				}
 			}
 		}
 		else
@@ -102,7 +109,10 @@ messageEditor.prototype = {
 		}
 		eval('this.editor = CKEDITOR.instances.'+this.editorid+';');
 		this.updateoldtextarea(this.editor);
-		this.editor.on('instanceReady', this.autosave);
+		if(CKEDITOR.config.autosave > 0)
+		{
+			this.editor.on('instanceReady', this.autosave);
+		}
 		this.editor.on('instanceReady', this.stylesheet);
 	},
 	
@@ -320,35 +330,38 @@ messageEditor.prototype = {
 			autosave($autosave, e);
 		});
 		setInterval(function(){
-			myautosave = JSON.parse(localStorage.getItem('autosave'));
-			message = e.editor.getData(1);
-			date = new Date();
-			var timenow = date.valueOf();
-			ok = false;
-
-			if(message.length < 10 || message == e.editor.config.placeholder)
-				return;
-			
-			message = encodeURIComponent(message);
-
-			if(myautosave)
+			if(e.editor.config.clearautosave == 0)
 			{
-				jQuery.each( myautosave, function( key, value ) {
-					if(value == message) ok = true;
-				});
-			}
-			else
-			{
-				myautosave = {};
-			}
-			if(ok)
-				return;
+				myautosave = JSON.parse(localStorage.getItem('autosave'));
+				message = e.editor.getData(1);
+				date = new Date();
+				var timenow = date.valueOf();
+				ok = false;
 
-			
-			myautosave['a_' + timenow] = message;
-			
-			localStorage.setItem('autosave', JSON.stringify(myautosave))
-		}, 25000);
+				if(message.length < 10 || message == e.editor.config.placeholder)
+					return;
+				
+				message = encodeURIComponent(message);
+
+				if(myautosave)
+				{
+					jQuery.each( myautosave, function( key, value ) {
+						if(value == message) ok = true;
+					});
+				}
+				else
+				{
+					myautosave = {};
+				}
+				if(ok)
+					return;
+
+				
+				myautosave['a_' + timenow] = message;
+				
+				localStorage.setItem('autosave', JSON.stringify(myautosave));
+			}
+		}, CKEDITOR.config.autosave*1000);
 	}
 };
 

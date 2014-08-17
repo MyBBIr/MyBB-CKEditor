@@ -222,6 +222,7 @@ bbcodeParser.addBBCode('[img={NUMBER1}x{NUMBER2}]{TEXT_INTAG}[/img]', '<img widt
 bbcodeParser.addBBCode('[img={NUMBER1}x{NUMBER2}]{TEXT_INTAG}[/img]', '<img width="{NUMBER1}" height="{NUMBER2}" src="{TEXT_INTAG}">');
 bbcodeParser.addBBCode('', '<removess>{TEXT}</removess>','htmltobbcode');
 
+
 /**
  * @license Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license

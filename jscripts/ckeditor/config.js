@@ -48,6 +48,24 @@ CKEDITOR.editorConfig = function( config ) {
 	{
 		config.clipboard_defaultContentType = 'html';
 	}
+
+	// My Options -> default paste
+	mycookie = '';
+	cname = 'myoptions_clearautosave';
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	for(var i=0; i<ca.length; i++) {
+		var c = ca[i].trim();
+		if (c.indexOf(name) == 0) mycookie =  c.substring(name.length,c.length);
+	}
+	if(mycookie == 'true')
+	{
+		config.clearautosave = 1;
+	}
+	else
+	{
+		config.clearautosave = 0;
+	}
 	
 	config.placeholder = 'Type here...';
 
