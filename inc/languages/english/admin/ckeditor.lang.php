@@ -25,5 +25,5 @@ $l['ckeditor_placeholder'] = 'Write something...';
 
 $l['ckeditor_autosaves'] = 'Auto Saves';
 $l['ckeditor_autosave_disabled'] = 'You have disabled AutoSave.';
-$l['ckeditor_no_autosave'] = 'There aren\'t any AutoSaves now.';
+$l['ckeditor_no_autosave'] = 'There aren`t any AutoSaves now.';
 ?>
