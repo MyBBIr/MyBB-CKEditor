@@ -37,7 +37,7 @@ function ckplugin_gettemplate($title, $eslashes=1, $htmlcomments=1) {
 	if($eslashes)
 	{
 		$template = str_replace("\\'", "'", addslashes($template));
-	}	
+	}
 	return $template;
 }
 
@@ -75,18 +75,17 @@ function ckeditor_build($bind="message") {
 			$divarea = 'divarea,';
 		}
 		if(!isset($headerinclude) || !stristr('jscripts/ckeditor/ckeditor.js',$headerinclude)) {
-			$jsfiles = '<script type="text/javascript">if(typeof jQuery == \'undefined\') document.write(\'<script type="text\\/javascript" src="<bburl>/jscripts/ckeditor/jquery.min.js"><\\/script>\');</script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/ckeditor.js"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js"></script>';
+			$jsfiles = '<script type="text/javascript" src="<bburl>/jscripts/ckeditor/ckeditor.js"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js"></script>';
 		}
 		if(defined("IN_ADMINCP"))
 		{
 			eval("\$codeinsert = \"".ckplugin_gettemplate("codebuttons")."\";");
-			$codeinsert = str_replace('<bburl>', '../', $codeinsert);
 		}
 		else
 		{
 			eval("\$codeinsert = \"".$templates->get("ckeditor_codebuttons")."\";");
-			$codeinsert = str_replace('<bburl>', $mybb->settings['bburl'].'/', $codeinsert);
 		}
+		$codeinsert = str_replace('<bburl>', $mybb->asset_url, $codeinsert);
 	}
 	
 	return $codeinsert;
@@ -95,7 +94,7 @@ function ckeditor_build($bind="message") {
 
 function ckesmiliesjs_build($finds = 0)
 {
-	global $cache, $smiliecache, $theme, $templates, $lang, $mybb, $smiliecount;
+	global $cache, $theme, $templates, $lang, $mybb;
 
 	if($mybb->settings['smilieinserter'] != 0 && $mybb->settings['smilieinsertercols'] && $mybb->settings['smilieinsertertot'])
 	{
@@ -143,6 +142,8 @@ function ckesmiliesjs_build($finds = 0)
 
 			foreach($mysmilies as $find => $image)
 			{
+				$find_multi = explode("\n", $find);
+				$find = $find_multi[0];
 				$find = addslashes(htmlspecialchars_uni($find));
 				$image = addslashes($image);
 				$image2 = ((substr($image, 0, 4) != "http" && defined("IN_ADMINCP"))?('../'.$image):$image);
@@ -215,5 +216,3 @@ function ckeditor_getthemeeditors() {
 }
 
 /* Functions - end */
-
-?>

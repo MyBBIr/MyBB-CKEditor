@@ -14,9 +14,8 @@ function ckeditor_info()
 		"website"       => "https://github.com/ATofighi/MyBB-CKEditor",
 		"author"        => "AliReza_Tofighi",
 		"authorsite"    => "http://my-bb.ir",
-		"version"       => "0.1 ".$lang->demo,
-		"guid"          => "",
-		"compatibility" => "16*"
+		"version"       => "0.8",
+		"compatibility" => "18*"
 	);
 	if(ckeditor_is_installed() && $plugins_cache['active']['ckeditor'])
 	{
@@ -26,4 +25,3 @@ function ckeditor_info()
 	}
 	return $info;
 }
-?>

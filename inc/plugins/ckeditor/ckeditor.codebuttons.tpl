@@ -1,6 +1,9 @@
 {$jsfiles}
 <script type="text/javascript">
 <!--
+	lang.ckeditor_autosaves = '{$lang->ckeditor_autosaves}';
+	lang.ckeditor_autosave_disabled = '{$lang->ckeditor_autosave_disabled}';
+	lang.ckeditor_no_autosave = '{$lang->ckeditor_no_autosave}';
 	{$smiliesmap}
 	CKEDITOR.config.direction = '{$direction}';
 	CKEDITOR.config.autosave = '{$mybb->settings['ckeditor_autosave']}';
@@ -17,13 +20,21 @@
 		{$smilies}
 	};
 	CKEDITOR.replace("{$bind}", opt_editor);
-	var clickableEditor = new messageEditor("{$bind}");
+	var clickableEditor = new messageEditor
+	clickableEditor.setup("{$bind}");
 	CKEDITOR.performInsert = function(a,b,c,d) {
 		return clickableEditor.performInsert(a,b,c,d);
 	}
 	if(clickableEditor)
 	{
 		clickableEditor.bindSmilieInserter("clickable_smilies");
+	}
+	
+	MyBBEditor = {
+		insertText: function(a)
+		{
+			clickableEditor.Insert(a, bbcodeParser.bbcodeToHtml(a));
+		}
 	}
 // -->
 </script>

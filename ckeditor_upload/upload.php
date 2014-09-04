@@ -28,7 +28,7 @@ if(isset($_FILES['upl']) && $_FILES['upl']['error'] == 0){
 		echo json_encode(array("status" => "error", "message" => $lang->ckeditor_upload_size_big));
 		exit;
 	}
-	$_FILES['upl']['name'] = time().'_'.rand(10000000,9999999).'.'.$extension;
+	$_FILES['upl']['name'] = time().'_'.random_str(15).'.'.$extension;
 	if(move_uploaded_file($_FILES['upl']['tmp_name'], 'uploads/'.$_FILES['upl']['name'])){
 		echo json_encode(array("status" => "success", "filename" => $mybb->settings['bburl'].'/ckeditor_upload/uploads/'.$_FILES['upl']['name']));
 		exit;

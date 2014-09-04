@@ -11,11 +11,11 @@ function ckedtior_admin_style_templates() {
 	$lang->load('ckeditor');
 }
 
-$plugins->add_hook('xmlhttp','ckeditor_inline_editor');
-function ckeditor_inline_editor(){
-	global $mybb, $codebuttons;
-	if($mybb->input['action'] == "edit_post" && $mybb->input['do'] == "get_post") {
-		$codebuttons = build_mycode_inserter("quickedit_".intval($mybb->input['pid']));
+$plugins->add_hook('private_read_end','ckeditor_pm_quickreply');
+function ckeditor_pm_quickreply(){
+	global $mybb, $quickreply;
+	if($quickreply) {
+		$quickreply .= build_mycode_inserter("message");
 	}
 }
 
@@ -69,4 +69,3 @@ function ckeditor_parser($m){
 
 	return $m;
 }
-?>

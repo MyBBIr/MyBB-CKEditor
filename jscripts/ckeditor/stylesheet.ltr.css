@@ -1,0 +1,250 @@
+.autosave {
+	cursor: pointer!important;
+	float: right;
+}
+
+.autosaveblock {
+	position: absolute;
+	background: #fff;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	z-index: 999999;
+	padding: 5px;
+	width: 400px;
+	text-align: left;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.autosavecontent {
+	max-height: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin: 0 5px;
+}
+
+.autosaveblock:before {
+	position: absolute;
+	bottom: -9px;
+	right: 5px;
+	border-right: 9px solid transparent;
+	border-left: 9px solid transparent;
+	border-top: 9px solid #ccc;
+	content: ' ';
+	z-index: 1000000;
+}
+
+.autosaveblock:after {
+	position: absolute;
+	bottom: -8px;
+	right: 6px;
+	border-right: 8px solid transparent;
+	border-left: 8px solid transparent;
+	border-top: 8px solid #fff;
+	content: ' ';
+	z-index: 1000001;
+}
+
+.autosaveblock h3 {
+	margin: 3px 0;
+	font-size: 13px;
+}
+
+.autosaverow {
+	padding: 5px;
+	margin: 0 5px 0 0;
+	width: auto;
+	border: 1px solid #fff;
+	border-bottom: 1px dashed #ccc;
+	font-size: 11px;
+}
+
+
+.autosaverow:hover {
+	background: rgb(253,253,255); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(253,253,255,1) 0%, rgba(232,238,247,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, right top, right bottom, color-stop(0%,rgba(253,253,255,1)), color-stop(100%,rgba(232,238,247,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(253,253,255,1) 0%,rgba(232,238,247,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(253,253,255,1) 0%,rgba(232,238,247,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(253,253,255,1) 0%,rgba(232,238,247,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(253,253,255,1) 0%,rgba(232,238,247,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fdfdff', endColorstr='#e8eef7',GradientType=0 ); /* IE6-9 */
+	border-radius: 4px;
+	border: 1px solid #b2d3fb;
+}
+
+.autosaverow_remove, .autosaverow_remove:link, .autosaverow_remove:hover, .autosaverow_remove:visited, .autosaverow_remove:active {
+	float: right;
+	cursor: pointer;
+	text-decoration: none;
+	color: #f00;
+	font-size: 12px;
+}
+
+.autosaverow_time {
+	color: #666;
+	font-style: italic;
+}
+
+.autosaverow_content {
+	font-size: 12px;
+}
+
+
+/* contents.css for div area mode
+ https://github.com/ATofighi/MyBB-CKEditor/issues/30
+ */
+/*
+Copyleft (c) 2003-2014, CKSource - Frederico Knabben. All lefts reserved.
+For licensing, see LICENSE.md or http://ckeditor.com/license
+*/
+
+.cke_wysiwyg_div
+{
+	/* Font */
+	font-family: Tahoma, sans-serif, Arial, Verdana, "Trebuchet MS";
+	font-size: 12px;
+
+	/* Text color */
+	color: #333;
+
+	/* Remove the background color to make it transparent */
+	background-color: #fff;
+
+	margin: 0;
+}
+
+.cke_wysiwyg_div.placeholder {
+	color: #999;
+}
+
+.cke_wysiwyg_div .cke_editable
+{
+	font-size: 13px;
+	line-height: 1.6;
+}
+
+.cke_wysiwyg_div blockquote
+{
+	font-style: italic;
+	font-family: Tahoma, Georgia, Times, "Times New Roman", serif;
+	padding: 2px 0;
+	border-style: solid;
+	border-color: #ccc;
+	border-width: 0;
+	margin:5px;
+}
+
+.cke_wysiwyg_div .cke_contents_ltr blockquote
+{
+	padding-right: 20px;
+	padding-left: 8px;
+	border-right-width: 5px;
+}
+
+.cke_wysiwyg_div .cke_contents_rtl blockquote
+{
+	padding-right: 8px;
+	padding-left: 20px;
+	border-left-width: 5px;
+}
+
+.cke_wysiwyg_div a
+{
+	color: #0782C1;
+}
+
+.cke_wysiwyg_div ol, .cke_wysiwyg_div ul, .cke_wysiwyg_div dl
+{
+	/* IE7: reset rtl list margin. (#7334) */
+	*margin-left: 0px;
+	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
+	padding: 0 40px;
+}
+
+.cke_wysiwyg_div h1, .cke_wysiwyg_div h2, .cke_wysiwyg_div h3, .cke_wysiwyg_div h4, .cke_wysiwyg_div h5, .cke_wysiwyg_div h6
+{
+	font-weight: normal;
+	line-height: 1.2;
+}
+
+.cke_wysiwyg_div hr
+{
+	border: 0px;
+	border-top: 1px solid #ccc;
+}
+
+.cke_wysiwyg_div img {
+	max-width:100%;
+	max-height:auto;
+	width:auto;
+	height:auto;
+}
+
+.cke_wysiwyg_div img.left
+{
+	border: 1px solid #ccc;
+	float: left;
+	margin-right: 15px;
+	padding: 5px;
+}
+
+.cke_wysiwyg_div img.right
+{
+	border: 1px solid #ccc;
+	float: right;
+	margin-left: 15px;
+	padding: 5px;
+}
+
+.cke_wysiwyg_div pre
+{
+	white-space: pre-wrap; /* CSS 2.1 */
+	word-wrap: break-word; /* IE7 */
+}
+
+.cke_wysiwyg_div .marker
+{
+	background-color: Yellow;
+}
+
+.cke_wysiwyg_div span[lang]
+{
+   font-style: italic;
+}
+
+.cke_wysiwyg_div figure
+{
+	text-align: center;
+	border: solid 1px #ccc;
+	border-radius: 2px;
+	background: rgba(0,0,0,0.05);
+	padding: 10px;
+	margin: 10px 20px;
+	display: block; /* For IE8 */
+}
+
+.cke_wysiwyg_div figure figcaption
+{
+	text-align: center;
+	display: block; /* For IE8 */
+}
+
+.cke_wysiwyg_div .textareackcontnet {
+	overflow:auto;
+}
+
+
+.cke_wysiwyg_div table {
+	width: 100%;
+	border-collapse:collapse;
+	border-spacing:0;
+	table-layout:fixed;
+	border: 2px solid #333;
+}
+
+.cke_wysiwyg_div table td {
+	border: 1px dashed #999;
+	padding: 3px 5px;
+	vertical-align: top;
+	min-height:20px;
+}

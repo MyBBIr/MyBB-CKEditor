@@ -129,7 +129,7 @@ section, footer, header, aside{
     top: 20px;
 }
 
-html[dir=ltr] #upload ul li p {
+html #upload ul li p {
 	left: 100px;
 }
 
@@ -158,7 +158,7 @@ html[dir=rtl] #upload ul li p {
 	background:#fff;
 }
 
-html[dir=ltr] #upload ul li canvas, html[dir=ltr] #upload ul li img{
+html #upload ul li canvas, html #upload ul li img{
     left: 32px;
 }
 
@@ -175,7 +175,7 @@ html[dir=rtl] #upload ul li canvas, html[dir=rtl] #upload ul li img{
     cursor:pointer;
 }
 
-html[dir=ltr] #upload ul li span{
+html #upload ul li span{
     right: 33px;
 }
 
@@ -192,7 +192,7 @@ html[dir=rtl] #upload ul li span{
     color:red;
 }
 
-html[dir=ltr] #upload ul li.error p{
+html #upload ul li.error p{
 	left:30px;
 }
 
