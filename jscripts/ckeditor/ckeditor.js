@@ -13,7 +13,7 @@
 		'IDENTIFIER'	: '([a-zA-Z0-9-_]+)',
 		'COLOR'			: '([a-zA-Z]+|#[0-9a-fA-F]{3}|#[0-9a-fA-F]{6})',
 		'NUMBER'		: '([0-9]+)',
-		'ALIGN'			: '(left|right|center)',
+		'ALIGN'			: '(left|right|center|justify)',
 		'FONTSIZE'		: '(xx-small|x-small|small|medium|large|x-large|xx-large)',
 		'TEXT_INTAG'			: '([^\'\\[\\]"><]+)',
 		'TAG_ATTRS'			: '([^\]\[><]+)',
