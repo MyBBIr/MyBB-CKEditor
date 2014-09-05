@@ -8,6 +8,7 @@ $l['sttingsforckeditor'] = 'Settings for CKEditor plugin';
 $l['group_ckeditor'] = 'CKEditor';
 $l['ckeditor_activate'] = 'Turns on or off CKEditor';
 $l['ckeditor_userdivarea'] = 'use "div" element for editor area';
+$l['ckeditor_ajaxbbcodeparser'] = 'Do you want CKEditor use Ajax for parsing BBCode to HTML?';
 $l['ckeditor_editormode'] = 'Editor Mode';
 $l['ckeditor_disablelocations'] = '';
 $l['ckeditor_disablelocations'] = 'Disabled locations';

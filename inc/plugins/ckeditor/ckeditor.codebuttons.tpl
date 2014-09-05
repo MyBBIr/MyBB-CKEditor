@@ -19,6 +19,7 @@
 		extraPlugins: '{$divarea}',
 		{$smilies}
 	};
+	CKEDITOR.ajaxbbcodeparser = '{$mybb->settings['ajaxbbcodeparser']}';
 	CKEDITOR.replace("{$bind}", opt_editor);
 	var clickableEditor = new messageEditor
 	clickableEditor.setup("{$bind}");

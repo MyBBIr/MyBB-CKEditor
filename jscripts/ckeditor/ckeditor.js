@@ -1,4 +1,64 @@
-﻿var bbcodeParser = {};
+﻿
+var Ajax = function(){};
+Ajax.prototype = {
+	
+	create: function()
+	{
+		return (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+	},
+
+	parseRequestData: function(requestData)
+	{
+		var data = null;
+		if (typeof requestData == 'string')
+		{
+			data = requestData;
+		}
+		else if (typeof requestData == 'object')
+		{
+			data = [];
+			for (property in requestData)
+			{
+				if (requestData[property])
+				{
+					var encoded_data = PHP.urlencode(requestData[property]);
+				}
+				else
+				{
+					var encoded_data = '';
+				}
+				data.push(property + '=' + encoded_data); 
+			}
+			data = data.join('&');
+		}
+		return data;
+	},
+
+	open: function(request)
+	{
+		var xmlHttp = this.create();
+		xmlHttp.open(request.type, request.url, request.async);
+		
+		if (request.type && request.type.toUpperCase() == 'POST')
+		{
+			xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		}
+		else
+		{
+			request.type = 'GET';
+		}
+			
+		if ((typeof request.async == 'undefined' || request.async != false) && request.callback)
+		{
+			xmlHttp.onreadystatechange = request.callback;
+		}
+		xmlHttp.send(this.parseRequestData(request.data));
+			
+		return xmlHttp;
+	}
+};
+	
+var bbcodeParser = {};
 (function() {
 	var token_match = /{[A-Z_]+[0-9]*}/g;
 
@@ -136,15 +196,33 @@
 	 * Turns all of the added bbcodes into html
 	 */
 	bbcodeParser.bbcodeToHtml = function(str) {
-		code = str.split("[");
-		codes = (code.length > 20)?20:code.length;
-		// For fix: " [font=times new roman][font=impact]saddass[/font][/font]"
-		for(var j = 0; j <= codes; j++)
+		var old_str = str;
+		if(CKEDITOR.ajaxbbcodeparser == '1' && str)
 		{
-			var i = 0;
+			postData = "m="+encodeURIComponent(str).replace(/\+/g, "%2B");
+			var responseXML = CKEDITOR.MyBB_Ajax.open({
+					url: 'ckeditor.php',
+					type: 'POST',
+					data: postData
+			});
 
-			for(; i < bbcodeParser.bbcode_matches.length; i += 1) {
-				str = str.replace(bbcodeParser.bbcode_matches[i], bbcodeParser.html_tpls[i]);
+			json = jQuery.parseJSON(responseXML.responseText);
+			if(typeof json == 'object' && typeof json.message != 'undefined')
+				str = json.message;
+		}
+
+		if(CKEDITOR.ajaxbbcodeparser != '1' || !str || old_str == str)
+		{
+			code = str.split("[");
+			codes = (code.length > 20)?20:code.length;
+			// For fix: " [font=times new roman][font=impact]saddass[/font][/font]"
+			for(var j = 0; j <= codes; j++)
+			{
+				var i = 0;
+
+				for(; i < bbcodeParser.bbcode_matches.length; i += 1) {
+					str = str.replace(bbcodeParser.bbcode_matches[i], bbcodeParser.html_tpls[i]);
+				}
 			}
 		}
 
@@ -270,3 +348,4 @@ else {
  * @member CKEDITOR
  */
 CKEDITOR.skinName = 'moonocolor';
+CKEDITOR.MyBB_Ajax = new Ajax();

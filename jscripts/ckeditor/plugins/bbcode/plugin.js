@@ -849,10 +849,16 @@ var BBCODEparser_custom_last = function(str)
 
 			function onSetData( evt ) {
 				var bbcode = evt.data.dataValue;
-				bbcode = BBCODEparser_custom_first(bbcode);
+				if(CKEDITOR.ajaxbbcodeparser != '1')
+				{
+					bbcode = BBCODEparser_custom_first(bbcode);
+				}
 				bbcode = bbcodeParser.bbcodeToHtml(bbcode);
 				bbcode = bbcode.replace(/\n/g,'<br>');
-				bbcode = BBCODEparser_custom_last(bbcode);
+				if(CKEDITOR.ajaxbbcodeparser != '1')
+				{
+					bbcode = BBCODEparser_custom_last(bbcode);
+				}
 				evt.data.dataValue = bbcode;
 			}
 

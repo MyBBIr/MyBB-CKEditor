@@ -75,6 +75,11 @@ function ckeditor_activate(){
 							"description" => '',
 							"value" => 0
 						),
+						"ajaxbbcodeparser" => array(
+							"title" => $lang->ckeditor_ajaxbbcodeparser,
+							"description" => '',
+							"value" => 1
+						),
 						"editormode" => array(
 							"title" => $lang->ckeditor_editormode,
 							"description" => $lang->ckeditor_editormode_desc,
