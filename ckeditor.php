@@ -228,6 +228,9 @@ while(preg_match("#\[table\](.*?)\[/table\]#si", $message, $m1))
 	$message = str_replace($m1[0], '<table class="ckeditor_table" style="width: 100%;border-collapse:collapse;border-spacing:0;table-layout:fixed;border: 2px solid #333;background:#fff;">'.$m1[1].'</table>', $message);
 }
 
+// Smilies:
+$message = ckeparser_smilies($message);
+
 // End Code Block:
 if(count($code_matches) > 0)
 {

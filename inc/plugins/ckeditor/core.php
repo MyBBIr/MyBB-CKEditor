@@ -142,7 +142,7 @@ function ckesmiliesjs_build($finds = 0)
 
 			foreach($mysmilies as $find => $image)
 			{
-				$find_multi = explode("\n", $find);
+				$find_multi = explode('\n', $find);
 				$find = $find_multi[0];
 				$find = addslashes(htmlspecialchars_uni($find));
 				$image = addslashes($image);
@@ -152,7 +152,7 @@ function ckesmiliesjs_build($finds = 0)
 				$smilies3 .= "'smilie{$i}': '".$find."', ";
 				$smilies4 .= "'".$image."': 'smilie{$i}', ";
 				$smilies5 .= <<<EOF
-	bbcodeParser.addBBCode('{$find}', '<img src="{$image2}" data-cke-saved-src="{$image}" title="smilie{$i}" alt="smilie{$i}">');
+	bbcodeParser.addBBCode('{$find}', '<img src="{$image2}" data-cke-saved-src="{$image}" title="smilie{$i}" alt="smilie{$i}" class=\"smilie smilie_{$smilie['sid']}\">');
 EOF;
 				if(substr($image, 0, 4) != "http") {
 					$image = $mybb->settings['bburl']."/".$image;
@@ -184,6 +184,64 @@ EOF;
 	}
 
 	return $clickablesmilies;
+}
+
+function ckeparser_smilies($message)
+{
+	global $cache, $theme, $templates, $lang, $mybb;
+
+	if($mybb->settings['smilieinserter'] != 0 && $mybb->settings['smilieinsertercols'] && $mybb->settings['smilieinsertertot'])
+	{
+		if(!$smiliecount)
+		{
+			$smilie_cache = $cache->read("smilies");
+			$smiliecount = count($smilie_cache);
+		}
+
+		if(!$smiliecache)
+		{
+			if(!is_array($smilie_cache))
+			{
+				$smilie_cache = $cache->read("smilies");
+			}
+			foreach($smilie_cache as $smilie)
+			{
+				if($smilie['showclickable'] != 0)
+				{
+					$smiliecache[$smilie['find']] = $smilie['image'];
+				}
+			}
+		}
+
+		unset($smilie);
+
+		if(is_array($smiliecache))
+		{
+			reset($smiliecache);
+			$mysmilies = $smiliecache;
+			arsort($mysmilies);
+			$getmore = '';
+			if($mybb->settings['smilieinsertertot'] >= $smiliecount)
+			{
+				$mybb->settings['smilieinsertertot'] = $smiliecount;
+			}
+			
+			$counter = 0;
+			$i = 0;
+
+			foreach($mysmilies as $find => $image)
+			{
+				$find = htmlspecialchars_uni($find);
+				$find = explode('\n', $find);
+				$image = htmlspecialchars_uni($image);
+				$image2 = ((substr($image, 0, 4) != "http" && defined("IN_ADMINCP"))?('../'.$image):$image);
+				$message = str_ireplace($find, "<img src=\"{$image2}\" data-cke-saved-src=\"{$image}\" title=\"smilie{$i}\" alt=\"smilie{$i}\" class=\"smilie smilie_{$smilie['sid']}\">", $message);
+				++$i;
+			}
+		}
+	}
+
+	return $message;
 }
 
 function ckeditor_getthemeeditors() {
