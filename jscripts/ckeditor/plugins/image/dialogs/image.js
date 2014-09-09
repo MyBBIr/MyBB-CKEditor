@@ -330,6 +330,20 @@
 						this.preview.removeAttribute( 'src' );
 						this.preview.setStyle( 'display', 'none' );
 					}
+					if(editor.mode == 'source') {
+						this.hide();
+						var person = prompt(editor.lang.image.alertUrl,"http://");
+						if (person!=null) {
+							CKEDITOR.performInsert('[img]'+ person + '[/img]','',true);
+						}
+					}
+					else
+					{
+						CKEDITOR.insertpicture = function(img){
+							editor.insertHtml('<img src="'+img+'" />');
+							return false;
+						};
+					}
 				},
 				onOk: function() {
 					if(!this.getValueOf('info', 'txtUrl')) return;
@@ -420,24 +434,6 @@
 					}
 
 					this.commitContent = commitContent;
-				},
-				onShow: function() {
-						if(editor.mode == 'source') {
-							this.hide();
-							var person = prompt(editor.lang.image.alertUrl,"http://");
-							if (person!=null) {
-								CKEDITOR.performInsert('[img]'+ person + '[/img]','',true);
-							}
-						}
-						else
-						{
-							that = this;
-							CKEDITOR.insertpicture = function(img){
-								editor.insertHtml('<img src="'+img+'" />');
-								//that.hide();
-								return false;
-							};
-						}
 				},
 				onHide: function() {
 					if ( this.preview )
@@ -980,7 +976,7 @@
 						commit: function( type, element ) {
 							if ( type == LINK ) {
 								if ( this.getValue() || this.isChanged() ) {
-									var url = decodeURI( this.getValue() );
+									var url = this.getValue();
 									element.data( 'cke-saved-href', url );
 									element.setAttribute( 'href', url );
 
