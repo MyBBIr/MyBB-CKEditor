@@ -217,6 +217,22 @@ $message = preg_replace("#\[img=([0-9]{1,3})x([0-9]{1,3})\](\r\n?|\n?)(https?://
 $message = preg_replace("#\[img align=([a-z]+)\](\r\n?|\n?)(https?://([^<>\"']+?))\[/img\]#is", '<div style="text-align: $1;"><img src="$3" /></div>', $message);
 $message = preg_replace("#\[img=([0-9]{1,3})x([0-9]{1,3}) align=([a-z]+)\](\r\n?|\n?)(https?://([^<>\"']+?))\[/img\]#is", '<div style="text-align: $3;"><img src="$5" width="$1" height="$2" /></div>', $message);
 
+$parser->list_elements = array();
+$parser->list_count = 0;
+
+//Lists:
+// Find all lists
+$message = preg_replace_callback("#(\[list(=(a|A|i|I|1))?\]|\[/list\])#si", array($parser, 'mycode_prepare_list'), $message);
+
+// Replace all lists
+for($i = $parser->list_count; $i > 0; $i--)
+{
+	// Ignores missing end tags
+	$message = preg_replace_callback("#\s?\[list(=(a|A|i|I|1))?&{$i}\](.*?)(\[/list&{$i}\]|$)(\r\n?|\n?)#si", array($parser, 'mycode_parse_list_callback'), $message, 1);
+}
+$message = preg_replace("#</li>([\n\r]+)<li>#si",'</li><li>', $message);
+
+
 // Table:
 while(preg_match("#\[table\](.*?)\[/table\]#si", $message, $m1))
 {
