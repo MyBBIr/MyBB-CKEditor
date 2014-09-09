@@ -75,9 +75,9 @@ function ckeditor_build($bind="message") {
 			$divarea = 'divarea,';
 		}
 		if(!isset($headerinclude) || !stristr('jscripts/ckeditor/ckeditor.js',$headerinclude)) {
-			$jsfiles = '<script type="text/javascript" src="<bburl>/jscripts/ckeditor/ckeditor.js"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js"></script>';
+			$jsfiles = '<script type="text/javascript" src="<bburl>/jscripts/ckeditor/ckeditor.js?ver='.CKEDITOR_VERSIONCODE.'"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js?ver='.CKEDITOR_VERSIONCODE.'"></script>';
 		}
-		if(isset($headerinclude))
+		if(isset($headerinclude) && !stristr('jscripts/ckeditor/ckeditor.js',$headerinclude))
 		{
 			$headerinclude .= str_replace('<bburl>', $mybb->asset_url, $jsfiles);
 			$jsfiles = '';
