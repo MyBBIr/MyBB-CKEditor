@@ -24,6 +24,11 @@ var autosave = function($btn, e, message)
 				{
 					myautosave = JSON.parse(localStorage.getItem('autosave'));
 					$.each( myautosave, function( key, value ) {
+						if(i > 20)
+						{
+							delete myautosave['a_' + key];
+							return;
+						}
 						value = decodeURIComponent(value);
 						key = key.replace('a_', '');
 						if(key < timenow - 3 * 24 * 60 * 60 * 1000 || value.length < 5)
@@ -61,6 +66,10 @@ var autosave = function($btn, e, message)
 				if(i == 0)
 				{
 					$elm.find('.autosavecontent').prepend(lang.ckeditor_no_autosave);
+				}
+				else
+				{
+					localStorage.setItem('autosave', JSON.stringify(myautosave));
 				}
 			}
 		}
