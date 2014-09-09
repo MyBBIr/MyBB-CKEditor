@@ -70,12 +70,17 @@ function ckeditor_build($bind="message") {
 		}
 		$smilies = ckesmiliesjs_build();
 		$smiliesmap = ckesmiliesjs_build(1);
-		$divarea = '';
+		$divarea = $jsfiles = '';
 		if($mybb->settings['ckeditor_usedivarea']) {
 			$divarea = 'divarea,';
 		}
 		if(!isset($headerinclude) || !stristr('jscripts/ckeditor/ckeditor.js',$headerinclude)) {
 			$jsfiles = '<script type="text/javascript" src="<bburl>/jscripts/ckeditor/ckeditor.js"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js"></script>';
+		}
+		if(isset($headerinclude))
+		{
+			$headerinclude .= str_replace('<bburl>', $mybb->asset_url, $jsfiles);
+			$jsfiles = '';
 		}
 		if(defined("IN_ADMINCP"))
 		{
