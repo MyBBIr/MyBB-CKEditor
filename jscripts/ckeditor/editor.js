@@ -389,306 +389,307 @@ var messageEditor = (function()
 	
 	return messageEditor;
 })();
-
-if(typeof Thread != 'undefined')
-{
-	Thread.multiQuotedLoaded = function(request)
+$(document).ready(function(){
+	if(typeof Thread != 'undefined')
 	{
-		var json = $.parseJSON(request.responseText);
-		if(typeof json == 'object')
+		Thread.multiQuotedLoaded = function(request)
 		{
-			if(json.hasOwnProperty("errors"))
+			var json = $.parseJSON(request.responseText);
+			if(typeof json == 'object')
 			{
-				$.each(json.errors, function(i, message)
+				if(json.hasOwnProperty("errors"))
 				{
-					$.jGrowl(lang.post_fetch_error + ' ' + message);
-				});
-				return false;
-			}
-		}
-
-		if(typeof clickableEditor != 'undefined')
-		{
-			var id = clickableEditor.editor;
-			value = id.getData();
-			if(value)
-			{
-				value += "\n";
-			}
-			value += json.message;
-			id.setData(value);
-			id.focus();
-		}
-		else if(typeof $('textarea').sceditor != 'undefined')
-		{
-			$('textarea').sceditor('instance').insert(json.message);
-		}
-		else
-		{
-			var id = $('#message');
-			if(id.value)
-			{
-				id.value += "\n";
-			}
-			id.val(id.val() + json.message);
-		}
-
-		Thread.clearMultiQuoted();
-		$('#quickreply_multiquote').hide();
-		$('#quoted_ids').val('all');
-
-		$('#message').focus();
-	};
-	
-	Thread.quickReplyDone = function(request, status)
-	{
-		this.quick_replying = 0;
-
-		var json = $.parseJSON(request.responseText);
-		if(typeof json == 'object')
-		{
-			if(json.hasOwnProperty("errors"))
-			{
-				$(".jGrowl").jGrowl("close");
-
-				$.each(json.errors, function(i, message)
-				{
-					$.jGrowl(lang.quick_reply_post_error + ' ' + message);
-				});
-			}
-		}
-
-		if($('#captcha_trow'))
-		{
-			cap = json.data.match(/^<captcha>([0-9a-zA-Z]+)(\|([0-9a-zA-Z]+)|)<\/captcha>/);
-			if(cap)
-			{
-				json.data = json.data.replace(/^<captcha>(.*)<\/captcha>/, '');
-
-				if(cap[1] == "reload")
-				{
-					Recaptcha.reload();
-				}
-				else if($("#captcha_img"))
-				{
-					if(cap[1])
+					$.each(json.errors, function(i, message)
 					{
-						imghash = cap[1];
-						$('#imagehash').val(imghash);
-						if(cap[3])
+						$.jGrowl(lang.post_fetch_error + ' ' + message);
+					});
+					return false;
+				}
+			}
+
+			if(typeof clickableEditor != 'undefined')
+			{
+				var id = clickableEditor.editor;
+				value = id.getData();
+				if(value)
+				{
+					value += "\n";
+				}
+				value += json.message;
+				id.setData(value);
+				id.focus();
+			}
+			else if(typeof $('textarea').sceditor != 'undefined')
+			{
+				$('textarea').sceditor('instance').insert(json.message);
+			}
+			else
+			{
+				var id = $('#message');
+				if(id.value)
+				{
+					id.value += "\n";
+				}
+				id.val(id.val() + json.message);
+			}
+
+			Thread.clearMultiQuoted();
+			$('#quickreply_multiquote').hide();
+			$('#quoted_ids').val('all');
+
+			$('#message').focus();
+		};
+		
+		Thread.quickReplyDone = function(request, status)
+		{
+			this.quick_replying = 0;
+
+			var json = $.parseJSON(request.responseText);
+			if(typeof json == 'object')
+			{
+				if(json.hasOwnProperty("errors"))
+				{
+					$(".jGrowl").jGrowl("close");
+
+					$.each(json.errors, function(i, message)
+					{
+						$.jGrowl(lang.quick_reply_post_error + ' ' + message);
+					});
+				}
+			}
+
+			if($('#captcha_trow'))
+			{
+				cap = json.data.match(/^<captcha>([0-9a-zA-Z]+)(\|([0-9a-zA-Z]+)|)<\/captcha>/);
+				if(cap)
+				{
+					json.data = json.data.replace(/^<captcha>(.*)<\/captcha>/, '');
+
+					if(cap[1] == "reload")
+					{
+						Recaptcha.reload();
+					}
+					else if($("#captcha_img"))
+					{
+						if(cap[1])
 						{
-							$('#imagestring').attr('type', 'hidden').val(cap[3]);
-							// hide the captcha
-							$('#captcha_trow').css('display', 'none');
-						}
-						else
-						{
-							$('#captcha_img').attr('src', "captcha.php?action=regimage&imagehash="+imghash);
-							$('#imagestring').attr('type', 'text').val('');
-							$('#captcha_trow').css('display', '');
+							imghash = cap[1];
+							$('#imagehash').val(imghash);
+							if(cap[3])
+							{
+								$('#imagestring').attr('type', 'hidden').val(cap[3]);
+								// hide the captcha
+								$('#captcha_trow').css('display', 'none');
+							}
+							else
+							{
+								$('#captcha_img').attr('src', "captcha.php?action=regimage&imagehash="+imghash);
+								$('#imagestring').attr('type', 'text').val('');
+								$('#captcha_trow').css('display', '');
+							}
 						}
 					}
 				}
 			}
-		}
-		
-		if(json.hasOwnProperty("errors"))
-			return false;
-
-		if(json.data.match(/id="post_([0-9]+)"/))
-		{
-			var pid = json.data.match(/id="post_([0-9]+)"/)[1];
-			var post = document.createElement("div");
-
-			$('#posts').append(json.data);
 			
-			if (typeof inlineModeration != "undefined") // Guests don't have this object defined
-				$("#inlinemod_" + pid).on('change', inlineModeration.checkItem);
-				
-			Thread.quickEdit("#pid_" + pid);
+			if(json.hasOwnProperty("errors"))
+				return false;
 
-			/*if(MyBB.browser == "ie" || MyBB.browser == "opera" || MyBB.browser == "safari" || MyBB.browser == "chrome")
-			{*/
+			if(json.data.match(/id="post_([0-9]+)"/))
+			{
+				var pid = json.data.match(/id="post_([0-9]+)"/)[1];
+				var post = document.createElement("div");
+
+				$('#posts').append(json.data);
+				
+				if (typeof inlineModeration != "undefined") // Guests don't have this object defined
+					$("#inlinemod_" + pid).on('change', inlineModeration.checkItem);
+					
+				Thread.quickEdit("#pid_" + pid);
+
+				/*if(MyBB.browser == "ie" || MyBB.browser == "opera" || MyBB.browser == "safari" || MyBB.browser == "chrome")
+				{*/
+					// Eval javascript
+					$(json.data).filter("script").each(function(e) {
+						eval($(this).text());
+					});
+				//}
+
+				$('#quick_reply_form')[0].reset();
+				if(typeof clickableEditor != 'undefined')
+				{
+					clickableEditor.editor.setData('');
+				}
+
+				var lastpid = $('#lastpid');
+				if(lastpid)
+				{
+					lastpid.val(pid);
+				}
+			}
+			else
+			{
 				// Eval javascript
 				$(json.data).filter("script").each(function(e) {
 					eval($(this).text());
 				});
-			//}
-
-			$('#quick_reply_form')[0].reset();
-			if(typeof clickableEditor != 'undefined')
-			{
-				clickableEditor.editor.setData('');
 			}
 
-			var lastpid = $('#lastpid');
-			if(lastpid)
-			{
-				lastpid.val(pid);
-			}
-		}
-		else
+			$(".jGrowl").jGrowl("close");
+		};
+		
+		Thread.quickEdit = function(el)
 		{
-			// Eval javascript
-			$(json.data).filter("script").each(function(e) {
-				eval($(this).text());
-			});
-		}
+			if(!el) el = '.post_body';
 
-		$(".jGrowl").jGrowl("close");
-	};
-	
-	Thread.quickEdit = function(el)
-	{
-		if(!el) el = '.post_body';
-
-		$(el).each(function()
-		{
-			// Take pid out of the id attribute
-			id = $(this).attr('id');
-			pid = id.replace( /[^\d.]/g, '');
-
-			$('#pid_' + pid).editable("xmlhttp.php?action=edit_post&do=update_post&pid=" + pid + '&my_post_key=' + my_post_key,
+			$(el).each(function()
 			{
-				indicator: spinner,
-				loadurl: "xmlhttp.php?action=edit_post&do=get_post&pid=" + pid,
-				type: "textarea",
-				rows: 12,
-				submit: lang.save_changes,
-				cancel: lang.cancel_edit,
-				event: "edit" + pid, // Triggered by the event "edit_[pid]",
-				onblur: "ignore",
-				dataType: "json",
-				submitdata: function (values, settings)
+				// Take pid out of the id attribute
+				id = $(this).attr('id');
+				pid = id.replace( /[^\d.]/g, '');
+
+				$('#pid_' + pid).editable("xmlhttp.php?action=edit_post&do=update_post&pid=" + pid + '&my_post_key=' + my_post_key,
 				{
-					id = $(this).attr('id');
-					pid = id.replace( /[^\d.]/g, '');
-					if(typeof CKEDITOR != 'undefined')
+					indicator: spinner,
+					loadurl: "xmlhttp.php?action=edit_post&do=get_post&pid=" + pid,
+					type: "textarea",
+					rows: 12,
+					submit: lang.save_changes,
+					cancel: lang.cancel_edit,
+					event: "edit" + pid, // Triggered by the event "edit_[pid]",
+					onblur: "ignore",
+					dataType: "json",
+					submitdata: function (values, settings)
 					{
-						values = CKEDITOR.instances['quickedit_' + pid].getData();
-					}
-					return {
-						editreason: $("#quickedit_" + pid + "_editreason").val(),
-						value: values
-					}
-				},
-				callback: function(values, settings)
-				{
-					id = $(this).attr('id');
-					pid = id.replace( /[^\d.]/g, '');
-					
-					var json = $.parseJSON(values);
-					if(typeof json == 'object')
-					{
-						if(json.hasOwnProperty("errors"))
+						id = $(this).attr('id');
+						pid = id.replace( /[^\d.]/g, '');
+						if(typeof CKEDITOR != 'undefined')
 						{
-							$(".jGrowl").jGrowl("close");
-
-							$.each(json.errors, function(i, message)
-							{
-								$.jGrowl(lang.quick_edit_update_error + ' ' + message);
-							});
-							$(this).html($('#pid_' + pid + '_temp').html());
+							values = CKEDITOR.instances['quickedit_' + pid].getData();
 						}
-						else if(json.hasOwnProperty("moderation_post"))
+						return {
+							editreason: $("#quickedit_" + pid + "_editreason").val(),
+							value: values
+						}
+					},
+					callback: function(values, settings)
+					{
+						id = $(this).attr('id');
+						pid = id.replace( /[^\d.]/g, '');
+						
+						var json = $.parseJSON(values);
+						if(typeof json == 'object')
 						{
-							$(".jGrowl").jGrowl("close");
-
-							$(this).html(json.message);
-
-							// No more posts on this page? (testing for "1" as the last post would be removed here)
-							if($('.post').length == 1)
+							if(json.hasOwnProperty("errors"))
 							{
-								alert(json.moderation_post);
-								window.location = json.url;
+								$(".jGrowl").jGrowl("close");
+
+								$.each(json.errors, function(i, message)
+								{
+									$.jGrowl(lang.quick_edit_update_error + ' ' + message);
+								});
+								$(this).html($('#pid_' + pid + '_temp').html());
 							}
+							else if(json.hasOwnProperty("moderation_post"))
+							{
+								$(".jGrowl").jGrowl("close");
+
+								$(this).html(json.message);
+
+								// No more posts on this page? (testing for "1" as the last post would be removed here)
+								if($('.post').length == 1)
+								{
+									alert(json.moderation_post);
+									window.location = json.url;
+								}
+								else
+								{
+									$.jGrowl(json.moderation_post);
+									$('#post_' + pid).slideToggle();
+								}
+							}
+							else if(json.hasOwnProperty("moderation_thread"))
+							{
+								$(".jGrowl").jGrowl("close");
+
+								$(this).html(json.message);
+								
+								alert(json.moderation_thread);
+								
+								// Redirect user to forum
+								window.location = json.url;
+							}	
 							else
 							{
-								$.jGrowl(json.moderation_post);
-								$('#post_' + pid).slideToggle();
+								// Change html content
+								$(this).html(json.message);
+								$('#edited_by_' + pid).html(json.editedmsg);
 							}
 						}
-						else if(json.hasOwnProperty("moderation_thread"))
-						{
-							$(".jGrowl").jGrowl("close");
-
-							$(this).html(json.message);
-							
-							alert(json.moderation_thread);
-							
-							// Redirect user to forum
-							window.location = json.url;
-						}	
 						else
 						{
 							// Change html content
 							$(this).html(json.message);
 							$('#edited_by_' + pid).html(json.editedmsg);
 						}
+						$('#pid_' + pid + '_temp').remove();
 					}
-					else
-					{
-						// Change html content
-						$(this).html(json.message);
-						$('#edited_by_' + pid).html(json.editedmsg);
-					}
-					$('#pid_' + pid + '_temp').remove();
-				}
+				});
 			});
-        });
 
-		$('.quick_edit_button').each(function()
-		{
-			$(this).bind("click", function(e)
+			$('.quick_edit_button').each(function()
 			{
-				e.preventDefault();
-
-				// Take pid out of the id attribute
-				id = $(this).attr('id');
-				pid = id.replace( /[^\d.]/g, '');
-
-				// Create a copy of the post
-				if($('#pid_' + pid + '_temp').length == 0)
+				$(this).bind("click", function(e)
 				{
-					$('#pid_' + pid).clone().attr('id','pid_' + pid + '_temp').css('display','none').appendTo("body");
-				}
+					e.preventDefault();
 
-				// Trigger the edit event
-				$('#pid_' + pid).trigger("edit" + pid);
+					// Take pid out of the id attribute
+					id = $(this).attr('id');
+					pid = id.replace( /[^\d.]/g, '');
 
-				// Edit Reason
-				$('#pid_' + pid + ' textarea').attr('id', 'quickedit_' + pid);
-				if(allowEditReason == 1 && $('#quickedit_' + pid + '_editreason').length == 0)
-				{
-					$('#quickedit_' + pid).after('<label for="editreason">' + lang.editreason + ':</label> <input type="text" class="textbox" style="margin: 6px 0;" name="editreason" size="40" maxlength="150" id="quickedit_' + pid + '_editreason" /><br />');
-				}
-				if(typeof opt_editor == 'object')
-				{
-					var qucikeditor = CKEDITOR.replace('quickedit_' + pid, opt_editor);
-					qucikeditor.updatePreview = function(e) {
-						var consoleEl = CKEDITOR.document.getById( e.editor.name );
-						consoleEl.addClass( 'updated' );
-						setTimeout( function() { consoleEl.removeClass( 'updated' ); }, 500 );
-						// IE needs <br>, it doesn't even understand new lines.
-						consoleEl.setHtml( e.editor.getData());
-					};
+					// Create a copy of the post
+					if($('#pid_' + pid + '_temp').length == 0)
+					{
+						$('#pid_' + pid).clone().attr('id','pid_' + pid + '_temp').css('display','none').appendTo("body");
+					}
 
-					qucikeditor.checkUpdatePreview = function(e) {
-						setTimeout( function() {
-							if ( e.editor.checkDirty() ) {
-								qucikeditor.updatePreview(e);
-								e.editor.resetDirty();
-							}
-						}, 0 );
-					};
+					// Trigger the edit event
+					$('#pid_' + pid).trigger("edit" + pid);
 
-					qucikeditor.on( 'instanceReady', qucikeditor.updatePreview );
-					qucikeditor.on( 'key', qucikeditor.checkUpdatePreview );
-					qucikeditor.on( 'selectionChange', qucikeditor.checkUpdatePreview );
-				}
+					// Edit Reason
+					$('#pid_' + pid + ' textarea').attr('id', 'quickedit_' + pid);
+					if(allowEditReason == 1 && $('#quickedit_' + pid + '_editreason').length == 0)
+					{
+						$('#quickedit_' + pid).after('<label for="editreason">' + lang.editreason + ':</label> <input type="text" class="textbox" style="margin: 6px 0;" name="editreason" size="40" maxlength="150" id="quickedit_' + pid + '_editreason" /><br />');
+					}
+					if(typeof opt_editor == 'object')
+					{
+						var qucikeditor = CKEDITOR.replace('quickedit_' + pid, opt_editor);
+						qucikeditor.updatePreview = function(e) {
+							var consoleEl = CKEDITOR.document.getById( e.editor.name );
+							consoleEl.addClass( 'updated' );
+							setTimeout( function() { consoleEl.removeClass( 'updated' ); }, 500 );
+							// IE needs <br>, it doesn't even understand new lines.
+							consoleEl.setHtml( e.editor.getData());
+						};
+
+						qucikeditor.checkUpdatePreview = function(e) {
+							setTimeout( function() {
+								if ( e.editor.checkDirty() ) {
+									qucikeditor.updatePreview(e);
+									e.editor.resetDirty();
+								}
+							}, 0 );
+						};
+
+						qucikeditor.on( 'instanceReady', qucikeditor.updatePreview );
+						qucikeditor.on( 'key', qucikeditor.checkUpdatePreview );
+						qucikeditor.on( 'selectionChange', qucikeditor.checkUpdatePreview );
+					}
+				});
 			});
-        });
 
-		return false;
-	};
-}
+			return false;
+		};
+	}
+});
