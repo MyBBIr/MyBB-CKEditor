@@ -174,7 +174,7 @@ else
 	$charset = "UTF-8";
 }
 
-if($mybb->settings['ajaxbbcodeparser'] == 0)
+if($mybb->settings['ckeditor_ajaxbbcodeparser'] == 0)
 {
 	exit;
 }
