@@ -13,6 +13,8 @@ $l['ckeditor_placeholder'] = 'Write something...';
 $l['ckeditor_autosaves'] = 'Auto Saves';
 $l['ckeditor_autosave_disabled'] = 'You have disabled AutoSave.';
 $l['ckeditor_no_autosave'] = 'There aren`t any AutoSaves now.';
+$l['ckeditor_remove_all_autosaves'] = 'Remove all auto saved contents';
+$l['ckeditor_saved'] = 'Saved!';
 
 $l['editor_size_xx_small'] = 'XX-Small';
 $l['editor_size_x_small'] = 'X-Small';

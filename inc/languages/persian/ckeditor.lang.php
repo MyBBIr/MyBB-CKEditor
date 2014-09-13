@@ -13,6 +13,8 @@ $l['ckeditor_placeholder'] = 'چیزی را بنویسید...';
 $l['ckeditor_autosaves'] = 'ذخیره‌های خودکار';
 $l['ckeditor_autosave_disabled'] = 'شما ذخیره‌ی خودکار را غیرفعال کرده‌اید.';
 $l['ckeditor_no_autosave'] = 'هیچ ذخیره‌ی خودکاری وجود ندارد.';
+$l['ckeditor_remove_all_autosaves'] = 'حذف همه‌ی محتواهای ذخیره‌شده';
+$l['ckeditor_saved'] = 'دخیره شد!';
 
 $l['editor_size_xx_small'] = 'خیلی خیلی کوچک';
 $l['editor_size_x_small'] = 'خیلی کوچک';

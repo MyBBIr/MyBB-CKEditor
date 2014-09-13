@@ -92,6 +92,12 @@ function ckeditor_activate(){
 							"optionscode" => "textarea",
 							"value" => ''
 						),
+						"minilocation" => array(
+							"title" => $lang->ckeditor_minilocations,
+							"description" => $lang->ckeditor_minilocations_desc,
+							"optionscode" => "textarea",
+							"value" => 'showthread.php'
+						),
 						"autosave" => array(
 							"title" => $lang->ckeditor_autosave,
 							"description" => $lang->ckeditor_autosave_desc,

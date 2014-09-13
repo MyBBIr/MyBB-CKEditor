@@ -57,10 +57,32 @@ function is_ckeditor_avilable($file = THIS_SCRIPT)
 	}
 }
 
-function ckeditor_build($bind="message") {
+function is_ckeditor_mini($file = THIS_SCRIPT)
+{
+	global $mybb;
+	$dsblocations = $mybb->settings['ckeditor_minilocation'];
+	$dsblocations = str_replace(array("\r", " "), '', $dsblocations);
+	$dsblocations = explode("\n", $dsblocations);
+	if(in_array($file, $dsblocations))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+function ckeditor_build($bind="message", $smilies = true) {
 	global $db, $mybb, $theme, $templates, $lang, $plugins, $headerinclude;
 	$lang->load('ckeditor');
-	$codeinsert = '';
+	$codeinsert = $minifolder = '';
+	$mini = is_ckeditor_mini();
+	if($mini == true)
+	{
+		$minifolder = 'mini';
+	}
+
 	if($mybb->settings['bbcodeinserter'] != 0)
 	{
 		if($lang->settings['rtl'] == true) {
@@ -75,9 +97,9 @@ function ckeditor_build($bind="message") {
 			$divarea = 'divarea,';
 		}
 		if(!isset($headerinclude) || !stristr('jscripts/ckeditor/ckeditor.js',$headerinclude)) {
-			$jsfiles = '<script type="text/javascript" src="<bburl>/jscripts/ckeditor/ckeditor.js?ver='.CKEDITOR_VERSIONCODE.'"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js?ver='.CKEDITOR_VERSIONCODE.'"></script>';
+			$jsfiles = '<script type="text/javascript" src="<bburl>/jscripts/ckeditor'.$minifolder.'/ckeditor.js"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js"></script>';
 		}
-		if(isset($headerinclude) && !stristr('jscripts/ckeditor/ckeditor.js',$headerinclude))
+		if(isset($headerinclude))
 		{
 			$headerinclude .= str_replace('<bburl>', $mybb->asset_url, $jsfiles);
 			$jsfiles = '';

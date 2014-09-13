@@ -248,3 +248,19 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 	vertical-align: top;
 	min-height:20px;
 }
+
+.code_textarea {
+	text-align:left;
+	direction: ltr;
+}
+
+.autosave img {
+	vertical-align: middle;
+}
+
+#autosave_saved {
+	text-decoration: none;
+	display: none;
+	font-size: 12px;
+	float: right;
+}

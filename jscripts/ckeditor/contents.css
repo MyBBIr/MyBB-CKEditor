@@ -28,25 +28,20 @@ blockquote
 {
 	font-style: italic;
 	font-family: Tahoma, Georgia, Times, "Times New Roman", serif;
-	padding: 2px 0;
+	padding: 5px;
 	border-style: solid;
-	border-color: #ccc;
-	border-width: 0;
+	border-color: #bbb;
+	border-width: 1px;
 	margin:5px;
+	border-radius: 6px;
 }
 
-.cke_contents_ltr blockquote
-{
-	padding-left: 20px;
-	padding-right: 8px;
-	border-left-width: 5px;
-}
-
-.cke_contents_rtl blockquote
-{
-	padding-left: 8px;
-	padding-right: 20px;
-	border-right-width: 5px;
+blockquote cite {
+	border-bottom: 1px solid #bbb;
+	display: block;
+	padding: 3px;
+	font-weight: bold;
+	font-size: 11px;
 }
 
 a

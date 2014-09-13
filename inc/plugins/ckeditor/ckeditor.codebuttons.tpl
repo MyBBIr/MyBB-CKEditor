@@ -4,6 +4,8 @@
 	lang.ckeditor_autosaves = '{$lang->ckeditor_autosaves}';
 	lang.ckeditor_autosave_disabled = '{$lang->ckeditor_autosave_disabled}';
 	lang.ckeditor_no_autosave = '{$lang->ckeditor_no_autosave}';
+	lang.ckeditor_remove_all_autosaves = '{$lang->ckeditor_remove_all_autosaves}';
+	lang.ckeditor_saved = '{$lang->ckeditor_saved}';
 	{$smiliesmap}
 	CKEDITOR.config.direction = '{$direction}';
 	CKEDITOR.config.autosave = '{$mybb->settings['ckeditor_autosave']}';
@@ -15,7 +17,7 @@
 		placeholder: '{$lang->ckeditor_placeholder}',
 		startupMode: '{$mybb->settings['ckeditor_editormode']}',
 		uiColor: '{$mybb->settings['ckeditor_color']}',
-		skin: '{$mybb->settings['ckeditor_theme']}',
+		skin: '{$mybb->settings['ckeditor_theme']},{$mybb->settings['bburl']}/jscripts/ckeditor/skins/{$mybb->settings['ckeditor_theme']}/',
 		extraPlugins: '{$divarea}',
 		{$smilies}
 	};

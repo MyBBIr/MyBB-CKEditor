@@ -14,7 +14,7 @@ function ckedtior_admin_style_templates() {
 $plugins->add_hook('private_read_end','ckeditor_pm_quickreply');
 function ckeditor_pm_quickreply(){
 	global $mybb, $quickreply;
-	if($quickreply) {
+	if($quickreply && is_ckeditor_avilable('pm_quickreply') && is_ckeditor_avilable()) {
 		$quickreply .= build_mycode_inserter("message");
 	}
 }
@@ -23,7 +23,7 @@ $plugins->add_hook('showthread_start','ckeditor_quickreply');
 function ckeditor_quickreply(){
 	global $mybb, $forumpermissions, $thread, $fid, $forum;
 	global $codebuttons, $smilieinserter;
-	if(!is_ckeditor_avilable('quickreply'))
+	if(!is_ckeditor_avilable('quickreply') || !is_ckeditor_avilable())
 	{
 		return NULL;
 	}

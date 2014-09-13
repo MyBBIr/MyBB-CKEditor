@@ -60,6 +60,7 @@ var autosave = function($btn, e, message)
 						$row.append('<a class="autosaverow_remove" href="javascript:;">x</a>');
 						$row.append('<span class="autosaverow_time">' + row_time + '</span>');
 						$row.append('<div class="autosaverow_content">' + message + '</span>');
+						$row.find('.autosaverow_content').attr('title', value);
 						$elm.find('.autosavecontent').prepend($row);
 					});
 				}
@@ -69,6 +70,12 @@ var autosave = function($btn, e, message)
 				}
 				else
 				{
+					$remove = $('<button />').html(lang.ckeditor_remove_all_autosaves).css({'text-align': 'center','margin':'0 auto','display':'block'}).click(function()
+					{
+						localStorage.setItem('autosave', '{}');
+						$elm.remove();
+					});
+					$elm.append($remove);
 					localStorage.setItem('autosave', JSON.stringify(myautosave));
 				}
 			}
@@ -143,6 +150,7 @@ var messageEditor = (function()
 		if(CKEDITOR.config.autosave > 0)
 		{
 			this.editor.on('instanceReady', this.editor_autosave);
+			CKEDITOR.autosave_done = this.autosave_done;
 		}
 		this.editor.on('instanceReady', this.stylesheet);
 	};
@@ -331,7 +339,7 @@ var messageEditor = (function()
 	{
 		if(typeof(Storage) == "undefined") return;
 		$footer = $('#' + e.editor.id + '_bottom');
-		$footer.append('<a href="javascript:;" id="'+e.editor.id+'_autosave" title="Auto Save" class="autosave"><img src="images/ckeditor/autosave.png" alt="AutoSave" title="Auto Save" /></a>');
+		$footer.append('<a href="javascript:;" id="'+e.editor.id+'_autosave" title="Auto Save" class="autosave"><img src="images/ckeditor/autosave.png" alt="AutoSave" title="Auto Save" /></a><span id="autosave_saved">'+lang.ckeditor_saved+'</span>');
 		$autosave = $('#' + e.editor.id+'_autosave');
 		$autosave.click(function(){
 			autosave($autosave, e);
@@ -339,36 +347,41 @@ var messageEditor = (function()
 		setInterval(function(){
 			if(e.editor.config.clearautosave == 0)
 			{
-				myautosave = JSON.parse(localStorage.getItem('autosave'));
-				message = e.editor.getData();
-				date = new Date();
-				var timenow = date.valueOf();
-				ok = false;
-
-				if(message.length < 10 || message == e.editor.config.placeholder)
-					return;
-				
-				message = encodeURIComponent(message);
-
-				if(myautosave)
-				{
-					$.each( myautosave, function( key, value ) {
-						if(value == message) ok = true;
-					});
-				}
-				else
-				{
-					myautosave = {};
-				}
-				if(ok)
-					return;
-
-				
-				myautosave['a_' + timenow] = message;
-				
-				localStorage.setItem('autosave', JSON.stringify(myautosave));
+				CKEDITOR.autosave_done(e.editor);
 			}
 		}, CKEDITOR.config.autosave*1000);
+	};
+	
+	function autosave_done(editor)
+	{
+		myautosave = JSON.parse(localStorage.getItem('autosave'));
+		message = editor.getData();
+		date = new Date();
+		var timenow = date.valueOf();
+		ok = false;
+
+		if(message.length < 10 || message == editor.config.placeholder)
+			return;
+		
+		message = encodeURIComponent(message);
+
+		if(myautosave)
+		{
+			$.each( myautosave, function( key, value ) {
+				if(value == message) ok = true;
+			});
+		}
+		else
+		{
+			myautosave = {};
+		}
+		if(ok)
+			return;
+			
+		myautosave['a_' + timenow] = message;
+		
+		localStorage.setItem('autosave', JSON.stringify(myautosave));
+		$('#autosave_saved').fadeIn('normal').delay(2000).fadeOut('normal');
 	};
 
 	messageEditor.prototype = {
@@ -384,7 +397,8 @@ var messageEditor = (function()
 		execCommand: execCommand,
 		openGetMoreSmilies: openGetMoreSmilies,
 		insertSmilie: insertSmilie,
-		editor_autosave: editor_autosave
+		editor_autosave: editor_autosave,
+		autosave_done: autosave_done
 	};
 	
 	return messageEditor;

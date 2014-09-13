@@ -13,6 +13,8 @@ $l['ckeditor_editormode'] = 'Editor Mode';
 $l['ckeditor_disablelocations'] = '';
 $l['ckeditor_disablelocations'] = 'Disabled locations';
 $l['ckeditor_disablelocations_desc'] = 'Please enter places the CKEditor don\'t shown in those, Eeach location in a new line.';
+$l['ckeditor_minilocations'] = 'Mini locations';
+$l['ckeditor_minilocations_desc'] = 'Please enter places that you want use MINI CKEditor shown in those, Eeach location in a new line.';
 $l['ckeditor_autosave'] = 'How often CKEditor auto save the content. (in seconds)';
 $l['ckeditor_autosave_desc'] = 'If you want disable auto saving please enter 0.';
 $l['ckeditor_wysiwyg'] = 'WYSIWYG Mode';
@@ -27,6 +29,8 @@ $l['ckeditor_placeholder'] = 'Write something...';
 $l['ckeditor_autosaves'] = 'Auto Saves';
 $l['ckeditor_autosave_disabled'] = 'You have disabled AutoSave.';
 $l['ckeditor_no_autosave'] = 'There aren`t any AutoSaves now.';
+$l['ckeditor_remove_all_autosaves'] = 'Remove all auto saved contents';
+$l['ckeditor_saved'] = 'Saved!';
 
 $l['editor_size_xx_small'] = 'XX-Small';
 $l['editor_size_x_small'] = 'X-Small';

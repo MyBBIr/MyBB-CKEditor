@@ -13,6 +13,8 @@ $l['ckeditor_editormode'] = 'حالت ویرایش‌گر';
 $l['ckeditor_disablelocations'] = '';
 $l['ckeditor_disablelocations'] = 'مکان‌های غیرمجاز';
 $l['ckeditor_disablelocations_desc'] = 'نام فایل‌هایی که می‌خواهید ویرایشگر در آن اجرا نشود را وارد کنید. نام هر فایل در یک خط وارد نمائید.';
+$l['ckeditor_minilocations'] = 'مکان‌ها با ویرایشگر کوچیک';
+$l['ckeditor_minilocations_desc'] = 'لطفا مکان‌هایی که میخواهید در آن از ویرایشگر کوچک استفاده شود را وارد فرمائید، هرفایل در یک خط جدا.';
 $l['ckeditor_autosave'] = 'متن ویرایشگر چندثانیه یک‌بار به صورت خودکار ذخیره شود؟';
 $l['ckeditor_autosave_desc'] = 'برای غیرفعال سازی ذخیره خودکار 0 را وارد نمائید';
 $l['ckeditor_wysiwyg'] = 'حالت پیشرفته';
@@ -27,4 +29,5 @@ $l['ckeditor_placeholder'] = 'چیزی را بنویسید...';
 $l['ckeditor_autosaves'] = 'ذخیره‌های خودکار';
 $l['ckeditor_autosave_disabled'] = 'شما ذخیره‌ی خودکار را غیرفعال کرده‌اید.';
 $l['ckeditor_no_autosave'] = 'هیچ ذخیره‌ی خودکاری وجود ندارد.';
-?>
+$l['ckeditor_remove_all_autosaves'] = 'حذف همه‌ی محتواهای ذخیره‌شده';
+$l['ckeditor_saved'] = 'دخیره شد!';
