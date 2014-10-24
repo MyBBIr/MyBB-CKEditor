@@ -203,7 +203,8 @@ var bbcodeParser = {};
 			var responseXML = CKEDITOR.MyBB_Ajax.open({
 					url: 'ckeditor.php',
 					type: 'POST',
-					data: postData
+					data: postData,
+					async: false
 			});
 
 			json = jQuery.parseJSON(responseXML.responseText);
