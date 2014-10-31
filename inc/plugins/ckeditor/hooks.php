@@ -69,3 +69,14 @@ function ckeditor_parser($m){
 
 	return $m;
 }
+
+
+
+$plugins->add_hook('postbit', 'ckeditor_quickquote');
+
+function ckeditor_quickquote(&$post)
+{
+	global $templates, $lang;
+
+		eval("\$post['quick_quote'] = \"" . $templates->get("ckeditor_quickquote") . "\";");
+}

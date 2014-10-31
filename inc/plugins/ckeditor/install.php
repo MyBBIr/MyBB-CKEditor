@@ -30,36 +30,6 @@ function ckeditor_install(){
 		flash_message($lang->pluginlibraryold, "error");
 		admin_redirect("index.php?module=config-plugins");
 	}
-	include MYBB_ROOT."/inc/adminfunctions_templates.php";
-	//find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('{$codebuttons}')."#i", '', 0);
-	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$codebuttons}')."#i", '', 0);
-	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$smilieinserter}')."#i", '', 0);
-	//find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('</textarea>')."#i", '</textarea>{$codebuttons}');
-	find_replace_templatesets("showthread_quickreply", "#".preg_quote('</textarea>')."#i", '</textarea>{$codebuttons}');
-	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$option_signature}')."#i", '{$smilieinserter}{$option_signature}');
-	find_replace_templatesets("post_attachments_attachment_postinsert", "#".'\\$\\(\'\\#message\'\\)\\.sceditor\\(\'instance\'\\)'."#i", 'MyBBEditor');
-	$PL->templates("ckeditor",
-					"<lang:group_ckeditor>",
-					array(
-						"codebuttons" => ckplugin_gettemplate('codebuttons', 0, 0)
-					)
-				);
-}
-
-function ckeditor_activate(){
-	global $mybb, $db, $lang, $PL;
-	$lang->load('ckeditor');
-	if(!file_exists(PLUGINLIBRARY))
-	{
-		flash_message($lang->pluginlibrarymissing, "error");
-		admin_redirect("index.php?module=config-plugins");
-	}
-	$PL or require_once PLUGINLIBRARY;
-	if($PL->version < 12)
-	{
-		flash_message($lang->pluginlibraryold, "error");
-		admin_redirect("index.php?module=config-plugins");
-	}
 
 	$PL->settings("ckeditor",
 					$lang->sttingsforckeditor,
@@ -131,6 +101,42 @@ function ckeditor_activate(){
 						)
 					)
 				);
+	$PL->templates("ckeditor",
+					"<lang:group_ckeditor>",
+					array(
+						"codebuttons" => ckplugin_gettemplate('codebuttons', 0, 0),
+						"quickquote" => ckplugin_gettemplate('quickquote', 0, 0)
+					)
+				);
+}
+
+function ckeditor_activate(){
+	global $mybb, $db, $lang, $PL;
+	$lang->load('ckeditor');
+	if(!file_exists(PLUGINLIBRARY))
+	{
+		flash_message($lang->pluginlibrarymissing, "error");
+		admin_redirect("index.php?module=config-plugins");
+	}
+	$PL or require_once PLUGINLIBRARY;
+	if($PL->version < 12)
+	{
+		flash_message($lang->pluginlibraryold, "error");
+		admin_redirect("index.php?module=config-plugins");
+	}
+
+	include MYBB_ROOT."/inc/adminfunctions_templates.php";
+	//find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('{$codebuttons}')."#i", '', 0);
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$codebuttons}')."#i", '', 0);
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$smilieinserter}')."#i", '', 0);
+	find_replace_templatesets("postbit", "#".preg_quote('{$post[\'quick_quote\']}')."#i", '', 0);
+	find_replace_templatesets("postbit_classic", "#".preg_quote('{$post[\'quick_quote\']}')."#i", '', 0);
+	//find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('</textarea>')."#i", '</textarea>{$codebuttons}');
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('</textarea>')."#i", '</textarea>{$codebuttons}');
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$option_signature}')."#i", '{$smilieinserter}{$option_signature}');
+	find_replace_templatesets("postbit", "#".preg_quote('{$post[\'iplogged\']}')."#i", '{$post[\'quick_quote\']}{$post[\'iplogged\']}');
+	find_replace_templatesets("postbit_classic", "#".preg_quote('{$post[\'iplogged\']}')."#i", '{$post[\'quick_quote\']}{$post[\'iplogged\']}');
+	find_replace_templatesets("post_attachments_attachment_postinsert", "#".'\\$\\(\'\\#message\'\\)\\.sceditor\\(\'instance\'\\)'."#i", 'MyBBEditor');
 	$PL->edit_core('ckeditor', 'inc/functions.php',
                array('search' => 'function build_mycode_inserter($bind="message", $smilies = true)
 {',
@@ -143,7 +149,11 @@ function ckeditor_deactivate(){
 	global $mybb, $db, $lang, $PL;
 	$lang->load('ckeditor');
 	$PL or require_once PLUGINLIBRARY;
-	$PL->settings_delete('ckeditor');
+	include MYBB_ROOT."/inc/adminfunctions_templates.php";
+	//find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('{$codebuttons}')."#i", '', 0);
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$codebuttons}')."#i", '', 0);
+	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$smilieinserter}')."#i", '', 0);
+	find_replace_templatesets("post_attachments_attachment_postinsert", "#".preg_quote('MyBBEditor')."#i", '$(\'#message\').sceditor(\'instance\')');
 	$PL->edit_core('ckeditor', 'inc/functions.php',
                array('search' => 'function build_mycode_inserter($bind="message", $smilies = true)
 {global $mybb;if(function_exists("ckeditor_build")) { return ckeditor_build($bind, $smilies);}',
@@ -154,12 +164,8 @@ function ckeditor_deactivate(){
 
 function ckeditor_uninstall(){
 	global $mybb, $db, $lang, $PL;
-	include MYBB_ROOT."/inc/adminfunctions_templates.php";
-	//find_replace_templatesets("xmlhttp_inline_post_editor", "#".preg_quote('{$codebuttons}')."#i", '', 0);
-	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$codebuttons}')."#i", '', 0);
-	find_replace_templatesets("showthread_quickreply", "#".preg_quote('{$smilieinserter}')."#i", '', 0);
-	find_replace_templatesets("post_attachments_attachment_postinsert", "#".preg_quote('MyBBEditor')."#i", '$(\'#message\').sceditor(\'instance\')');
 	$lang->load('ckeditor');
 	$PL or require_once PLUGINLIBRARY;
+	$PL->settings_delete('ckeditor');
 	$PL->templates_delete("ckeditor");
 }

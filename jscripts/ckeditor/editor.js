@@ -131,7 +131,7 @@ var messageEditor = (function()
 			consoleEl.addClass( 'updated' );
 			setTimeout( function() { consoleEl.removeClass( 'updated' ); }, 500 );
 			// IE needs <br>, it doesn't even understand new lines.
-			consoleEl.setHtml( e.editor.getData());
+			consoleEl.setHtml( e.editor.getData(1));
 		}
 
 		var checkUpdatePreview = function(e) {

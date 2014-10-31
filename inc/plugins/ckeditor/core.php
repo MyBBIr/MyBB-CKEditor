@@ -99,6 +99,10 @@ function ckeditor_build($bind="message", $smilies = true) {
 		if(!isset($headerinclude) || !stristr('jscripts/ckeditor/ckeditor.js',$headerinclude)) {
 			$jsfiles = '<script type="text/javascript" src="<bburl>/jscripts/ckeditor'.$minifolder.'/ckeditor.js"></script><script type="text/javascript" src="<bburl>/jscripts/ckeditor/editor.js"></script>';
 		}
+		if($jsfiles != '' && THIS_SCRIPT == 'showthread.php') // Quick Quote
+		{
+			$jsfiles .= '<script type="text/javascript" src="<bburl>/jscripts/Thread.quickquote.js"></script>';
+		}
 		if(isset($headerinclude))
 		{
 			$headerinclude .= str_replace('<bburl>', $mybb->asset_url, $jsfiles);
