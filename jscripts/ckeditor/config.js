@@ -43,10 +43,12 @@ CKEDITOR.editorConfig = function( config ) {
 	if(mycookie == 'true')
 	{
 		config.clipboard_defaultContentType = 'text';
+		config.forcePasteAsPlainText = true;
 	}
 	else
 	{
 		config.clipboard_defaultContentType = 'html';
+		config.forcePasteAsPlainText = false;
 	}
 
 	// My Options -> default paste

@@ -15,6 +15,9 @@ $l['ckeditor_autosave_disabled'] = 'شما ذخیره‌ی خودکار را غ�
 $l['ckeditor_no_autosave'] = 'هیچ ذخیره‌ی خودکاری وجود ندارد.';
 $l['ckeditor_remove_all_autosaves'] = 'حذف همه‌ی محتواهای ذخیره‌شده';
 $l['ckeditor_saved'] = 'دخیره شد!';
+$l['ckeditor_delete'] = 'حذف';
+$l['ckeditor_back'] = '&larr; بازگشت';
+$l['ckeditor_use_it'] = 'استفاده!';
 
 $l['editor_size_xx_small'] = 'خیلی خیلی کوچک';
 $l['editor_size_x_small'] = 'خیلی کوچک';

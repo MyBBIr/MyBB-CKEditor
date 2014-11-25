@@ -161,8 +161,6 @@ else
 	$theme['imglangdir'] = $mybb->get_asset_url($theme['imglangdir']);
 }
 
-$templatelist = "postbit_editedby,xmlhttp_inline_post_editor,xmlhttp_buddyselect_online,xmlhttp_buddyselect_offline,xmlhttp_buddyselect";
-$templates->cache($db->escape_string($templatelist));
 
 if($lang->settings['charset'])
 {
@@ -174,6 +172,28 @@ else
 	$charset = "UTF-8";
 }
 
+require_once MYBB_ROOT."inc/class_parser.php";
+$parser = new postParser;
+
+
+if($mybb->get_input('action') == 'preview')
+{
+	$lang->load('global');
+	$message = $mybb->get_input('message');
+	$parser_options = array();
+	$parser_options['allow_html'] = 0;
+	$parser_options['allow_mycode'] = 1;
+	$parser_options['allow_smilies'] = 1;
+	$parser_options['allow_imgcode'] = 1;
+	$parser_options['allow_videocode'] = 0;
+	$parser_options['me_username'] = htmlspecialchars_uni($mybb->user['username']);
+	$parser_options['filter_badwords'] = 1;
+
+	header("Content-type: application/html; charset={$charset}");
+	echo $parser->parse_message($message, $parser_options);
+	exit;
+}
+
 if($mybb->settings['ckeditor_ajaxbbcodeparser'] == 0)
 {
 	exit;
@@ -181,9 +201,7 @@ if($mybb->settings['ckeditor_ajaxbbcodeparser'] == 0)
 
 $lang->load("global");
 $lang->load("ckeditor");
-$message = $mybb->input['m'];
-require_once MYBB_ROOT."inc/class_parser.php";
-$parser = new postParser;
+$message = $mybb->get_input('m');
 
 $plugins->run_hooks("ckeditor");
 
@@ -192,6 +210,7 @@ $message = $parser->parse_html($message);
 // Start Code block:
 preg_match_all("#\[(code|php)\](.*?)\[/\\1\](\r\n?|\n?)#si", $message, $code_matches, PREG_SET_ORDER);
 $message = preg_replace("#\[(code|php)\](.*?)\[/\\1\](\r\n?|\n?)#si", "<mybb-code>\n", $message);
+
 // Parser MyCodes
 $message = preg_replace("#\[b\](.*?)\[/b\]#si", '<strong>$1</strong>', $message);
 $message = preg_replace("#\[i\](.*?)\[/i\]#si", '<em>$1</em>', $message);
@@ -206,8 +225,15 @@ $message = preg_replace("#\[size=(xx-small|x-small|small|medium|large|x-large|xx
 $message = preg_replace("#\[font=([a-z0-9 ,\-_'\"]+)\](.*?)\[/font\]#si", '<span style="font-family: $1;">$2</span>', $message);
 $message = preg_replace("#\[color=([a-zA-Z]*|\#?[\da-fA-F]{3}|\#?[\da-fA-F]{6})\](.*?)\[/color\]#si", '<span style="color: $1;">$2</span>', $message);
 $message = preg_replace("#\[hr\]#si", '<hr>', $message);
-$message = preg_replace("#\[quote\](.*?)\[/quote\]#si", '<blockquote><p>$1</p></blockquote>', $message);
-$message = preg_replace("#\[quote=(.*?)\](.*?)\[/quote\]#si", '<blockquote><cite>$1</cite><p>$2</p></blockquote>', $message);
+do
+{
+	$message = preg_replace("#\[quote\](.*?)\[/quote\]#si", '<blockquote><p>$1</p></blockquote>', $message);
+} while(preg_match("#\[quote\](.*?)\[/quote\]#si", $message));
+
+do
+{
+	$message = preg_replace("#\[quote=(.*?)\](.*?)\[/quote\]#si", '<blockquote><cite>$1</cite><bquote>$2</bquote></blockquote>', $message);
+} while(preg_match("#\[quote=(.*?)\](.*?)\[/quote\]#si", $message));
 $message = preg_replace("#\[url\](.*?)\[/url\]#si", '<a href="$1">$1</a>', $message);
 $message = preg_replace("#\[url=(.*?)](.*?)\[/url\]#si", '<a href="$1">$2</a>', $message);
 $message = preg_replace("#\[email\]([^\"]+)\[/email\]#si", '<a href="mailto:$1">$1</a>', $message);
@@ -230,7 +256,11 @@ for($i = $parser->list_count; $i > 0; $i--)
 	// Ignores missing end tags
 	$message = preg_replace_callback("#\s?\[list(=(a|A|i|I|1))?&{$i}\](.*?)(\[/list&{$i}\]|$)(\r\n?|\n?)#si", array($parser, 'mycode_parse_list_callback'), $message, 1);
 }
-$message = preg_replace("#</li>([\n\r]+)<li>#si",'</li><li>', $message);
+$message = preg_replace("#</li>([\n\r\s\t]+)<li>#si",'</li><li>', $message);
+$message = preg_replace("#</li>([\n\r\s\t]+)<ul>#si",'</li><ul>', $message);
+$message = preg_replace("#<li>([\n\r\s\t]+)</ul>#si",'<li></ul>', $message);
+$message = preg_replace("#([\n\r\s\t]{1})<(li|ul)>#si",'<$2>', $message);
+$message = preg_replace("#</(li|ul)>([\n\r\s\t]{1})#si",'</$1>', $message);
 
 
 // Table:

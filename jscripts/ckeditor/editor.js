@@ -1,13 +1,16 @@
+$.getScript(CKEDITOR.getUrl('extra/moment-with-langs.js'));
 var autosave = function($btn, e, message)
 {
 	if(typeof(Storage) == "undefined") return;
-	$.getScript(CKEDITOR.getUrl('extra/moment-with-langs.js'), function()
-	{
+	//$.getScript(CKEDITOR.getUrl('extra/moment-with-langs.js'), function()
+	//{
 		moment.lang(e.editor.config.language);
 		date = new Date();
 		var timenow = date.valueOf();
 
-		$('body').append('<div class="autosaveblock" id="autosaveblock_' + e.editor.id + '"></div>');
+		$('#autosaveblock_' + e.editor.id).remove();
+
+		$('body').append('<div class="autosaveblock scaleimages" id="autosaveblock_' + e.editor.id + '"></div>');
 		$elm = $('#autosaveblock_' + e.editor.id);
 
 		if(!message)
@@ -26,8 +29,10 @@ var autosave = function($btn, e, message)
 					$.each( myautosave, function( key, value ) {
 						if(i > 20)
 						{
-							delete myautosave['a_' + key];
-							return;
+							$oldrow = $elm.find('.autosavecontent').find('.autosaverow').last();
+							delete myautosave['a_' + $oldrow.data('timenow')];
+							$oldrow.remove();
+							
 						}
 						value = decodeURIComponent(value);
 						key = key.replace('a_', '');
@@ -49,13 +54,61 @@ var autosave = function($btn, e, message)
 						$row = $('<div class="autosaverow" data-timenow="'+key+'" />');
 						$row.click(function(ev){
 							//timenow = $(this).data('timenow');
-							if($(ev.target).closest('.autosaverow_remove').length == 0) {
-								e.editor.setData(value);
+							if($(ev.target).closest('.autosaverow_remove').length == 1) {
+								delete myautosave['a_' + key];
+								localStorage.setItem('autosave', JSON.stringify(myautosave));
+								$(this).slideUp();
 							}
-							delete myautosave['a_' + key];
-							localStorage.setItem('autosave', JSON.stringify(myautosave));
+							else
+							{
+								$elm.find('.autosavecontent').html(spinner);
+								$elm.find('.autosavecontent').load('ckeditor.php', {
+									'action': 'preview',
+									'message': value
+								},function()
+								{
+									$buttonsbar = $('<div />');
+									$button = $('<button />');
+									$button.css({
+										'margin': '0 1px'
+									});
+									$button.html(lang.ckeditor_back);
+									$button.click(function(){
+										autosave($btn, e, '');
+										return false;
+									});
+									$buttonsbar.append($button);
 
-							$(this).slideUp();
+									$button = $('<button />');
+									$button.html(lang.ckeditor_use_it);
+									$button.click(function(){
+										e.editor.setData(value);
+									});
+									$button.css({
+										'margin': '0 1px'
+									});
+									$buttonsbar.append($button);
+
+									$button = $('<button />');
+									$button.html(lang.ckeditor_delete);
+									$button.click(function(){
+										delete myautosave['a_' + key];
+										localStorage.setItem('autosave', JSON.stringify(myautosave));
+										autosave($btn, e, '');
+									});
+									$button.css({
+										'margin': '0 1px'
+									});
+									$buttonsbar.append($button);
+
+									$buttonsbar.css({
+										'text-align': 'center',
+										'margin': '3px'
+									});
+									$elm.find('.autosavecontent').append($buttonsbar);
+								});
+								return false;
+							}
 						});
 						$row.append('<a class="autosaverow_remove" href="javascript:;">x</a>');
 						$row.append('<span class="autosaverow_time">' + row_time + '</span>');
@@ -109,7 +162,7 @@ var autosave = function($btn, e, message)
 				$elm.remove();
 			}
 		});
-	});
+	//});
 }
 
 var messageEditor = (function()

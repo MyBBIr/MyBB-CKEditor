@@ -6,6 +6,9 @@
 	lang.ckeditor_no_autosave = '{$lang->ckeditor_no_autosave}';
 	lang.ckeditor_remove_all_autosaves = '{$lang->ckeditor_remove_all_autosaves}';
 	lang.ckeditor_saved = '{$lang->ckeditor_saved}';
+	lang.ckeditor_delete = '{$lang->ckeditor_delete}';
+	lang.ckeditor_back = '{$lang->ckeditor_back}';
+	lang.ckeditor_use_it = '{$lang->ckeditor_use_it}';
 	{$smiliesmap}
 	CKEDITOR.config.direction = '{$direction}';
 	CKEDITOR.config.autosave = '{$mybb->settings['ckeditor_autosave']}';
@@ -36,7 +39,14 @@
 	MyBBEditor = {
 		insertText: function(a)
 		{
-			clickableEditor.Insert(a, bbcodeParser.bbcodeToHtml(a));
+			if(clickableEditor.editor.mode == 'wysiwyg')
+			{
+				clickableEditor.Insert(a, bbcodeParser.bbcodeToHtml(a));
+			}
+			else
+			{
+				clickableEditor.performInsert(a);
+			}
 		}
 	}
 // -->

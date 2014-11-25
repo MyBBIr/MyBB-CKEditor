@@ -15,6 +15,9 @@ $l['ckeditor_autosave_disabled'] = 'You have disabled AutoSave.';
 $l['ckeditor_no_autosave'] = 'There aren`t any AutoSaves now.';
 $l['ckeditor_remove_all_autosaves'] = 'Remove all auto saved contents';
 $l['ckeditor_saved'] = 'Saved!';
+$l['ckeditor_delete'] = 'Delete';
+$l['ckeditor_back'] = '&larr; Back';
+$l['ckeditor_use_it'] = 'Use It!';
 
 $l['editor_size_xx_small'] = 'XX-Small';
 $l['editor_size_x_small'] = 'X-Small';
