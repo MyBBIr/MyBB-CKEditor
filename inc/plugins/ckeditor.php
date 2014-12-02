@@ -19,4 +19,3 @@ require_once(CKEDITOR_PLUGINROOT.'core.php');
 require_once(CKEDITOR_PLUGINROOT.'hooks.php');
 require_once(CKEDITOR_PLUGINROOT.'info.php');
 require_once(CKEDITOR_PLUGINROOT.'install.php');
-?>
