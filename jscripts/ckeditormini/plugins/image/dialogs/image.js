@@ -272,64 +272,67 @@
 					previewPreloader = new CKEDITOR.dom.element( 'img', editor.document );
 					this.preview = CKEDITOR.document.getById( previewImageId );
 
-					// Copy of the image
-					this.originalElement = editor.document.createElement( 'img' );
-					this.originalElement.setAttribute( 'alt', '' );
-					this.originalElement.setCustomData( 'isReady', 'false' );
+					if(editor.mode == 'wysiwyg'){
+						// Copy of the image
+						this.originalElement = editor.document.createElement( 'img' );
+						this.originalElement.setAttribute( 'alt', '' );
+						this.originalElement.setCustomData( 'isReady', 'false' );
 
-					if ( link ) {
-						this.linkElement = link;
-						this.linkEditMode = true;
+						if ( link ) {
+							this.linkElement = link;
+							this.linkEditMode = true;
 
-						// Look for Image element.
-						var linkChildren = link.getChildren();
-						if ( linkChildren.count() == 1 ) // 1 child.
-						{
-							var childTagName = linkChildren.getItem( 0 ).getName();
-							if ( childTagName == 'img' || childTagName == 'input' ) {
-								this.imageElement = linkChildren.getItem( 0 );
-								if ( this.imageElement.getName() == 'img' )
-									this.imageEditMode = 'img';
-								else if ( this.imageElement.getName() == 'input' )
-									this.imageEditMode = 'input';
+							// Look for Image element.
+							var linkChildren = link.getChildren();
+							if ( linkChildren.count() == 1 ) // 1 child.
+							{
+								var childTagName = linkChildren.getItem( 0 ).getName();
+								if ( childTagName == 'img' || childTagName == 'input' ) {
+									this.imageElement = linkChildren.getItem( 0 );
+									if ( this.imageElement.getName() == 'img' )
+										this.imageEditMode = 'img';
+									else if ( this.imageElement.getName() == 'input' )
+										this.imageEditMode = 'input';
+								}
 							}
+							// Fill out all fields.
+							if ( dialogType == 'image' )
+								this.setupContent( LINK, link );
 						}
-						// Fill out all fields.
-						if ( dialogType == 'image' )
-							this.setupContent( LINK, link );
+
+						// Edit given image element instead the one from selection.
+						if ( this.customImageElement ) {
+							this.imageEditMode = 'img';
+							this.imageElement = this.customImageElement;
+							delete this.customImageElement;
+						}
+						else if ( element && element.getName() == 'img' && !element.data( 'cke-realelement' ) ||
+							element && element.getName() == 'input' && element.getAttribute( 'type' ) == 'image' ) {
+							this.imageEditMode = element.getName();
+							this.imageElement = element;
+						}
+
+						if ( this.imageEditMode ) {
+							// Use the original element as a buffer from  since we don't want
+							// temporary changes to be committed, e.g. if the dialog is canceled.
+							this.cleanImageElement = this.imageElement;
+							this.imageElement = this.cleanImageElement.clone( true, true );
+
+							// Fill out all fields.
+							this.setupContent( IMAGE, this.imageElement );
+						} else
+							this.imageElement = editor.document.createElement( 'img' );
+
+						// Refresh LockRatio button
+						switchLockRatio( this, true );
+
+						// Dont show preview if no URL given.
+						if ( !CKEDITOR.tools.trim( this.getValueOf( 'info', 'txtUrl' ) ) ) {
+							this.preview.removeAttribute( 'src' );
+							this.preview.setStyle( 'display', 'none' );
+						}
 					}
 
-					// Edit given image element instead the one from selection.
-					if ( this.customImageElement ) {
-						this.imageEditMode = 'img';
-						this.imageElement = this.customImageElement;
-						delete this.customImageElement;
-					}
-					else if ( element && element.getName() == 'img' && !element.data( 'cke-realelement' ) ||
-						element && element.getName() == 'input' && element.getAttribute( 'type' ) == 'image' ) {
-						this.imageEditMode = element.getName();
-						this.imageElement = element;
-					}
-
-					if ( this.imageEditMode ) {
-						// Use the original element as a buffer from  since we don't want
-						// temporary changes to be committed, e.g. if the dialog is canceled.
-						this.cleanImageElement = this.imageElement;
-						this.imageElement = this.cleanImageElement.clone( true, true );
-
-						// Fill out all fields.
-						this.setupContent( IMAGE, this.imageElement );
-					} else
-						this.imageElement = editor.document.createElement( 'img' );
-
-					// Refresh LockRatio button
-					switchLockRatio( this, true );
-
-					// Dont show preview if no URL given.
-					if ( !CKEDITOR.tools.trim( this.getValueOf( 'info', 'txtUrl' ) ) ) {
-						this.preview.removeAttribute( 'src' );
-						this.preview.setStyle( 'display', 'none' );
-					}
 					if(editor.mode == 'source') {
 						this.hide();
 						var person = prompt(editor.lang.image.alertUrl,"http://");
