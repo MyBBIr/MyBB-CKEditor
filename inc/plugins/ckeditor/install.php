@@ -139,8 +139,7 @@ function ckeditor_activate(){
 	find_replace_templatesets("post_attachments_attachment_postinsert", "#".'\\$\\(\'\\#message\'\\)\\.sceditor\\(\'instance\'\\)'."#i", 'MyBBEditor');
 	$PL->edit_core('ckeditor', 'inc/functions.php',
                array('search' => 'global $db, $mybb, $theme, $templates, $lang, $plugins, $smiliecache, $cache;',
-                     'replace' => 'if(function_exists("ckeditor_build") && is_ckeditor_avilable()) { return ckeditor_build($bind, $smilies);}global $db, $mybb, $theme, $templates, $lang, $plugins, $smiliecache, $cache;'),
-               true);
+                     'replace' => array('if(function_exists("ckeditor_build") && is_ckeditor_avilable())', '{', 'return ckeditor_build($bind, $smilies);','}','global $db, $mybb, $theme, $templates, $lang, $plugins, $smiliecache, $cache;')),true);
 }
 
 function ckeditor_deactivate(){
