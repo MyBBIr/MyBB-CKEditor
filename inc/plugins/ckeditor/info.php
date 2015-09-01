@@ -17,7 +17,8 @@ function ckeditor_info()
 		"author"        => "AliReza_Tofighi",
 		"authorsite"    => "http://my-bb.ir",
 		"version"       => "1.0.0",
-		"compatibility" => "18*"
+		"compatibility" => "18*",
+		"codename"		=> "ckeditor"
 	);
 	if(ckeditor_is_installed() && $plugins_cache['active']['ckeditor'])
 	{
