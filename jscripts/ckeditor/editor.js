@@ -1,4 +1,4 @@
-$.getScript(CKEDITOR.getUrl('extra/moment-with-langs.js'));
+$.getScript(CKEDITOR.getUrl('../ckeditor/extra/moment-with-langs.js'));
 var autosave = function($btn, e, message)
 {
 	if(typeof(Storage) == "undefined") return;
@@ -176,30 +176,26 @@ var messageEditor = (function()
 		if (typeof CKEDITOR == 'undefined') {
 			document.write(unescape("%3Cscript src=\'"+this.baseURL+"ckeditor/ckeditor.js\' type=\'text/javascript\'%3E%3C/script%3E"));
 		}
-		eval('this.editor = CKEDITOR.instances.'+this.editorid+';');
+		this.editor = CKEDITOR.instances[this.editorid];
 		
 		// Update Old Textarea:
-		var updatePreview = function(e) {
-			var consoleEl = CKEDITOR.document.getById( e.editor.name );
-			consoleEl.addClass( 'updated' );
-			setTimeout( function() { consoleEl.removeClass( 'updated' ); }, 500 );
-			// IE needs <br>, it doesn't even understand new lines.
-			consoleEl.setHtml( e.editor.getData(1));
-		}
-
-		var checkUpdatePreview = function(e) {
-			setTimeout( function() {
-				if ( e.editor.checkDirty() ) {
-					updatePreview(e);
-					e.editor.resetDirty();
-				}
-			}, 0 );
-		}
-
-		this.editor.on( 'instanceReady', updatePreview );
-		this.editor.on( 'key', checkUpdatePreview );
-		this.editor.on( 'selectionChange', checkUpdatePreview );
-
+		this.editor.on( 'change', function(e) {
+			clickableEditor.updateTextarea();
+		});
+		this.editor.on( 'selectionChange', function(e) {
+			clickableEditor.updateTextarea();
+		});
+		this.editor.on( 'key', function(e) {
+			clickableEditor.updateTextarea();
+		});
+		$(document).ready($.proxy(function(){
+			$($('#' + this.editorid).parents('form')).submit($.proxy(function(){
+				this.updateTextarea();
+			}, this)).find('input[type=submit], input[type=button], button').click($.proxy(function(){
+				this.updateTextarea();
+			}, this));
+		}, this));
+		
 		if(CKEDITOR.config.autosave > 0)
 		{
 			this.editor.on('instanceReady', this.editor_autosave);
@@ -436,6 +432,14 @@ var messageEditor = (function()
 		localStorage.setItem('autosave', JSON.stringify(myautosave));
 		$('#autosave_saved').fadeIn('normal').delay(2000).fadeOut('normal');
 	};
+	
+	function updateTextarea(content) {
+		if(!content) {
+			content = this.editor.getData();
+		}
+
+		$('#' + this.editor.name ).val(content);
+	}
 
 	messageEditor.prototype = {
 		setup: setup,
@@ -451,7 +455,8 @@ var messageEditor = (function()
 		openGetMoreSmilies: openGetMoreSmilies,
 		insertSmilie: insertSmilie,
 		editor_autosave: editor_autosave,
-		autosave_done: autosave_done
+		autosave_done: autosave_done,
+		updateTextarea: updateTextarea
 	};
 	
 	return messageEditor;
@@ -522,10 +527,11 @@ $(document).ready(function(){
 					{
 						$.jGrowl(lang.quick_reply_post_error + ' ' + message);
 					});
+					$('#quickreply_spinner').hide();
 				}
 			}
 
-			if($('#captcha_trow'))
+			if($('#captcha_trow').length)
 			{
 				cap = json.data.match(/^<captcha>([0-9a-zA-Z]+)(\|([0-9a-zA-Z]+)|)<\/captcha>/);
 				if(cap)
@@ -536,7 +542,7 @@ $(document).ready(function(){
 					{
 						Recaptcha.reload();
 					}
-					else if($("#captcha_img"))
+					else if($("#captcha_img").length)
 					{
 						if(cap[1])
 						{
@@ -546,13 +552,13 @@ $(document).ready(function(){
 							{
 								$('#imagestring').attr('type', 'hidden').val(cap[3]);
 								// hide the captcha
-								$('#captcha_trow').css('display', 'none');
+								$('#captcha_trow').hide();
 							}
 							else
 							{
 								$('#captcha_img').attr('src', "captcha.php?action=regimage&imagehash="+imghash);
 								$('#imagestring').attr('type', 'text').val('');
-								$('#captcha_trow').css('display', '');
+								$('#captcha_trow').show();
 							}
 						}
 					}
@@ -574,13 +580,10 @@ $(document).ready(function(){
 					
 				Thread.quickEdit("#pid_" + pid);
 
-				/*if(MyBB.browser == "ie" || MyBB.browser == "opera" || MyBB.browser == "safari" || MyBB.browser == "chrome")
-				{*/
-					// Eval javascript
-					$(json.data).filter("script").each(function(e) {
-						eval($(this).text());
-					});
-				//}
+				// Eval javascript
+				$(json.data).filter("script").each(function(e) {
+					eval($(this).text());
+				});
 
 				$('#quick_reply_form')[0].reset();
 				if(typeof clickableEditor != 'undefined')
@@ -589,7 +592,7 @@ $(document).ready(function(){
 				}
 
 				var lastpid = $('#lastpid');
-				if(lastpid)
+				if(lastpid.length)
 				{
 					lastpid.val(pid);
 				}
@@ -604,6 +607,16 @@ $(document).ready(function(){
 
 			$(".jGrowl").jGrowl("close");
 		};
+		
+		Thread.oldQuickReply = Thread.quickReply;
+		
+		Thread.quickReply = function(e)
+		{
+			if(typeof clickableEditor != 'undefined') {
+				clickableEditor.updateTextarea();
+			}
+			return Thread.oldQuickReply(e);
+		}
 		
 		Thread.quickEdit = function(el)
 		{

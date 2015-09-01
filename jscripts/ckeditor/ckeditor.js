@@ -208,8 +208,10 @@ var bbcodeParser = {};
 			});
 
 			json = jQuery.parseJSON(responseXML.responseText);
-			if(typeof json == 'object' && typeof json.message != 'undefined')
+			if(typeof json == 'object' && typeof json.message != 'undefined') {
 				str = json.message;
+				clickableEditor.updateTextarea(str);
+			}
 		}
 
 		if(CKEDITOR.ajaxbbcodeparser != '1' || !str || old_str == str)
